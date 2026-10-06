@@ -32,7 +32,6 @@
             border-bottom: 1px solid #3a3a4a;
             padding-bottom: 15px;
         }
-        /* PROGRESS BAR STYLES */
         .progress-bar-container {
             width: 100%;
             background-color: #313142;
@@ -81,22 +80,19 @@
             color: #1a1a24;
             font-weight: bold;
         }
-        .option:disabled {
-            cursor: not-allowed;
-        }
+        .option:disabled { cursor: not-allowed; }
         .correct {
-            background-color: #1c3d26 !important; /* Darker green background */
+            background-color: #1c3d26 !important;
             border-color: #4CAF50 !important;
             color: white !important;
             font-weight: bold;
         }
         .wrong {
-            background-color: #3d1c1c !important; /* Darker red background */
+            background-color: #3d1c1c !important;
             border-color: #F44336 !important;
             color: white !important;
             font-weight: bold;
         }
-        /* FEEDBACK / TRIVIA BOX STYLES */
         .feedback-box {
             display: none;
             padding: 15px;
@@ -105,25 +101,26 @@
             border-left: 5px solid;
             background-color: #1e293b;
         }
-        .feedback-box.correct-feedback {
-            border-left-color: #4CAF50;
-        }
-        .feedback-box.wrong-feedback {
-            border-left-color: #F44336;
-        }
+        .feedback-box.correct-feedback { border-left-color: #4CAF50; }
+        .feedback-box.wrong-feedback { border-left-color: #F44336; }
         .feedback-title {
             font-weight: bold;
             font-size: 1.1em;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
         .feedback-correct-title { color: #4CAF50; }
         .feedback-wrong-title { color: #F44336; }
         .feedback-text {
             color: #e2e8f0;
             font-size: 0.95em;
-            line-height: 1.4;
+            line-height: 1.5;
         }
-        
+        .rationale {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #4a4a5a;
+            color: #a8b2d1;
+        }
         .action-btn {
             background-color: #4CAF50;
             color: #ffffff;
@@ -136,15 +133,34 @@
             background-color: #45a049 !important;
             border-color: #45a049 !important;
         }
-        .menu-btn {
-            background-color: #4da6ff;
-        }
-        .menu-btn:hover {
-            background-color: #3388dd !important;
-        }
+        .menu-btn { background-color: #4da6ff; border-color: #4da6ff; color: #1a1a24; }
+        .menu-btn:hover { background-color: #3388dd !important; border-color: #3388dd !important; }
+        
+        .master-btn { background-color: #9d4edd; border-color: #9d4edd; color: white;}
+        .master-btn:hover { background-color: #7b2cbf !important; border-color: #7b2cbf !important;}
+
         #quiz-screen, #score-screen { display: none; }
         #next-btn { display: none; }
         .menu-desc { text-align: center; margin-bottom: 30px; color: #ccc; }
+
+        /* REVIEW SECTION STYLES */
+        .review-container {
+            margin-top: 30px;
+            max-height: 400px;
+            overflow-y: auto;
+            border-top: 2px solid #3a3a4a;
+            padding-top: 20px;
+            text-align: left;
+        }
+        .review-item {
+            background-color: #1e293b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .review-q { font-weight: bold; margin-bottom: 10px; color: #4da6ff;}
+        .review-wrong { color: #F44336; margin-bottom: 5px;}
+        .review-correct { color: #4CAF50; }
     </style>
 </head>
 <body>
@@ -157,13 +173,13 @@
     <button class="option action-btn menu-btn" onclick="startQuiz('U1')">U1: Intro to Robotics & Concepts</button>
     <button class="option action-btn menu-btn" onclick="startQuiz('U2')">U2: Robot Sensors</button>
     <button class="option action-btn menu-btn" onclick="startQuiz('U3')">U3: Robot Grippers & Programming</button>
+    <button class="option action-btn master-btn" onclick="startQuiz('MASTER')">★ MASTER EXAM MODE (All Modules) ★</button>
 </div>
 
 <!-- QUIZ SCREEN -->
 <div class="quiz-container" id="quiz-screen">
     <h2 id="quiz-title">Quiz</h2>
     
-    <!-- PROGRESS BAR -->
     <div class="progress-bar-container">
         <div class="progress-bar-fill" id="progress-bar"></div>
     </div>
@@ -176,7 +192,6 @@
     <div class="question" id="question">Loading question...</div>
     <div id="options"></div>
 
-    <!-- TRIVIA / FEEDBACK BOX -->
     <div class="feedback-box" id="feedback-box">
         <div class="feedback-title" id="feedback-title"></div>
         <div class="feedback-text" id="feedback-text"></div>
@@ -189,10 +204,16 @@
 <div class="quiz-container" id="score-screen">
     <h2>Quiz Completed!</h2>
     <p style="text-align: center; font-size: 1.2em;">Your final score: <strong id="score"></strong> out of <strong id="total"></strong></p>
+    
+    <div id="review-area" class="review-container">
+        <!-- Javascript will inject missed questions here -->
+    </div>
+
     <button class="option action-btn menu-btn" onclick="returnToMenu()">Return to Main Menu</button>
 </div>
 
 <script>
+    
     // U0: HISTORY OF ROBOTICS DATA
     const quizU0 = [
         {
@@ -1384,10 +1405,111 @@
         }
     ];
 
+   // EXPANDED DICTIONARY OF TERMS FOR INCORRECT ANSWERS
+    const termDictionary = {
+        // People & History
+        "Isaac Asimov": "He is the science fiction author who introduced the term 'robotics' in 1941 and formulated the Three Laws of Robotics.",
+        "Karel Čapek": "He is the Czech playwright who coined the word 'robot' (from 'robota', meaning forced labor) in his 1921 play 'Rossum's Universal Robots'.",
+        "George Devol": "He designed the first programmable robot in 1954 and coined the term 'universal automation'. He also patented a playback device in 1946.",
+        "Joseph Engelberger": "He joined George Devol in 1956 to form Unimation, the first successful robot manufacturing company.",
+        "Blaise Pascal": "He built his version of a calculator way back in 1642.",
+        "Charles Babbage": "He designed the analytical engine in 1835, considered the 'world's first general-purpose computer'.",
+        "George Boole": "He conducted mathematical analysis on logic in 1847, now known as Boolean Algebra.",
+        "Alan Turing": "He introduced the Turing Test in 1937 to evaluate a machine's ability to exhibit intelligent behavior.",
+        "Norbert Wiener": "He published the book 'Cybernetics' in 1948, describing communications and control in electronic, mechanical, and biological systems.",
+        "Jack Kilby": "He created the first microchip in 1958.",
+        "Marvin Minsky": "He designed the 'Tentacle Arm' in 1968, which had 12 joints for added mobility options.",
+        "Raymond Goertz": "He designed a tele-operator equipped with an articulated arm for the Atomic Energy Commission in 1951.",
+        "Clive Humby": "He is credited with coining the phrase 'data is the new oil' in relation to Data Mining.",
+        "Kevin Ashton": "He coined the term 'IoT' (Internet of Things) in 1999, laying the groundwork for the 4th Industrial Revolution.",
+        "Dennis Ritchie": "He created the general-purpose C programming language at Bell Labs in 1972.",
+        
+        // Robot Types & Projects
+        "WABOT-1": "This was the world's first anthropomorphic robot, created by Waseda University between 1970 and 1973.",
+        "ASIMO": "This stands for Advanced Step in Innovative Mobility, a famous humanoid robot created by Honda in 2000.",
+        "P2 robot": "Introduced in 1997, this was a bipedal humanoid robot capable of walking smoothly for over 30 minutes.",
+        "Sojourner": "This was the very first NASA Mars rover deployed on Mars.",
+        "Spirit": "This was the NASA Mars rover that notoriously got stuck on Mars.",
+        "SCARA": "Selective Compliant Articulated Robot Arm. It typically has 4 axes and was developed by Hiroshi Makino in 1978.",
+        "SCOT": "Shared Computer Operated Transport, an autonomous driverless car developed by NUS and MIT.",
+        "BRAVE": "Bomb Removal Automated Vehicle, developed by De La Salle University for bomb disposal and remote inspection.",
+        "The Dragon": "The SpaceX robotic capsule that made history in 2012 by docking with the International Space Station.",
+
+        // Robotics Concepts
+        "Sensors": "These act as the robot's 'eyes' and 'ears', converting physical phenomena (light, sound, pressure) into electronic signals.",
+        "Actuators": "These act as the robot's 'muscles', producing motion using electricity, pneumatics, or hydraulics.",
+        "End Effectors": "These are the devices at the end of the robotic arm, like grippers, hooks, or scoops (the 'hands').",
+        "Controller": "This integrates microprocessors and acts as the 'brain' of the robotic system.",
+        "Transducer": "This is a device that converts one form of energy into another form. Both sensors and actuators fall under this category.",
+        "Pitch": "The up and down motion of a robot's wrist.",
+        "Yaw": "The side-to-side motion of a robot's wrist.",
+        "Roll": "The rotation of the wrist about the forearm axis.",
+        "Rectilinear / Cartesian Robot": "A robot that works strictly in three linear directions: up/down, left/right, and front/back.",
+        "Cylindrical Robot": "Operates within a cylindrical work envelope; the arm swings around its base and moves vertically.",
+        "Spherical Robot": "Operates within a spherical work envelope, combining polar articulation with rectilinear motion.",
+        "Fully Articulated Robot": "A highly flexible robot with multiple joints (like SCARA), commonly used in welding and painting.",
+        "Playback Robots": "Robots that memorize and record motion paths, allowing them to repeat tasks continuously without further guidance.",
+        "Repeatability": "The ability of a robot to consistently return to a specific position over multiple cycles.",
+        
+        // Sensors
+        "Active Sensor": "This type of sensor generates its own signal, transmits it, and measures the reflection (e.g., LIDAR, Radar, Sonar).",
+        "Passive Sensor": "This type of sensor requires an external power source and responds to external stimuli, like a photocell (LDR) reacting to light.",
+        "Thermocouple": "A passive sensor specifically used to measure temperature.",
+        "Proximity Sensor": "A sensor that detects an object when it approaches the boundary without requiring physical contact.",
+        "Inductive Proximity Sensor": "A sensor that uses an electromagnetic field to detect ferrous and non-ferrous metal objects.",
+        "Capacitive Proximity Sensor": "A sensor that produces an electrostatic field and can sense metals as well as nonmetallic materials based on their dielectric constant.",
+        "Piezoelectric Ceramic disk": "The component mounted on an ultrasonic sensor that vibrates to produce and receive high-frequency sound waves.",
+        "Diffuse Mode": "The standard ultrasonic mode where objects entering the sound cone cause the sensor output to switch states.",
+        "Reflex Mode": "An ultrasonic mode that uses a reflector; the output activates when a target blocks the echo.",
+        "Thru-Beam Mode": "An ultrasonic mode that uses a separate transmitter and receiver. The output switches when the target interrupts the beam.",
+        "Blanking out the background": "A technique where objects located beyond the upper limit of a sensor's range are ignored so they don't produce false outputs.",
+        "Mutual Interference": "This occurs when two sonar devices are mounted too close to each other, causing echoes to reflect to the wrong sensor.",
+
+        // Grippers
+        "Parallel Gripper": "This gripper features jaws that move in a parallel motion in relation to the gripper body. It is accurate, simple, and widely used.",
+        "Angular Gripper": "This gripper features jaws that open and close around a central pivot point using an arcing or sweeping motion.",
+        "Toggle Gripper": "This gripper uses a pivot movement that acts as an over-center lock to provide a very high grip force to weight ratio.",
+        "Internal Gripper": "This gripper utilizes the internal geometry of a part to lock and hold it from the inside out.",
+        "Pneumatic": "A gripper drive mechanism known for smaller units, quick assembly, and high cycle rates, but it requires precise system control.",
+        "Hydraulic": "A drive mechanism known for high strength and speed, ideal for heavy loads, but it takes up large floor space.",
+        "Electric Motors": "A drive mechanism known for high accuracy and repeatability without needing large floor space, but the motors can be easy to damage.",
+
+        // Computer Vision
+        "Robotic Vision": "The process of extracting, characterizing, and interpreting information from images of a 3D world to give a robot 'eyes'.",
+        "Machine Vision": "Traditionally refers to the use of computer vision specifically in industrial or practical applications like automated inspection.",
+        "Decoding": "An identification application in machine vision where the system reads barcodes or alphanumeric characters to track products or validate data.",
+
+        // Linear Algebra & MATLAB
+        "Cramer's Rule": "A mathematical rule best suited for solving small linear systems (like 2x2 or 3x3) due to its high computational cost for larger matrices.",
+        "Gauss-Elimination": "An algebraic method that transforms linear equations into an upper triangular form to be solved via back substitution.",
+        "LU Decomposition": "An algebraic direct method that factors a coefficient matrix into a Lower Triangular matrix and an Upper Triangular matrix.",
+        "Gauss-Jordan Method": "A method that utilizes a diagonal form matrix where coefficients are only on the diagonal.",
+        "Trace": "In linear algebra, this is the sum of the main-diagonal elements of a matrix.",
+        "Transpose": "The result of swapping the rows and columns of a matrix.",
+        "Workspace": "The window in MATLAB that allows you to view variables in memory, including their names, sizes, types, and values.",
+        "Command Window": "The primary interface in MATLAB for entering commands and running scripts.",
+        "clc": "The command used in MATLAB to clear the Command Window without removing your stored variables.",
+
+        // Python & Programming
+        "Pandas": "A Python library focused on fast data analysis, manipulation, fast I/O, and DataFrame operations.",
+        "NumPy": "A Python library foundational for numerical computing, linear algebra, statistics, and fast n-dimensional arrays.",
+        "Matplotlib": "A Python library used for plotting and data visualization, such as creating line charts, scatterplots, and histograms.",
+        "Keras": "A high-level deep learning Python API that typically uses TensorFlow as a backend to simplify complex workflows.",
+        "PyTorch": "A deep learning framework with dynamic computation graphs that is highly flexible and fast.",
+        "TensorFlow": "A scalable deep learning framework originally written in C++ with Python APIs, used for building and deploying neural networks.",
+        "Spyder": "Scientific Python Development Environment. A powerful Python IDE with advanced editing and introspection features.",
+        "Jupyter Notebook": "A web-based, interactive computing notebook environment used to edit and run human-readable documents while describing data analysis.",
+        "Anaconda": "A popular distribution of Python and R designed to simplify package management and deployment for scientific computing.",
+        "Google Colab": "A platform that allows you to write and execute Python in your browser with zero configuration and free access to GPUs.",
+        "Syntax Error": "The type of error that occurs if you miss the strictly required indentation in a Python statement.",
+        "GNU Compiler Collection": "What GCC stands for. It is a robust compiler suite supporting multiple languages including C and C++."
+    };
+
     // STATE VARIABLES
     let activeData = [];
     let currentQuestion = 0;
     let score = 0;
+    let wrongAnswersReview = [];
 
     // DOM ELEMENTS
     const menuScreen = document.getElementById('menu-screen');
@@ -1403,8 +1525,8 @@
     const feedbackBox = document.getElementById('feedback-box');
     const feedbackTitle = document.getElementById('feedback-title');
     const feedbackText = document.getElementById('feedback-text');
+    const reviewArea = document.getElementById('review-area');
 
-    // Fisher-Yates Shuffle Function
     function shuffleArray(array) {
         let shuffled = [...array];
         for (let i = shuffled.length - 1; i > 0; i--) {
@@ -1414,7 +1536,6 @@
         return shuffled;
     }
 
-    // LOGIC
     function startQuiz(quizID) {
         let selectedQuiz = [];
         
@@ -1430,11 +1551,16 @@
         } else if (quizID === 'U3') {
             selectedQuiz = quizU3;
             quizTitle.innerText = "U3: Robot Grippers & Programming Quiz";
+        } else if (quizID === 'MASTER') {
+            const allQuestions = [...quizU0, ...quizU1, ...quizU2, ...quizU3];
+            selectedQuiz = shuffleArray(allQuestions).slice(0, 50);
+            quizTitle.innerText = "★ MASTER EXAM MODE (50 Random Questions) ★";
         }
 
         activeData = shuffleArray(selectedQuiz);
         currentQuestion = 0;
         score = 0;
+        wrongAnswersReview = [];
         
         menuScreen.style.display = 'none';
         quizScreen.style.display = 'block';
@@ -1452,11 +1578,9 @@
         realTimeScoreEl.innerText = `Score: ${score}`;
         questionEl.innerText = currentQuizData.question;
 
-        // Update progress bar width based on current question
         const progressPercent = (currentQuestion / activeData.length) * 100;
         progressBar.style.width = `${progressPercent}%`;
 
-        // Shuffle options for the current question so they aren't always in the same order
         const randomizedOptions = shuffleArray(currentQuizData.options);
 
         randomizedOptions.forEach(option => {
@@ -1472,12 +1596,10 @@
         const currentQuizData = activeData[currentQuestion];
         const allButtons = optionsEl.children;
         
-        // Disable buttons after clicking
         for (let btn of allButtons) {
             btn.disabled = true;
         }
 
-        // Check Answer & Show Feedback Box
         if (selected === currentQuizData.answer) {
             buttonElement.classList.add('correct');
             score++;
@@ -1486,7 +1608,7 @@
             feedbackBox.className = 'feedback-box correct-feedback';
             feedbackTitle.innerHTML = '✔ Correct!';
             feedbackTitle.className = 'feedback-title feedback-correct-title';
-            feedbackText.innerHTML = `Great job! The answer is exactly <strong>"${currentQuizData.answer}"</strong>.`;
+            feedbackText.innerHTML = `Great job! The answer is <strong>"${currentQuizData.answer}"</strong>.`;
         } else {
             buttonElement.classList.add('wrong');
             for (let btn of allButtons) {
@@ -1495,15 +1617,26 @@
                 }
             }
             
+            wrongAnswersReview.push({
+                question: currentQuizData.question,
+                chosen: selected,
+                correct: currentQuizData.answer
+            });
+
+            // Look up the distractor term in the dictionary
+            let definitionText = "";
+            if (termDictionary[selected]) {
+                definitionText = `<div class="rationale"><strong>Wait, what is ${selected}?</strong><br>${termDictionary[selected]}</div>`;
+            }
+
             feedbackBox.className = 'feedback-box wrong-feedback';
             feedbackTitle.innerHTML = '✖ Incorrect';
             feedbackTitle.className = 'feedback-title feedback-wrong-title';
-            feedbackText.innerHTML = `The correct answer was: <strong>"${currentQuizData.answer}"</strong>.`;
+            feedbackText.innerHTML = `The correct answer was: <strong>"${currentQuizData.answer}"</strong>.${definitionText}`;
         }
 
         feedbackBox.style.display = 'block';
 
-        // Fill progress bar for the completed question
         const progressPercent = ((currentQuestion + 1) / activeData.length) * 100;
         progressBar.style.width = `${progressPercent}%`;
 
@@ -1529,6 +1662,23 @@
         scoreScreen.style.display = 'block';
         document.getElementById('score').innerText = score;
         document.getElementById('total').innerText = activeData.length;
+
+        reviewArea.innerHTML = '';
+        if (wrongAnswersReview.length === 0) {
+            reviewArea.innerHTML = '<p style="text-align:center; color:#4CAF50; font-size:1.2em;">Perfect score! You missed zero questions.</p>';
+        } else {
+            reviewArea.innerHTML = `<h3 style="color:#4da6ff; text-align:center;">Review Your Missed Questions</h3>`;
+            wrongAnswersReview.forEach(item => {
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('review-item');
+                reviewItem.innerHTML = `
+                    <div class="review-q">${item.question}</div>
+                    <div class="review-wrong">✖ You chose: ${item.chosen}</div>
+                    <div class="review-correct">✔ Correct Answer: ${item.correct}</div>
+                `;
+                reviewArea.appendChild(reviewItem);
+            });
+        }
     }
 
     function returnToMenu() {
