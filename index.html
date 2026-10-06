@@ -1407,7 +1407,7 @@
 
    // EXPANDED DICTIONARY OF TERMS FOR INCORRECT ANSWERS
     const termDictionary = {
-        // People & History
+        // PEOPLE & HISTORY
         "Isaac Asimov": "He is the science fiction author who introduced the term 'robotics' in 1941 and formulated the Three Laws of Robotics.",
         "Karel Čapek": "He is the Czech playwright who coined the word 'robot' (from 'robota', meaning forced labor) in his 1921 play 'Rossum's Universal Robots'.",
         "George Devol": "He designed the first programmable robot in 1954 and coined the term 'universal automation'. He also patented a playback device in 1946.",
@@ -1423,35 +1423,52 @@
         "Clive Humby": "He is credited with coining the phrase 'data is the new oil' in relation to Data Mining.",
         "Kevin Ashton": "He coined the term 'IoT' (Internet of Things) in 1999, laying the groundwork for the 4th Industrial Revolution.",
         "Dennis Ritchie": "He created the general-purpose C programming language at Bell Labs in 1972.",
+        "Thomas Edison": "He invented the talking doll in 1887.",
+        "Nikola Tesla": "He conceptualized the modern AC induction motor in 1882.",
+        "Benjamin Franklin": "He is famous for his 1752 kite experiment proving that lightning is a form of electricity.",
+        "Seward Babbitt": "In 1892, he designed a motorized crane with a gripper to remove ingots from a furnace.",
+        "Joseph-Marie Jacquard": "He invented the textile machine operated by punch cards in 1801.",
+        "Warren S. McCulloch": "He co-published a paper in 1943 that introduced the first mathematical and computational model of a biological neuron.",
         
-        // Robot Types & Projects
+        // ROBOT TYPES & PROJECTS
         "WABOT-1": "This was the world's first anthropomorphic robot, created by Waseda University between 1970 and 1973.",
         "ASIMO": "This stands for Advanced Step in Innovative Mobility, a famous humanoid robot created by Honda in 2000.",
         "P2 robot": "Introduced in 1997, this was a bipedal humanoid robot capable of walking smoothly for over 30 minutes.",
         "Sojourner": "This was the very first NASA Mars rover deployed on Mars.",
         "Spirit": "This was the NASA Mars rover that notoriously got stuck on Mars.",
+        "Curiosity": "A NASA Mars rover deployed for space exploration.",
+        "Perseverance": "A NASA Mars rover deployed for space exploration.",
         "SCARA": "Selective Compliant Articulated Robot Arm. It typically has 4 axes and was developed by Hiroshi Makino in 1978.",
         "SCOT": "Shared Computer Operated Transport, an autonomous driverless car developed by NUS and MIT.",
         "BRAVE": "Bomb Removal Automated Vehicle, developed by De La Salle University for bomb disposal and remote inspection.",
         "The Dragon": "The SpaceX robotic capsule that made history in 2012 by docking with the International Space Station.",
+        "Waseda Talker No. 1": "Created in 2000 by Waseda University to reproduce human vocal movement.",
 
-        // Robotics Concepts
+        // ROBOTICS CONCEPTS & CLASSIFICATIONS
         "Sensors": "These act as the robot's 'eyes' and 'ears', converting physical phenomena (light, sound, pressure) into electronic signals.",
         "Actuators": "These act as the robot's 'muscles', producing motion using electricity, pneumatics, or hydraulics.",
         "End Effectors": "These are the devices at the end of the robotic arm, like grippers, hooks, or scoops (the 'hands').",
         "Controller": "This integrates microprocessors and acts as the 'brain' of the robotic system.",
-        "Transducer": "This is a device that converts one form of energy into another form. Both sensors and actuators fall under this category.",
+        "Communicator": "Transmits information and receives instructions from a remote operator.",
+        "Manipulator": "The segmented mechanism (arm) for positioning tools or parts.",
         "Pitch": "The up and down motion of a robot's wrist.",
         "Yaw": "The side-to-side motion of a robot's wrist.",
         "Roll": "The rotation of the wrist about the forearm axis.",
+        "Sweep": "Also known as waist motion; it is the rotation of the entire arm about its base.",
         "Rectilinear / Cartesian Robot": "A robot that works strictly in three linear directions: up/down, left/right, and front/back.",
         "Cylindrical Robot": "Operates within a cylindrical work envelope; the arm swings around its base and moves vertically.",
         "Spherical Robot": "Operates within a spherical work envelope, combining polar articulation with rectilinear motion.",
         "Fully Articulated Robot": "A highly flexible robot with multiple joints (like SCARA), commonly used in welding and painting.",
+        "Fixed Sequence": "Simple pick-and-place robots that follow a predetermined path or sequence.",
         "Playback Robots": "Robots that memorize and record motion paths, allowing them to repeat tasks continuously without further guidance.",
+        "Numerically Controlled Robots": "Robots that operate like NC machines, controlled by digital data and servo-controlled for accuracy.",
+        "Intelligent Robots": "Robots equipped with sensors (visual, tactile) and controlled by powerful computers.",
         "Repeatability": "The ability of a robot to consistently return to a specific position over multiple cycles.",
+        "Resolution": "The smallest incremental movement that the robot can detect or execute.",
+        "Accuracy": "The degree of closeness between the robot's actual movement and the intended target position.",
         
-        // Sensors
+        // SENSORS
+        "Transducer": "This is a device that converts one form of energy into another form. Both sensors and actuators fall under this category.",
         "Active Sensor": "This type of sensor generates its own signal, transmits it, and measures the reflection (e.g., LIDAR, Radar, Sonar).",
         "Passive Sensor": "This type of sensor requires an external power source and responds to external stimuli, like a photocell (LDR) reacting to light.",
         "Thermocouple": "A passive sensor specifically used to measure temperature.",
@@ -1459,38 +1476,77 @@
         "Inductive Proximity Sensor": "A sensor that uses an electromagnetic field to detect ferrous and non-ferrous metal objects.",
         "Capacitive Proximity Sensor": "A sensor that produces an electrostatic field and can sense metals as well as nonmetallic materials based on their dielectric constant.",
         "Piezoelectric Ceramic disk": "The component mounted on an ultrasonic sensor that vibrates to produce and receive high-frequency sound waves.",
+        "Blind Zone": "A zone typically 6 to 80 cm directly in front of an ultrasonic sensor where objects will produce an unstable output.",
+        "Beamwidth": "The angle between the half-power (-3db) points of the main lobe.",
+        "Mutual Interference": "This occurs when two sonar devices are mounted too close to each other, causing echoes to reflect to the wrong sensor.",
         "Diffuse Mode": "The standard ultrasonic mode where objects entering the sound cone cause the sensor output to switch states.",
         "Reflex Mode": "An ultrasonic mode that uses a reflector; the output activates when a target blocks the echo.",
         "Thru-Beam Mode": "An ultrasonic mode that uses a separate transmitter and receiver. The output switches when the target interrupts the beam.",
         "Blanking out the background": "A technique where objects located beyond the upper limit of a sensor's range are ignored so they don't produce false outputs.",
-        "Mutual Interference": "This occurs when two sonar devices are mounted too close to each other, causing echoes to reflect to the wrong sensor.",
 
-        // Grippers
+        // GRIPPERS
         "Parallel Gripper": "This gripper features jaws that move in a parallel motion in relation to the gripper body. It is accurate, simple, and widely used.",
         "Angular Gripper": "This gripper features jaws that open and close around a central pivot point using an arcing or sweeping motion.",
         "Toggle Gripper": "This gripper uses a pivot movement that acts as an over-center lock to provide a very high grip force to weight ratio.",
         "Internal Gripper": "This gripper utilizes the internal geometry of a part to lock and hold it from the inside out.",
+        "External Gripper": "A gripper that encompasses the outside of an object to hold it.",
         "Pneumatic": "A gripper drive mechanism known for smaller units, quick assembly, and high cycle rates, but it requires precise system control.",
         "Hydraulic": "A drive mechanism known for high strength and speed, ideal for heavy loads, but it takes up large floor space.",
         "Electric Motors": "A drive mechanism known for high accuracy and repeatability without needing large floor space, but the motors can be easy to damage.",
 
-        // Computer Vision
+        // COMPUTER VISION
         "Robotic Vision": "The process of extracting, characterizing, and interpreting information from images of a 3D world to give a robot 'eyes'.",
         "Machine Vision": "Traditionally refers to the use of computer vision specifically in industrial or practical applications like automated inspection.",
         "Decoding": "An identification application in machine vision where the system reads barcodes or alphanumeric characters to track products or validate data.",
+        "Counting": "Identifying the presence or absence of parts (like missing pieces) or checking features like holes in a flange.",
+        "Measurement": "Using a camera to measure dimensions, such as the multiple diameters of a bottleneck.",
 
-        // Linear Algebra & MATLAB
+        // LINEAR ALGEBRA
         "Cramer's Rule": "A mathematical rule best suited for solving small linear systems (like 2x2 or 3x3) due to its high computational cost for larger matrices.",
         "Gauss-Elimination": "An algebraic method that transforms linear equations into an upper triangular form to be solved via back substitution.",
         "LU Decomposition": "An algebraic direct method that factors a coefficient matrix into a Lower Triangular matrix and an Upper Triangular matrix.",
         "Gauss-Jordan Method": "A method that utilizes a diagonal form matrix where coefficients are only on the diagonal.",
+        "Forward Substitution": "The substitution method used specifically to solve Lower Triangular systems.",
+        "Back Substitution": "The substitution method used specifically to solve Upper Triangular systems.",
+        "Diagonal Substitution": "This is a distractor term; Diagonal Form is used in the Gauss-Jordan Method.",
+        "Crout's Substitution": "This is a distractor term; Crout's Method is actually a technique used to solve LU Decomposition.",
         "Trace": "In linear algebra, this is the sum of the main-diagonal elements of a matrix.",
         "Transpose": "The result of swapping the rows and columns of a matrix.",
+        "Symmetric matrix": "A matrix where the elements are mirrored across the diagonal (aij = aji).",
+        "Diagonal matrix": "A matrix where all off-diagonal elements are zero.",
+        "Identity matrix": "A diagonal matrix with 1's on the main diagonal.",
+        "Banded matrix": "A matrix where all elements are zero except for a band around the main diagonal.",
+        "Augmented matrix": "A matrix formed by appending columns (like constant vectors) to a coefficient matrix.",
+
+        // MATLAB
         "Workspace": "The window in MATLAB that allows you to view variables in memory, including their names, sizes, types, and values.",
         "Command Window": "The primary interface in MATLAB for entering commands and running scripts.",
+        "Figure Window": "The window that displays output from graphics and plot commands.",
+        "Editor": "The window used to create and debug script (.m) and function files.",
         "clc": "The command used in MATLAB to clear the Command Window without removing your stored variables.",
+        "clear": "The command used to remove all variables from memory.",
+        "who": "Lists the current variables in memory.",
+        "whos": "Lists the current variables in memory along with their size, bytes, and class.",
+        "format short": "Provides a fixed-point output with 4 decimal digits.",
+        "format long": "Provides a fixed-point output with 15 decimal digits.",
+        "format bank": "Provides a fixed-point output with 2 decimal digits.",
+        "format short e": "Provides scientific notation with 4 decimal digits.",
+        "ceil(x)": "Rounds a value toward infinity (up).",
+        "floor(x)": "Rounds a value toward minus infinity (down).",
+        "round(x)": "Rounds a value to the nearest integer.",
+        "fix(x)": "Rounds a value toward zero.",
+        "log10(x)": "Calculates the base-10 logarithm.",
+        "log(x)": "Calculates the natural logarithm (base e).",
+        "exp(x)": "Calculates the exponential value.",
+        "NaN": "Stands for Not-a-Number (e.g., 0/0).",
+        "inf": "Represents infinity.",
+        "eps": "The predefined variable representing the smallest difference in MATLAB.",
+        "^": "The symbol used for Exponentiation in MATLAB.",
+        "%": "The symbol used to indicate a comment in MATLAB code.",
+        "/": "The symbol used for Right Division.",
+        "\\": "The symbol used for Left Division.",
 
-        // Python & Programming
+        // PYTHON, ARDUINO & PROGRAMMING
         "Pandas": "A Python library focused on fast data analysis, manipulation, fast I/O, and DataFrame operations.",
         "NumPy": "A Python library foundational for numerical computing, linear algebra, statistics, and fast n-dimensional arrays.",
         "Matplotlib": "A Python library used for plotting and data visualization, such as creating line charts, scatterplots, and histograms.",
@@ -1499,10 +1555,23 @@
         "TensorFlow": "A scalable deep learning framework originally written in C++ with Python APIs, used for building and deploying neural networks.",
         "Spyder": "Scientific Python Development Environment. A powerful Python IDE with advanced editing and introspection features.",
         "Jupyter Notebook": "A web-based, interactive computing notebook environment used to edit and run human-readable documents while describing data analysis.",
+        "JupyterLab": "A next-generation web-based user interface for Project Jupyter.",
         "Anaconda": "A popular distribution of Python and R designed to simplify package management and deployment for scientific computing.",
         "Google Colab": "A platform that allows you to write and execute Python in your browser with zero configuration and free access to GPUs.",
         "Syntax Error": "The type of error that occurs if you miss the strictly required indentation in a Python statement.",
-        "GNU Compiler Collection": "What GCC stands for. It is a robust compiler suite supporting multiple languages including C and C++."
+        "GNU Compiler Collection": "What GCC stands for. It is a robust compiler suite supporting multiple languages including C and C++.",
+        "Arduino Nano": "A compact, breadboard-friendly board based on the ATmega328, featuring 22 digital I/O pins.",
+        "Arduino Uno": "Based on the ATmega328P, it is popular for desktop prototyping and IoT sensors.",
+        "Arduino Mega": "Built on the ATmega2560, designed for complex projects requiring extensive I/O capacity (54 digital I/O pins).",
+        "Arduino Leonardo": "The first Arduino board to feature a microcontroller with built-in USB communication, allowing it to emulate a keyboard or mouse.",
+        "setup()": "An Arduino function that executes only once upon startup or after a reset.",
+        "loop()": "An Arduino function that runs repeatedly in an infinite cycle after setup completes.",
+        
+        // INDUSTRIAL REVOLUTION
+        "1st Industry Revolution": "1760-1840: Introduced the Steam Power Engine, Iron Production, and Textile Machines.",
+        "2nd Industry Revolution": "1870-1914: Introduced the Internal Combustion Engine, Electricity, Telephone, and Mass Production/Assembly Lines.",
+        "3rd Industry Revolution": "1969-2010: Brought about Automation, Electronics, the Personal Computer (1981), and the Internet.",
+        "4th Industry Revolution": "2011-present: Features AI, Autonomous Robots, IoT, Cybersecurity, VR/AR, Cloud Computing, and Additive Manufacturing."
     };
 
     // STATE VARIABLES
