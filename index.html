@@ -1352,20 +1352,25 @@
         return shuffled;
     }
     // LOGIC
-    function startQuiz(quizID) {
+  function startQuiz(quizID) {
+        let selectedQuiz = [];
+        
         if (quizID === 'U0') {
-            activeData = quizU0;
+            selectedQuiz = quizU0;
             quizTitle.innerText = "U0: History of Robotics Quiz";
         } else if (quizID === 'U1') {
-            activeData = quizU1;
+            selectedQuiz = quizU1;
             quizTitle.innerText = "U1: Intro to Robotics & Concepts Quiz";
         } else if (quizID === 'U2') {
-            activeData = quizU2;
+            selectedQuiz = quizU2;
             quizTitle.innerText = "U2: Robot Sensors Quiz";
         } else if (quizID === 'U3') {
-            activeData = quizU3;
+            selectedQuiz = quizU3;
             quizTitle.innerText = "U3: Robot Grippers & Programming Quiz";
         }
+
+        // Shuffle the questions before starting
+        activeData = shuffleArray(selectedQuiz);
 
         currentQuestion = 0;
         score = 0;
@@ -1375,7 +1380,6 @@
         
         loadQuestion();
     }
- 
 
     function loadQuestion() {
         nextBtn.style.display = 'none';
