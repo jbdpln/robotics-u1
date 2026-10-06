@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics Quiz</title>
+    <style>
+        body {
+            background-color: #1a1a24;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .quiz-container {
+            background-color: #242430;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 700px;
+        }
+        h2 {
+            text-align: center;
+            color: #4da6ff;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #3a3a4a;
+            padding-bottom: 15px;
+        }
+        .question {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .option {
+            background-color: #313142;
+            border: 1px solid #4a4a5a;
+            color: white;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: block;
+            width: 100%;
+            text-align: left;
+            font-size: 1em;
+            line-height: 1.3;
+        }
+        .option:hover {
+            background-color: #4da6ff;
+            border-color: #4da6ff;
+            color: #1a1a24;
+            font-weight: bold;
+        }
+        #score-container {
+            display: none;
+            text-align: center;
+            font-size: 1.5em;
+        }
+        .progress {
+            font-size: 0.9em;
+            color: #888;
+            margin-bottom: 10px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container" id="quiz">
+    <h2>Robotics Concepts Quiz</h2>
+    <div class="progress" id="progress">Question 1 of 50</div>
+    <div class="question" id="question">Loading question...</div>
+    <div id="options"></div>
+</div>
+
+<div class="quiz-container" id="score-container">
+    <h2>Quiz Completed!</h2>
+    <p>Your score: <span id="score"></span> out of <span id="total"></span></p>
+    <button class="option" onclick="location.reload()" style="text-align: center; margin-top: 20px;">Restart Quiz</button>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "1. Who coined the word 'robot' in a 1921 play?",
+            options: ["Isaac Asimov", "Karel Čapek", "George Devol", "Joseph Engelberger"],
+            answer: "Karel Čapek"
+        },
+        {
+            question: "2. Which author first introduced the term 'robotics' in 1941?",
+            options: ["Isaac Asimov", "Karel Čapek", "Norbert Wiener", "Alan Turing"],
+            answer: "Isaac Asimov"
+        },
+        {
+            question: "3. According to Asimov's Three Laws of Robotics, what is the First Law?",
+            options: ["A robot must protect its own existence.", "A robot must obey orders given by human beings.", "A robot may not injure a human being, or, through inaction, allow a human being to come to harm.", "A robot must always prioritize its programming."],
+            answer: "A robot may not injure a human being, or, through inaction, allow a human being to come to harm."
+        },
+        {
+            question: "4. Which component of a robot acts as its 'muscles' by producing motion using electricity, pneumatics, or hydraulics?",
+            options: ["End Effectors", "Actuators", "Sensors", "Manipulator"],
+            answer: "Actuators"
+        },
+        {
+            question: "5. Which robot component converts physical phenomena into electronic signals, acting as the robot's 'eyes'?",
+            options: ["Sensors", "Communicator", "Controller", "End Effectors"],
+            answer: "Sensors"
+        },
+        {
+            question: "6. The degree of freedom (DOF) associated with a wrist's side-to-side motion is called:",
+            options: ["Pitch", "Roll", "Yaw", "Sweep"],
+            answer: "Yaw"
+        },
+        {
+            question: "7. Which type of robot classification refers to a machine that operates within a work envelope combining polar articulation with rectilinear motion?",
+            options: ["Cylindrical Robot", "Rectilinear Robot", "Spherical Robot", "Fully Articulated Robot"],
+            answer: "Spherical Robot"
+        },
+        {
+            question: "8. Which robot classification by control system memorizes and records motion paths to repeat them continuously without further guidance?",
+            options: ["Fixed Sequence", "Playback Robots", "Numerically Controlled Robots", "Intelligent Robots"],
+            answer: "Playback Robots"
+        },
+        {
+            question: "9. When selecting a robot, which factor describes the ability of the robot to return to a specific position consistently over multiple cycles?",
+            options: ["Resolution", "Accuracy", "Work Volume", "Repeatability"],
+            answer: "Repeatability"
+        },
+        {
+            question: "10. What does the term 'MATLAB' stand for?",
+            options: ["Mathematics Laboratory", "Matrix Laboratory", "Machine Learning Laboratory", "Manipulator Laboratory"],
+            answer: "Matrix Laboratory"
+        },
+        {
+            question: "11. In the MATLAB default layout, which window is the primary interface for entering commands and running scripts/functions?",
+            options: ["Figure Window", "Workspace", "Command Window", "Current Folder"],
+            answer: "Command Window"
+        },
+        {
+            question: "12. Which MATLAB window allows you to view variables in memory, including their names, sizes, types, and values?",
+            options: ["Workspace", "Command History", "Editor", "Figure Window"],
+            answer: "Workspace"
+        },
+        {
+            question: "13. What symbol is used at the end of a MATLAB command to suppress output in the Command Window?",
+            options: ["Colon (:)", "Comma (,)", "Semicolon (;)", "Period (.)"],
+            answer: "Semicolon (;)"
+        },
+        {
+            question: "14. Which symbol signifies a comment in MATLAB code?",
+            options: ["//", "%", "#", "/*"],
+            answer: "%"
+        },
+        {
+            question: "15. What is the command used to clear the MATLAB Command Window without removing variables?",
+            options: ["clear", "close all", "clc", "delete"],
+            answer: "clc"
+        },
+        {
+            question: "16. In MATLAB arithmetic, what is the symbol used for left division?",
+            options: ["/", "\\", "^", "%"],
+            answer: "\\"
+        },
+        {
+            question: "17. According to MATLAB's order of precedence, which operation is executed first?",
+            options: ["Exponentiation", "Multiplication", "Addition", "Parentheses"],
+            answer: "Parentheses"
+        },
+        {
+            question: "18. Which MATLAB display format provides a fixed-point output with 15 decimal digits?",
+            options: ["format short", "format long", "format bank", "format short e"],
+            answer: "format long"
+        },
+        {
+            question: "19. Which MATLAB function rounds a value toward minus infinity?",
+            options: ["ceil(x)", "floor(x)", "fix(x)", "round(x)"],
+            answer: "floor(x)"
+        },
+        {
+            question: "20. Which MATLAB math function calculates the natural logarithm?",
+            options: ["log10(x)", "ln(x)", "exp(x)", "log(x)"],
+            answer: "ln(x)"
+        },
+        {
+            question: "21. What is the predefined MATLAB variable that represents the smallest difference?",
+            options: ["inf", "NaN", "eps", "ans"],
+            answer: "eps"
+        },
+        {
+            question: "22. Which MATLAB command lists variables along with their size, bytes, and class?",
+            options: ["who", "whos", "clear", "disp"],
+            answer: "whos"
+        },
+        {
+            question: "23. What is the maximum number of characters allowed for a MATLAB variable name?",
+            options: ["31", "63", "128", "255"],
+            answer: "63"
+        },
+        {
+            question: "24. Which of the following is a rule for naming variables in MATLAB?",
+            options: ["It must begin with a digit.", "It can include spaces.", "It is not case-sensitive.", "It must begin with a letter."],
+            answer: "It must begin with a letter."
+        },
+        {
+            question: "25. What file extension is automatically added when you save a script file in MATLAB?",
+            options: [".mat", ".script", ".m", ".fig"],
+            answer: ".m"
+        },
+        {
+            question: "26. In linear algebra, a drawback of the graphical method occurs when the lines overlap completely. What does this indicate?",
+            options: ["No solution", "Infinite solutions", "Ill-conditioned system", "Singular point"],
+            answer: "Infinite solutions"
+        },
+        {
+            question: "27. What type of linear system is characterized by slopes that are very close, making the intersection difficult to detect visually?",
+            options: ["Symmetric", "Infinite", "Ill-conditioned", "Identity"],
+            answer: "Ill-conditioned"
+        },
+        {
+            question: "28. Which mathematical rule is noted as being best suited for small systems (like 2x2 or 3x3 matrices) due to computational cost?",
+            options: ["Gauss Elimination", "LU Decomposition", "Cramer's Rule", "Crout's Method"],
+            answer: "Cramer's Rule"
+        },
+        {
+            question: "29. In the matrix element a_ij, what does the first subscript (i) indicate?",
+            options: ["Column", "Row", "Diagonal", "Dimension"],
+            answer: "Row"
+        },
+        {
+            question: "30. What is a column vector?",
+            options: ["A vector of dimension 1 x m.", "A square matrix.", "A vector of dimension n x 1.", "A matrix with zeroes on the diagonal."],
+            answer: "A vector of dimension n x 1."
+        },
+        {
+            question: "31. A square matrix where all off-diagonal elements are zero is called a:",
+            options: ["Symmetric matrix", "Diagonal matrix", "Banded matrix", "Identity matrix"],
+            answer: "Diagonal matrix"
+        },
+        {
+            question: "32. What type of matrix has a diagonal of 1's and zeroes everywhere else?",
+            options: ["Identity matrix", "Lower triangular matrix", "Trace matrix", "Symmetric matrix"],
+            answer: "Identity matrix"
+        },
+        {
+            question: "33. In an upper triangular matrix, where are the zero elements located?",
+            options: ["Above the main diagonal", "Below the main diagonal", "On the main diagonal", "On the off-diagonal edges"],
+            answer: "Below the main diagonal"
+        },
+        {
+            question: "34. In order to multiply two matrices [A] and [B], what condition must be met?",
+            options: ["Both must be square matrices.", "The exterior dimensions must be equal.", "The number of columns of the left matrix must equal the number of rows of the right matrix.", "The matrices must have identical values."],
+            answer: "The number of columns of the left matrix must equal the number of rows of the right matrix."
+        },
+        {
+            question: "35. Swapping the rows and columns of a matrix produces its:",
+            options: ["Trace", "Augmentation", "Identity", "Transpose"],
+            answer: "Transpose"
+        },
+        {
+            question: "36. The sum of the main-diagonal elements of a matrix is called its:",
+            options: ["Transpose", "Determinant", "Trace", "Augmentation"],
+            answer: "Trace"
+        },
+        {
+            question: "37. Appending columns to a coefficient matrix with constant vectors forms a(n):",
+            options: ["Banded matrix", "Identity matrix", "Symmetric matrix", "Augmented matrix"],
+            answer: "Augmented matrix"
+        },
+        {
+            question: "38. In the matrix equation [A]{X} = {B}, what does [A] represent?",
+            options: ["The unknowns vector", "The constant vector", "The coefficient matrix", "The trace matrix"],
+            answer: "The coefficient matrix"
+        },
+        {
+            question: "39. In the matrix equation [A]{X} = {B}, what does {B} represent?",
+            options: ["The coefficient matrix", "The unknown vector", "The constant vector", "The identity matrix"],
+            answer: "The constant vector"
+        },
+        {
+            question: "40. Which of the following is an example of an algebraic direct method for solving linear equations?",
+            options: ["Cramer's Rule", "LU Decomposition", "Graphical Method", "Ill-conditioned Mapping"],
+            answer: "LU Decomposition"
+        },
+        {
+            question: "41. An upper triangular system is typically solved using which substitution method?",
+            options: ["Forward Substitution", "Back Substitution", "Diagonal Substitution", "Crout's Substitution"],
+            answer: "Back Substitution"
+        },
+        {
+            question: "42. A lower triangular system is typically solved using which substitution method?",
+            options: ["Forward Substitution", "Back Substitution", "Diagonal Substitution", "Crout's Substitution"],
+            answer: "Forward Substitution"
+        },
+        {
+            question: "43. Which linear algebraic method transforms equations into matrix form and reduces them to an upper triangular form?",
+            options: ["Diagonal Form", "Gauss-Elimination", "Cramer's Rule", "Trace summation"],
+            answer: "Gauss-Elimination"
+        },
+        {
+            question: "44. In Gauss-Elimination, what is the term for the equation containing the specific coefficient used to eliminate variables in subsequent rows?",
+            options: ["Target Equation", "Constant Equation", "Pivot Equation", "Trace Equation"],
+            answer: "Pivot Equation"
+        },
+        {
+            question: "45. Which method utilizes a diagonal form matrix where coefficients are only on the diagonal?",
+            options: ["Gauss-Jordan Method", "LU Decomposition", "Choleski's Method", "Crout's Method"],
+            answer: "Gauss-Jordan Method"
+        },
+        {
+            question: "46. LU Decomposition factors a coefficient matrix into which two matrices?",
+            options: ["A Left matrix and an Upper matrix", "A Lower Triangular matrix and an Upper Triangular matrix", "A Linear matrix and an Undefined matrix", "A Lower matrix and an Unknown vector"],
+            answer: "A Lower Triangular matrix and an Upper Triangular matrix"
+        },
+        {
+            question: "47. Which of the following is NOT a method used to solve LU Decomposition?",
+            options: ["Gauss Elimination", "Crout's Method", "Choleski's Method", "Gauss-Jordan Method"],
+            answer: "Gauss-Jordan Method"
+        },
+        {
+            question: "48. In the context of MATLAB operations, what is the result of rem(13,5)?",
+            options: ["2", "2.6", "3", "1"],
+            answer: "3"
+        },
+        {
+            question: "49. What type of robot works strictly in three linear directions (up/down, left/right, front/back)?",
+            options: ["Cylindrical Robot", "Rectilinear / Cartesian Robot", "Fully Articulated Robot", "Spherical Robot"],
+            answer: "Rectilinear / Cartesian Robot"
+        },
+        {
+            question: "50. What is a highly flexible robot with multiple joints commonly used in welding and painting?",
+            options: ["Spherical Robot", "Fully Articulated Robot", "Cylindrical Robot", "Rectilinear Robot"],
+            answer: "Fully Articulated Robot"
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById('question');
+    const optionsEl = document.getElementById('options');
+    const progressEl = document.getElementById('progress');
+    const quizEl = document.getElementById('quiz');
+    const scoreContainer = document.getElementById('score-container');
+
+    function loadQuestion() {
+        const currentQuizData = quizData[currentQuestion];
+        progressEl.innerText = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        questionEl.innerText = currentQuizData.question;
+        optionsEl.innerHTML = '';
+
+        currentQuizData.options.forEach(option => {
+            const button = document.createElement('button');
+            button.innerText = option;
+            button.classList.add('option');
+            button.onclick = () => selectAnswer(option);
+            optionsEl.appendChild(button);
+        });
+    }
+
+    function selectAnswer(selected) {
+        if (selected === quizData[currentQuestion].answer) {
+            score++;
+        }
+        currentQuestion++;
+
+        if (currentQuestion < quizData.length) {
+            loadQuestion();
+        } else {
+            showScore();
+        }
+    }
+
+    function showScore() {
+        quizEl.style.display = 'none';
+        scoreContainer.style.display = 'block';
+        document.getElementById('score').innerText = score;
+        document.getElementById('total').innerText = quizData.length;
+    }
+
+    // Start quiz
+    loadQuestion();
+</script>
+
+</body>
+</html>
