@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robotics Quiz</title>
+    <title>Robotics Quizzes</title>
     <style>
         body {
             background-color: #1a1a24;
@@ -49,7 +49,7 @@
             background-color: #313142;
             border: 1px solid #4a4a5a;
             color: white;
-            padding: 12px 15px;
+            padding: 15px;
             margin-bottom: 10px;
             border-radius: 5px;
             cursor: pointer;
@@ -57,7 +57,7 @@
             display: block;
             width: 100%;
             text-align: left;
-            font-size: 1em;
+            font-size: 1.1em;
             line-height: 1.3;
         }
         .option:hover:not(:disabled) {
@@ -69,7 +69,6 @@
         .option:disabled {
             cursor: not-allowed;
         }
-        /* Highlight colors for answers */
         .correct {
             background-color: #4CAF50 !important;
             border-color: #4CAF50 !important;
@@ -82,46 +81,314 @@
             color: white !important;
             font-weight: bold;
         }
-        /* Next button styling */
-        .next-btn {
+        .action-btn {
             background-color: #4da6ff;
             color: #1a1a24;
             font-weight: bold;
             text-align: center;
             margin-top: 20px;
-            display: none;
         }
-        .next-btn:hover {
+        .action-btn:hover {
             background-color: #3388dd !important;
         }
-        #score-container {
+        #quiz-screen, #score-screen {
             display: none;
+        }
+        #next-btn {
+            display: none;
+        }
+        .menu-desc {
             text-align: center;
-            font-size: 1.5em;
+            margin-bottom: 30px;
+            color: #ccc;
         }
     </style>
 </head>
 <body>
 
-<div class="quiz-container" id="quiz">
-    <h2>Robotics Concepts Quiz</h2>
+<!-- MAIN MENU SCREEN -->
+<div class="quiz-container" id="menu-screen">
+    <h2>Robotics Reviewer Quizzes</h2>
+    <p class="menu-desc">Select a module to begin testing your knowledge.</p>
+    <button class="option action-btn" onclick="startQuiz('U0')">U0: History of Robotics</button>
+    <button class="option action-btn" onclick="startQuiz('U1')">U1: Intro to Robotics & Concepts</button>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div class="quiz-container" id="quiz-screen">
+    <h2 id="quiz-title">Quiz</h2>
     <div class="header-info">
-        <span id="progress">Question 1 of 50</span>
+        <span id="progress">Question 1 of X</span>
         <span id="real-time-score">Score: 0</span>
     </div>
     <div class="question" id="question">Loading question...</div>
     <div id="options"></div>
-    <button class="option next-btn" id="next-btn" onclick="nextQuestion()">Next Question</button>
+    <button class="option action-btn" id="next-btn" onclick="nextQuestion()">Next Question</button>
 </div>
 
-<div class="quiz-container" id="score-container">
+<!-- SCORE SCREEN -->
+<div class="quiz-container" id="score-screen">
     <h2>Quiz Completed!</h2>
-    <p>Your final score: <span id="score"></span> out of <span id="total"></span></p>
-    <button class="option" onclick="location.reload()" style="text-align: center; margin-top: 20px;">Restart Quiz</button>
+    <p style="text-align: center; font-size: 1.2em;">Your final score: <strong id="score"></strong> out of <strong id="total"></strong></p>
+    <button class="option action-btn" onclick="returnToMenu()">Return to Main Menu</button>
 </div>
 
 <script>
-    const quizData = [
+   // U0: HISTORY OF ROBOTICS DATA (Expanded to 50 Questions)
+    const quizU0 = [
+        {
+            question: "1. Who built his version of a calculator in 1642?",
+            options: ["Blaise Pascal", "Charles Babbage", "George Boole", "Alan Turing"],
+            answer: "Blaise Pascal"
+        },
+        {
+            question: "2. Who is famous for the 1752 kite experiment proving that lightning is a form of electricity?",
+            options: ["Thomas Edison", "Nikola Tesla", "Benjamin Franklin", "George Boole"],
+            answer: "Benjamin Franklin"
+        },
+        {
+            question: "3. Who invented the textile machine operated by punch cards in 1801?",
+            options: ["Thomas Edison", "Joseph-Marie Jacquard", "Nikola Tesla", "Jack Kilby"],
+            answer: "Joseph-Marie Jacquard"
+        },
+        {
+            question: "4. Who designed the analytical engine in 1835, considered the 'world's first general-purpose computer'?",
+            options: ["Charles Babbage", "Alan Turing", "George Boole", "Warren S. McCulloch"],
+            answer: "Charles Babbage"
+        },
+        {
+            question: "5. Who conducted mathematical analysis on logic in 1847, now known as Boolean Algebra?",
+            options: ["Alan Turing", "George Boole", "Blaise Pascal", "Charles Babbage"],
+            answer: "George Boole"
+        },
+        {
+            question: "6. Who conceptualized the modern AC induction motor in 1882?",
+            options: ["Thomas Edison", "Nikola Tesla", "Jack Kilby", "Raymond Goertz"],
+            answer: "Nikola Tesla"
+        },
+        {
+            question: "7. What did Thomas Edison invent in 1887?",
+            options: ["The phonograph", "The lightbulb", "The talking doll", "The motion picture camera"],
+            answer: "The talking doll"
+        },
+        {
+            question: "8. In 1892, Seward Babbitt designed a motorized crane equipped with what specific feature to remove ingots from a furnace?",
+            options: ["A tele-operator", "A gripper", "A camera", "A pneumatic drill"],
+            answer: "A gripper"
+        },
+        {
+            question: "9. The first reference to the word 'robot' appeared in 1921 in a play written by:",
+            options: ["Isaac Asimov", "Norbert Wiener", "Karel Čapek", "George Devol"],
+            answer: "Karel Čapek"
+        },
+        {
+            question: "10. What is the title of the play that introduced the word 'robot'?",
+            options: ["Runaround", "Rossum's Universal Robots", "Cybernetics", "The Analytical Engine"],
+            answer: "Rossum's Universal Robots"
+        },
+        {
+            question: "11. The Czech word 'robota' loosely translates to:",
+            options: ["Artificial intelligence", "Mechanical man", "Compulsory servitude or forced labor", "Helper or assistant"],
+            answer: "Compulsory servitude or forced labor"
+        },
+        {
+            question: "12. In 1937, who introduced a concept evaluating a machine's ability to exhibit intelligent behavior?",
+            options: ["Alan Turing", "George Boole", "Isaac Asimov", "Norbert Wiener"],
+            answer: "Alan Turing"
+        },
+        {
+            question: "13. What is the name of the assessment used to measure a machine's ability to exhibit intelligent behavior?",
+            options: ["The Boole Logic Test", "The Turing Test", "The Asimov Assessment", "The Cybernetics Standard"],
+            answer: "The Turing Test"
+        },
+        {
+            question: "14. Who published the short story 'Runaround' in 1942, formulating the 'Three Laws of Robotics'?",
+            options: ["Karel Čapek", "Isaac Asimov", "Norbert Wiener", "George Devol"],
+            answer: "Isaac Asimov"
+        },
+        {
+            question: "15. According to the Three Laws of Robotics, which law states a robot must obey orders given by humans?",
+            options: ["First Law", "Second Law", "Third Law", "Fourth Law"],
+            answer: "Second Law"
+        },
+        {
+            question: "16. According to the Three Laws of Robotics, which law states a robot must protect its own existence?",
+            options: ["First Law", "Second Law", "Third Law", "Fourth Law"],
+            answer: "Third Law"
+        },
+        {
+            question: "17. Who published 'A Logical Calculus of the Ideas Immanent in Nervous Activity' in 1943?",
+            options: ["McCulloch and Pitts", "Devol and Engelberger", "Turing and Boole", "Wiener and Goertz"],
+            answer: "McCulloch and Pitts"
+        },
+        {
+            question: "18. What was the first mathematical and computational model of a biological neuron called?",
+            options: ["Turing Machine", "McCulloch-Pitts Neuron Model", "Cybernetic Neural Net", "Boolean Synapse"],
+            answer: "McCulloch-Pitts Neuron Model"
+        },
+        {
+            question: "19. In neural terminology, what is the connecting point where an input signal is passed to another neuron?",
+            options: ["Synapse", "Axon", "Node", "Receptor"],
+            answer: "Synapse"
+        },
+        {
+            question: "20. Who patented a general-purpose playback device for controlling machines in 1946?",
+            options: ["Joseph Engelberger", "George Devol", "Marvin Minsky", "Jack Kilby"],
+            answer: "George Devol"
+        },
+        {
+            question: "21. Who published the book 'Cybernetics' in 1948?",
+            options: ["Walter Pitts", "Norbert Wiener", "Marvin Minsky", "Alan Turing"],
+            answer: "Norbert Wiener"
+        },
+        {
+            question: "22. The book 'Cybernetics' describes communications and control in which types of systems?",
+            options: ["Mechanical and hydraulic", "Electronic, mechanical, and biological", "Digital and analog", "Space and aeronautical"],
+            answer: "Electronic, mechanical, and biological"
+        },
+        {
+            question: "23. Who designed a tele-operator equipped with an articulated arm for the Atomic Energy Commission in 1951?",
+            options: ["George Devol", "Raymond Goertz", "Joseph Engelberger", "Marvin Minsky"],
+            answer: "Raymond Goertz"
+        },
+        {
+            question: "24. Who designed the first programmable robot and coined the term 'universal automation' in 1954?",
+            options: ["George Devol", "Joseph Engelberger", "Marvin Minsky", "Isaac Asimov"],
+            answer: "George Devol"
+        },
+        {
+            question: "25. Who joined George Devol in 1956 to form the first successful robot manufacturing company?",
+            options: ["Norbert Wiener", "Marvin Minsky", "Joseph Engelberger", "Seward Babbitt"],
+            answer: "Joseph Engelberger"
+        },
+        {
+            question: "26. What was the name of the first successful robot manufacturing company?",
+            options: ["Cybernetics Inc.", "Unimation", "Robotics Dynamics", "ASIMO Corp."],
+            answer: "Unimation"
+        },
+        {
+            question: "27. Who created the first microchip in 1958?",
+            options: ["Jack Kilby", "George Devol", "Joseph Engelberger", "Marvin Minsky"],
+            answer: "Jack Kilby"
+        },
+        {
+            question: "28. In 1961, George Devol received a patent for an arm-type industrial robot used by which company?",
+            options: ["Ford", "Toyota", "General Motors (GM)", "Honda"],
+            answer: "General Motors (GM)"
+        },
+        {
+            question: "29. Who designed the 'Tentacle Arm' in 1968?",
+            options: ["Raymond Goertz", "Marvin Minsky", "Hiroshi Makino", "Marcelo Ang"],
+            answer: "Marvin Minsky"
+        },
+        {
+            question: "30. How many joints did the Minsky Tentacle Arm have for added mobility options?",
+            options: ["6 joints", "8 joints", "10 joints", "12 joints"],
+            answer: "12 joints"
+        },
+        {
+            question: "31. What is the name of the world's first anthropomorphic robot created by Waseda University between 1970 and 1973?",
+            options: ["ASIMO", "WABOT-1", "P2 robot", "Sojourner"],
+            answer: "WABOT-1"
+        },
+        {
+            question: "32. Which bipedal humanoid robot, introduced in 1997, could walk smoothly for over 30 minutes?",
+            options: ["ASIMO", "WABOT-1", "P2 robot", "Sojourner"],
+            answer: "P2 robot"
+        },
+        {
+            question: "33. Which company introduces the da Vinci medical robotic system?",
+            options: ["Honda", "SpaceX", "Intuitive Surgical Inc.", "Unimation"],
+            answer: "Intuitive Surgical Inc."
+        },
+        {
+            question: "34. In what year was the da Vinci medical robotic system approved for laparoscopic surgery?",
+            options: ["1997", "1999", "2000", "2006"],
+            answer: "2000"
+        },
+        {
+            question: "35. Honda created which Advanced Step in Innovative Mobility robot in 2000?",
+            options: ["P2", "P3", "ASIMO", "WABOT-2"],
+            answer: "ASIMO"
+        },
+        {
+            question: "36. Waseda University created which robot in 2000 to reproduce human vocal movement?",
+            options: ["ASIMO", "Waseda Talker No. 1", "WABOT-1", "Sojourner"],
+            answer: "Waseda Talker No. 1"
+        },
+        {
+            question: "37. In 2012, which company became the first privately owned company to launch and dock a robotic capsule with the International Space Station?",
+            options: ["NASA", "SpaceX", "Honda", "Unimation"],
+            answer: "SpaceX"
+        },
+        {
+            question: "38. What was the name of the SpaceX robotic capsule that docked with the ISS?",
+            options: ["The Falcon", "The Dragon", "Sojourner", "Curiosity"],
+            answer: "The Dragon"
+        },
+        {
+            question: "39. What does the acronym SCOT stand for in the context of the National University of Singapore's driverless car project?",
+            options: ["Shared Computer Operated Transport", "System Controlled Operation Tracker", "Simulated Computer Oriented Transport", "Sensory Controlled Operating Technology"],
+            answer: "Shared Computer Operated Transport"
+        },
+        {
+            question: "40. The SCOT project was led by Marcelo Ang in collaboration with which institution?",
+            options: ["Waseda University", "Massachusetts Institute of Technology (MIT)", "De La Salle University", "Stanford University"],
+            answer: "Massachusetts Institute of Technology (MIT)"
+        },
+        {
+            question: "41. The BRAVE project developed by De La Salle University stands for:",
+            options: ["Bipedal Robotic Automated Vehicle Engine", "Bomb Removal Automated Vehicle", "Basic Research Autonomous Vehicle Explorer", "Biological Reconnaissance Automated Vehicle"],
+            answer: "Bomb Removal Automated Vehicle"
+        },
+        {
+            question: "42. Which NASA Mars rover was the first to be deployed on Mars?",
+            options: ["Sojourner", "Curiosity", "Perseverance", "Spirit"],
+            answer: "Sojourner"
+        },
+        {
+            question: "43. Which of the following NASA Mars rovers is noted as having been stuck on Mars?",
+            options: ["Opportunity", "Curiosity", "Perseverance", "Spirit"],
+            answer: "Spirit"
+        },
+        {
+            question: "44. The SCARA robot arm, developed by Hiroshi Makino in 1978, stands for:",
+            options: ["Selective Compliant Articulated Robot Arm", "Systematic Computer Automated Robotic Arm", "Sensory Controlled Articulated Robot Arm", "Simulated Compliant Automated Robotic Arm"],
+            answer: "Selective Compliant Articulated Robot Arm"
+        },
+        {
+            question: "45. How many axes does the standard SCARA robot possess?",
+            options: ["3 axes", "4 axes", "5 axes", "6 axes"],
+            answer: "4 axes"
+        },
+        {
+            question: "46. Who coined the phrase 'data is the new oil' in relation to Data Mining?",
+            options: ["Kevin Ashton", "Clive Humby", "Alan Turing", "Norbert Wiener"],
+            answer: "Clive Humby"
+        },
+        {
+            question: "47. Which term is defined as the scientific process of extracting valuable information from both structured and unstructured data?",
+            options: ["Data Mining", "Machine Learning", "Data Science", "Cybernetics"],
+            answer: "Data Science"
+        },
+        {
+            question: "48. Which era of the Industrial Revolution introduced the steam power engine and textile machines?",
+            options: ["1st Industry Revolution", "2nd Industry Revolution", "3rd Industry Revolution", "4th Industry Revolution"],
+            answer: "1st Industry Revolution"
+        },
+        {
+            question: "49. The 3rd Industrial Revolution, spanning roughly from 1969 to 2010, is most associated with:",
+            options: ["Internal Combustion and Assembly Lines", "Steam Power and Iron Production", "Personal Computers, Electronics, and the Internet", "AI, Autonomous Robots, and IoT"],
+            answer: "Personal Computers, Electronics, and the Internet"
+        },
+        {
+            question: "50. Who coined the term 'IoT' (Internet of Things) in 1999, laying ground for the 4th Industrial Revolution?",
+            options: ["Clive Humby", "Kevin Ashton", "Marcelo Ang", "Hiroshi Makino"],
+            answer: "Kevin Ashton"
+        }
+    ];
+    // U1: INTRO TO ROBOTICS & CONCEPTS DATA
+    const quizU1 = [
         {
             question: "1. Who coined the word 'robot' in a 1921 play?",
             options: ["Isaac Asimov", "Karel Čapek", "George Devol", "Joseph Engelberger"],
@@ -374,24 +641,47 @@
         }
     ];
 
+    // STATE VARIABLES
+    let activeData = [];
     let currentQuestion = 0;
     let score = 0;
 
+    // DOM ELEMENTS
+    const menuScreen = document.getElementById('menu-screen');
+    const quizScreen = document.getElementById('quiz-screen');
+    const scoreScreen = document.getElementById('score-screen');
+    const quizTitle = document.getElementById('quiz-title');
     const questionEl = document.getElementById('question');
     const optionsEl = document.getElementById('options');
     const progressEl = document.getElementById('progress');
     const realTimeScoreEl = document.getElementById('real-time-score');
     const nextBtn = document.getElementById('next-btn');
-    const quizEl = document.getElementById('quiz');
-    const scoreContainer = document.getElementById('score-container');
+
+    // LOGIC
+    function startQuiz(quizID) {
+        if (quizID === 'U0') {
+            activeData = quizU0;
+            quizTitle.innerText = "U0: History of Robotics Quiz";
+        } else if (quizID === 'U1') {
+            activeData = quizU1;
+            quizTitle.innerText = "U1: Intro to Robotics & Concepts Quiz";
+        }
+
+        currentQuestion = 0;
+        score = 0;
+        
+        menuScreen.style.display = 'none';
+        quizScreen.style.display = 'block';
+        
+        loadQuestion();
+    }
 
     function loadQuestion() {
-        // Reset state
         nextBtn.style.display = 'none';
         optionsEl.innerHTML = '';
         
-        const currentQuizData = quizData[currentQuestion];
-        progressEl.innerText = `Question ${currentQuestion + 1} of ${quizData.length}`;
+        const currentQuizData = activeData[currentQuestion];
+        progressEl.innerText = `Question ${currentQuestion + 1} of ${activeData.length}`;
         realTimeScoreEl.innerText = `Score: ${score}`;
         questionEl.innerText = currentQuizData.question;
 
@@ -405,22 +695,19 @@
     }
 
     function selectAnswer(selected, buttonElement) {
-        const currentQuizData = quizData[currentQuestion];
+        const currentQuizData = activeData[currentQuestion];
         const allButtons = optionsEl.children;
         
-        // Disable all buttons so user can't click twice
         for (let btn of allButtons) {
             btn.disabled = true;
         }
 
-        // Check if correct or wrong
         if (selected === currentQuizData.answer) {
             buttonElement.classList.add('correct');
             score++;
             realTimeScoreEl.innerText = `Score: ${score}`;
         } else {
             buttonElement.classList.add('wrong');
-            // Find and highlight the correct answer
             for (let btn of allButtons) {
                 if (btn.innerText === currentQuizData.answer) {
                     btn.classList.add('correct');
@@ -428,16 +715,17 @@
             }
         }
 
-        // Show the Next button
         nextBtn.style.display = 'block';
-        if (currentQuestion === quizData.length - 1) {
+        if (currentQuestion === activeData.length - 1) {
             nextBtn.innerText = "Finish Quiz";
+        } else {
+            nextBtn.innerText = "Next Question";
         }
     }
 
     function nextQuestion() {
         currentQuestion++;
-        if (currentQuestion < quizData.length) {
+        if (currentQuestion < activeData.length) {
             loadQuestion();
         } else {
             showScore();
@@ -445,14 +733,16 @@
     }
 
     function showScore() {
-        quizEl.style.display = 'none';
-        scoreContainer.style.display = 'block';
+        quizScreen.style.display = 'none';
+        scoreScreen.style.display = 'block';
         document.getElementById('score').innerText = score;
-        document.getElementById('total').innerText = quizData.length;
+        document.getElementById('total').innerText = activeData.length;
     }
 
-    // Start quiz
-    loadQuestion();
+    function returnToMenu() {
+        scoreScreen.style.display = 'none';
+        menuScreen.style.display = 'block';
+    }
 </script>
 
 </body>
