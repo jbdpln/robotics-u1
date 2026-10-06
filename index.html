@@ -112,6 +112,8 @@
     <p class="menu-desc">Select a module to begin testing your knowledge.</p>
     <button class="option action-btn" onclick="startQuiz('U0')">U0: History of Robotics</button>
     <button class="option action-btn" onclick="startQuiz('U1')">U1: Intro to Robotics & Concepts</button>
+    <button class="option action-btn" onclick="startQuiz('U2')">U2: Robot Sensors</button>
+    <button class="option action-btn" onclick="startQuiz('U3')">U3: Robot Grippers</button>
 </div>
 
 <!-- QUIZ SCREEN -->
@@ -640,6 +642,689 @@
             answer: "Fully Articulated Robot"
         }
     ];
+    // U2: ROBOT SENSORS DATA
+    const quizU2 = [
+        {
+            question: "1. What is defined as a device that converts one form of energy into another form?",
+            options: ["Actuator", "Transducer", "Controller", "Flip-Flop"],
+            answer: "Transducer"
+        },
+        {
+            question: "2. The word 'Transducer' is the collective term used for both Sensors and:",
+            options: ["Controllers", "Manipulators", "Actuators", "Encoders"],
+            answer: "Actuators"
+        },
+        {
+            question: "3. Which of the following is a sensor used to measure temperature?",
+            options: ["LVDT", "Thermocouple", "Strain Gauge", "Photodiode"],
+            answer: "Thermocouple"
+        },
+        {
+            question: "4. What is the base SI unit for Illuminance?",
+            options: ["Candela", "Lux", "Tesla", "Pascal"],
+            answer: "Lux"
+        },
+        {
+            question: "5. What is the base SI unit for Magnetic Flux Density?",
+            options: ["Newton", "Decibel", "Tesla", "Ampere"],
+            answer: "Tesla"
+        },
+        {
+            question: "6. Which type of transducer requires an external power source for operation?",
+            options: ["Active Sensor", "Passive Sensor", "Proximity Sensor", "Ultrasonic Sensor"],
+            answer: "Passive Sensor"
+        },
+        {
+            question: "7. A photocell (Light Dependent Resistor) is an example of which type of sensor?",
+            options: ["Active Sensor", "Passive Sensor", "Inductive Sensor", "Capacitive Sensor"],
+            answer: "Passive Sensor"
+        },
+        {
+            question: "8. Which type of sensor generates a signal, transmits it, and measures the reflected signal from the target?",
+            options: ["Active Sensor", "Passive Sensor", "Contact Sensor", "LDR Sensor"],
+            answer: "Active Sensor"
+        },
+        {
+            question: "9. Which of the following is an example of an active sensor?",
+            options: ["Thermistor", "Strain Gauge", "LIDAR", "Potentiometer"],
+            answer: "LIDAR"
+        },
+        {
+            question: "10. Which sensor detects an object when it approaches the detection boundary without physical contact?",
+            options: ["Proximity Sensor", "Tactile Sensor", "Carbon Microphone", "Load Cell"],
+            answer: "Proximity Sensor"
+        },
+        {
+            question: "11. The maximum detection distance of a proximity sensor is called the:",
+            options: ["Actual distance", "Usable range", "Nominal range", "Blocking range"],
+            answer: "Nominal range"
+        },
+        {
+            question: "12. In a proximity sensor block diagram, which part is responsible for the emission of the electrostatic or electromagnetic field?",
+            options: ["Oscillator", "Demodulator", "Flip-Flop", "Sensing Face"],
+            answer: "Sensing Face"
+        },
+        {
+            question: "13. In a proximity sensor, which component extracts signal amplitude from the oscillating carrier?",
+            options: ["Oscillator", "Flip-Flop", "Demodulator", "Output"],
+            answer: "Demodulator"
+        },
+        {
+            question: "14. Which sensor relies on the effect of a magnet approaching a high turns ratio coil to detect ferrous and non-ferrous metals?",
+            options: ["Capacitive Proximity Sensor", "Inductive Proximity Sensor", "Ultrasonic Sensor", "Photoelectric Sensor"],
+            answer: "Inductive Proximity Sensor"
+        },
+        {
+            question: "15. Which proximity sensor produces an electrostatic field and can sense nonmetallic materials like paper, glass, and liquids?",
+            options: ["Inductive Proximity Sensor", "Capacitive Proximity Sensor", "Magnetic Sensor", "Sonar Sensor"],
+            answer: "Capacitive Proximity Sensor"
+        },
+        {
+            question: "16. The sensing surface of a capacitive sensor is formed by:",
+            options: ["A Piezoelectric disk", "A high turns ratio coil", "Two concentrically shaped metal electrodes", "A light-dependent resistor"],
+            answer: "Two concentrically shaped metal electrodes"
+        },
+        {
+            question: "17. The detection ability of a capacitive proximity sensor depends heavily on what property of the target?",
+            options: ["Magnetic flux", "Dielectric constant", "Temperature", "Weight"],
+            answer: "Dielectric constant"
+        },
+        {
+            question: "18. What is the dielectric constant of Water?",
+            options: ["1", "5", "25.8", "80"],
+            answer: "80"
+        },
+        {
+            question: "19. What is the dielectric constant of Air Vacuum?",
+            options: ["1", "2.2", "4", "80"],
+            answer: "1"
+        },
+        {
+            question: "20. The sensitivity of a capacitive sensor is primarily affected by the density of the substance and its:",
+            options: ["Color", "Moisture content", "Velocity", "Illuminance"],
+            answer: "Moisture content"
+        },
+        {
+            question: "21. A common application for capacitive sensors because of differing dielectric constants is:",
+            options: ["Measuring wind speed", "Level detection through a barrier (like a plastic container)", "Reading barcodes", "Decoding text"],
+            answer: "Level detection through a barrier (like a plastic container)"
+        },
+        {
+            question: "22. Ultrasonic proximity sensors use a transducer to send and receive:",
+            options: ["Electromagnetic waves", "Infrared light", "High-frequency sound signals", "X-rays"],
+            answer: "High-frequency sound signals"
+        },
+        {
+            question: "23. In an ultrasonic sensor, what component is mounted on the surface to vibrate and produce sound waves?",
+            options: ["Capacitor", "Inductive Coil", "Piezoelectric Ceramic disk", "Photodiode"],
+            answer: "Piezoelectric Ceramic disk"
+        },
+        {
+            question: "24. In an ultrasonic sensor, the time interval between the transmitted signal and the echo is directly proportional to the:",
+            options: ["Size of the object", "Distance between the object and the sensor", "Temperature of the air", "Dielectric constant of the object"],
+            answer: "Distance between the object and the sensor"
+        },
+        {
+            question: "25. What happens when an object is placed in the 'Blind Zone' of an ultrasonic sensor (typically 6 to 80 cm directly in front)?",
+            options: ["It produces a perfectly stable output", "It produces an unstable output", "It increases the sensor's range", "It changes the sensor's frequency"],
+            answer: "It produces an unstable output"
+        },
+        {
+            question: "26. What term describes when objects beyond the upper limit of an ultrasonic sensor do not produce a change in output?",
+            options: ["Mutual Interference", "Blanking out the background", "Demodulation", "Oscillation"],
+            answer: "Blanking out the background"
+        },
+        {
+            question: "27. The approximate angle of the main cone in an ultrasonic sensor's radiation pattern is:",
+            options: ["3°", "5°", "45°", "90°"],
+            answer: "5°"
+        },
+        {
+            question: "28. What term refers to the angle between the half-power (-3db) points of the main lobe?",
+            options: ["Usable Range", "Blind Zone", "Beamwidth", "Free Zone"],
+            answer: "Beamwidth"
+        },
+        {
+            question: "29. What occurs when two sonar devices are mounted too close to each other, causing echoes to reflect to the wrong sensor?",
+            options: ["Demodulation", "Mutual Interference", "Blanking", "Reflex Mode"],
+            answer: "Mutual Interference"
+        },
+        {
+            question: "30. When aligning an ultrasonic sensor directly to a flat surface, the maximum deviation angle must be:",
+            options: ["±1°", "±3°", "±10°", "±45°"],
+            answer: "±3°"
+        },
+        {
+            question: "31. Coarse-grained materials, such as sand, can have an angular deviation of as much as:",
+            options: ["3°", "5°", "15°", "45°"],
+            answer: "45°"
+        },
+        {
+            question: "32. Why do coarse-grained materials allow for a larger angular deviation in ultrasonic sensing?",
+            options: ["They absorb all the sound", "The sound is reflected over a larger angle", "They have a high dielectric constant", "They emit their own signals"],
+            answer: "The sound is reflected over a larger angle"
+        },
+        {
+            question: "33. How can you blank out an interfering object located in the vicinity of a sound cone?",
+            options: ["Increase the voltage", "Use an aperture made of a sound-absorbing material (e.g., rock wool)", "Change the dielectric constant", "Use a metal reflector"],
+            answer: "Use an aperture made of a sound-absorbing material (e.g., rock wool)"
+        },
+        {
+            question: "34. Which ultrasonic operating mode is the standard mode where objects traveling into the sound cone cause the output to switch states?",
+            options: ["Diffuse Mode", "Reflex Mode", "Thru-Beam Mode", "Passive Mode"],
+            answer: "Diffuse Mode"
+        },
+        {
+            question: "35. Which operating mode is typically used in applications where the target is NOT a good sound absorber, relying on a reflector?",
+            options: ["Diffuse Mode", "Reflex Mode", "Thru-Beam Mode", "Inductive Mode"],
+            answer: "Reflex Mode"
+        },
+        {
+            question: "36. Which operating mode consists of a separate transmitter and receiver where the target interrupts the beam?",
+            options: ["Diffuse Mode", "Reflex Mode", "Thru-Beam Mode", "Capacitive Mode"],
+            answer: "Thru-Beam Mode"
+        },
+        {
+            question: "37. How does a change in temperature generally affect an ultrasonic sensor?",
+            options: ["It stops the sensor from working entirely", "Sonic wave speed changes by 0.17%/°K", "It changes the dielectric constant", "It reverses the echo direction"],
+            answer: "Sonic wave speed changes by 0.17%/°K"
+        },
+        {
+            question: "38. Will an ultrasonic sensor operate in a vacuum?",
+            options: ["Yes, but with reduced range", "Yes, sound travels faster in a vacuum", "No, sensors will not operate in a vacuum", "Yes, if the voltage is increased"],
+            answer: "No, sensors will not operate in a vacuum"
+        },
+        {
+            question: "39. How does increasing humidity affect the sound velocity of an ultrasonic sensor?",
+            options: ["Velocity decreases", "Velocity increases, giving the impression of a shorter distance", "Velocity stops completely", "It has no effect on velocity"],
+            answer: "Velocity increases, giving the impression of a shorter distance"
+        },
+        {
+            question: "40. At what wind speed do air currents cause an ultrasonic sensor to receive no echo?",
+            options: ["<50 km/h", "50-100 km/h", ">100 km/h", "0 km/h"],
+            answer: ">100 km/h"
+        },
+        {
+            question: "41. By definition, what process extracts, characterizes, and interprets information from images of a 3-dimensional world?",
+            options: ["Data Mining", "Robotic Vision", "Ultrasonic Sensing", "Telemetry"],
+            answer: "Robotic Vision"
+        },
+        {
+            question: "42. Which field traditionally refers to the use of computer vision in industrial or practical applications?",
+            options: ["Machine Vision", "Artificial Intelligence", "Deep Learning", "Data Science"],
+            answer: "Machine Vision"
+        },
+        {
+            question: "43. Which of the following is NOT listed as an advantage of Machine Vision?",
+            options: ["Faster than manual systems", "Consistent and reliable", "Requires frequent breaks to avoid fatigue", "Can operate well in space-constrained environments"],
+            answer: "Requires frequent breaks to avoid fatigue"
+        },
+        {
+            question: "44. In machine vision applications, measuring multiple diameters of a bottleneck is an example of:",
+            options: ["Counting", "Measurement", "Decoding", "Surface Inspection"],
+            answer: "Measurement"
+        },
+        {
+            question: "45. In machine vision applications, identifying the presence or absence of a part (like missing pieces) is an example of:",
+            options: ["Counting", "Measurement", "Decoding", "Pose Verification"],
+            answer: "Counting"
+        },
+        {
+            question: "46. Which machine vision application reads alphanumeric characters and barcodes to track products or validate data?",
+            options: ["Counting", "Measurement", "Decoding", "Plane Reconstruction"],
+            answer: "Decoding"
+        },
+        {
+            question: "47. In the robotic vision process, what step occurs immediately after 'Image capture'?",
+            options: ["Connectivity and response", "Actuation", "Image processing", "Data Mining"],
+            answer: "Image processing"
+        },
+        {
+            question: "48. During 'Image processing' in robotic vision, how is the image analyzed?",
+            options: ["By listening to echoes", "By pixel, comparing colors and shapes against programmed database images", "By measuring dielectric constants", "By calculating magnetic flux"],
+            answer: "By pixel, comparing colors and shapes against programmed database images"
+        },
+        {
+            question: "49. Which of the following spectrums is an example of an 'Operation Scope' that Machine Vision can see but human vision cannot?",
+            options: ["Visible Light", "RGB", "X-ray / UV / IR", "Grayscale"],
+            answer: "X-ray / UV / IR"
+        },
+        {
+            question: "50. Integrating AI and vision systems into collaborative robots (cobots) helps ensure precision in repetitive tasks where humans would tire. This advantage is known as:",
+            options: ["Promoting a Safe Workplace", "Ensures Product Consistency", "Decoding", "Blanking out objects"],
+            answer: "Ensures Product Consistency"
+        },
+        {
+            question: "51. Which robotic vision advantage stops cobots when obstructions are detected?",
+            options: ["Reduces Operating Costs", "Promotes a Safe Workplace", "Increases Efficiency", "Ensures Product Consistency"],
+            answer: "Promotes a Safe Workplace"
+        },
+        {
+            question: "52. Though an investment, robot vision yields returns through efficiency, quality, and safety improvements. This refers to:",
+            options: ["Promotes a Safe Workplace", "Reduces Operating Costs", "Connectivity and response", "Machine Learning"],
+            answer: "Reduces Operating Costs"
+        },
+        {
+            question: "53. Python can be used on a server to create what type of applications?",
+            options: ["Microcontroller firmware", "Web applications", "Operating systems", "Hardware drivers"],
+            answer: "Web applications"
+        },
+        {
+            question: "54. Python dominates as the de facto platform for new technologies and ranked #1 in which 2021 index?",
+            options: ["TIOBE Index", "IEEE Spectrum Ranking", "StackOverflow Survey", "GitHub Octoverse"],
+            answer: "IEEE Spectrum Ranking"
+        },
+        {
+            question: "55. In the context of AI, Python powers machine learning models, natural language processing, and:",
+            options: ["Computer vision", "Pneumatic actuation", "Hardware assembly", "Circuit board printing"],
+            answer: "Computer vision"
+        },
+        {
+            question: "56. Python's syntax is known for its similarity to:",
+            options: ["C++", "Assembly Language", "The English language", "Binary code"],
+            answer: "The English language"
+        },
+        {
+            question: "57. Because Python uses an interpreter system, code execution allows for:",
+            options: ["Manual memory allocation", "Hardware-level interrupts", "Rapid prototyping", "Slower compilation times"],
+            answer: "Rapid prototyping"
+        },
+        {
+            question: "58. Which of the following is NOT a programming style supported by Python?",
+            options: ["Procedural", "Object-oriented", "Functional", "Manual memory management"],
+            answer: "Manual memory management"
+        },
+        {
+            question: "59. What does the acronym 'Pandas' stand for?",
+            options: ["Python Data Analysis", "Python Advanced Network Data", "Procedural Analytics", "Predictive And Numerical Data"],
+            answer: "Python Data Analysis"
+        },
+        {
+            question: "60. What does the acronym 'NumPy' stand for?",
+            options: ["Numerical Python", "Number Processing", "Neural Python", "Natural Parameters"],
+            answer: "Numerical Python"
+        },
+        {
+            question: "61. Which distribution of Python and R is designed to simplify package management and deployment?",
+            options: ["Spyder", "Anaconda", "Jupyter", "TensorFlow"],
+            answer: "Anaconda"
+        },
+        {
+            question: "62. What does SPYDER stand for?",
+            options: ["System Python Deployment Environment", "Scientific Python Development Environment", "Simulated Program Yielding Data", "Server Python Design Engine"],
+            answer: "Scientific Python Development Environment"
+        },
+        {
+            question: "63. Spyder is a powerful Python IDE known for advanced editing, debugging, and:",
+            options: ["Hardware assembly", "Introspection features", "Cloud deployment", "Database hosting"],
+            answer: "Introspection features"
+        },
+        {
+            question: "64. Which interface is described as a next-generation web-based user interface for Project Jupyter?",
+            options: ["JupyterLab", "Google Colab", "Anaconda Navigator", "Spyder"],
+            answer: "JupyterLab"
+        },
+        {
+            question: "65. Which environment allows editing and running human-readable documents while describing data analysis?",
+            options: ["Command Prompt", "Jupyter Notebook", "Notepad", "Terminal"],
+            answer: "Jupyter Notebook"
+        },
+        {
+            question: "66. Google Colaboratory allows you to write and execute Python in your browser with zero configuration and free access to:",
+            options: ["Unlimited cloud storage", "Premium datasets", "GPUs", "Private servers"],
+            answer: "GPUs"
+        },
+        {
+            question: "67. Which command is used in the terminal or command prompt to check the installed Python version?",
+            options: ["python -v", "python --version", "check python", "run python"],
+            answer: "python --version"
+        },
+        {
+            question: "68. How can Python syntax be executed immediately without saving a file?",
+            options: ["By writing directly in the Command Line", "By compiling to a .exe", "By using a punch card", "By writing in an HTML file"],
+            answer: "By writing directly in the Command Line"
+        },
+        {
+            question: "69. What file extension is used when saving and running a Python script from the Command Line?",
+            options: [".html", ".m", ".py", ".c"],
+            answer: ".py"
+        },
+        {
+            question: "70. What does Python use to indicate a block of code?",
+            options: ["Curly brackets {}", "Semicolons ;", "Indentation", "Parentheses ()"],
+            answer: "Indentation"
+        },
+        {
+            question: "71. What type of error occurs if you miss the required indentation in a Python statement?",
+            options: ["Runtime Error", "Syntax Error", "Logic Error", "Compilation Error"],
+            answer: "Syntax Error"
+        },
+        {
+            question: "72. Which of the following is a common use of Python mentioned in the reviewer?",
+            options: ["Web scraping", "Building microchips", "Soldering circuits", "Hydraulic control"],
+            answer: "Web scraping"
+        },
+        {
+            question: "73. What is a group of pre-built modules that help complete common tasks with fewer lines of code?",
+            options: ["A Python Library", "An IDE", "An Interpreter", "A Compiler"],
+            answer: "A Python Library"
+        },
+        {
+            question: "74. Which Python library is a high-level API that typically uses TensorFlow as a backend?",
+            options: ["NumPy", "Pandas", "Keras", "Matplotlib"],
+            answer: "Keras"
+        },
+        {
+            question: "75. Which Python library is used for plotting and data visualization, such as line charts and histograms?",
+            options: ["PyTorch", "Matplotlib", "Theano", "Scikit-learn"],
+            answer: "Matplotlib"
+        },
+        {
+            question: "76. Which Python library is foundational for numerical computing and features fast n-dimensional arrays?",
+            options: ["Pandas", "NumPy", "TensorFlow", "Keras"],
+            answer: "NumPy"
+        },
+        {
+            question: "77. Which Python library specializes in data analysis and manipulation with fast DataFrame operations?",
+            options: ["Matplotlib", "NumPy", "PyTorch", "Pandas"],
+            answer: "Pandas"
+        },
+        {
+            question: "78. Which deep learning framework uses dynamic computation graphs and is flexible and fast?",
+            options: ["PyTorch", "Pandas", "Matplotlib", "NumPy"],
+            answer: "PyTorch"
+        },
+        {
+            question: "79. Which scalable deep learning framework was written in C++ with Python APIs?",
+            options: ["Theano", "TensorFlow", "Keras", "Scikit-learn"],
+            answer: "TensorFlow"
+        },
+        {
+            question: "80. In robotics technology, Python is ideal for sensor integration, autonomous decision-making, and:",
+            options: ["Motion control", "Welding metals", "Replacing hydraulic fluid", "Circuit board printing"],
+            answer: "Motion control"
+        },
+        {
+            question: "81. Python allows developers to write programs with _____ than some other languages.",
+            options: ["More lines", "Fewer lines", "Strict memory limits", "Manual compilers"],
+            answer: "Fewer lines"
+        },
+        {
+            question: "82. Google Colab is highly recommended for students, AI researchers, and:",
+            options: ["Data scientists", "Hardware engineers", "Civil engineers", "Animators"],
+            answer: "Data scientists"
+        },
+        {
+            question: "83. What command is used to output text like 'Five is greater than two!' in Python?",
+            options: ["echo()", "disp()", "printf()", "print()"],
+            answer: "print()"
+        },
+        {
+            question: "84. According to the IEEE Spectrum Ranking 2021, which language ranked #2 behind Python?",
+            options: ["Java", "C++", "C", "C#"],
+            answer: "C"
+        },
+        {
+            question: "85. According to the IEEE Spectrum Ranking 2021, which language ranked #3?",
+            options: ["Java", "JavaScript", "C#", "R"],
+            answer: "Java"
+        }
+    ];
+    ];
+
+    // U3: ROBOT GRIPPERS & PROGRAMMING DATA
+    const quizU3 = [
+        {
+            question: "1. What is defined as a device that enables the holding of an object to be manipulated?",
+            options: ["Actuator", "Sensor", "Gripper", "Controller"],
+            answer: "Gripper"
+        },
+        {
+            question: "2. Mechanical devices attached to the end of a robot's arm to interact with objects are called robot grippers and:",
+            options: ["End effectors", "Base joints", "Microcontrollers", "Transducers"],
+            answer: "End effectors"
+        },
+        {
+            question: "3. Which type of gripper has jaws that move in a parallel motion in relation to the gripper body?",
+            options: ["Angular Gripper", "Toggle Gripper", "Parallel Gripper", "Internal Gripper"],
+            answer: "Parallel Gripper"
+        },
+        {
+            question: "4. Which type of gripper is described as accurate, simple, inexpensive, and widely used?",
+            options: ["Angular Gripper", "Parallel Gripper", "Toggle Gripper", "External Gripper"],
+            answer: "Parallel Gripper"
+        },
+        {
+            question: "5. Which gripper opens and closes around a central pivot point using a sweeping or arcing motion?",
+            options: ["Angular Gripper", "Parallel Gripper", "Toggle Gripper", "Internal Gripper"],
+            answer: "Angular Gripper"
+        },
+        {
+            question: "6. Which gripper type is ideal when jaws need to move up and out of the way in a limited space?",
+            options: ["Parallel Gripper", "Angular Gripper", "Magnetic Gripper", "Toggle Gripper"],
+            answer: "Angular Gripper"
+        },
+        {
+            question: "7. Which gripper uses an over-center lock to provide a high grip force to weight ratio?",
+            options: ["Parallel Gripper", "Angular Gripper", "Toggle Gripper", "Internal Gripper"],
+            answer: "Toggle Gripper"
+        },
+        {
+            question: "8. What type of gripper allows locking based on the part's geometry?",
+            options: ["External Gripper", "Internal Gripper", "Parallel Gripper", "Toggle Gripper"],
+            answer: "Internal Gripper"
+        },
+        {
+            question: "9. Which gripper drive mechanism is known for smaller units, quick assembly, and a high cycle rate?",
+            options: ["Electric Motors", "Pneumatic", "Hydraulic", "Magnetic"],
+            answer: "Pneumatic"
+        },
+        {
+            question: "10. Which gripper drive mechanism is known for high accuracy, repeatability, less floor space, and low cost?",
+            options: ["Pneumatic", "Hydraulic", "Electric Motors", "Combustion"],
+            answer: "Electric Motors"
+        },
+        {
+            question: "11. Which gripper drive mechanism provides high strength and speed, making it suitable for large robots handling heavy loads?",
+            options: ["Pneumatic", "Electric Motors", "Hydraulic", "Spring-loaded"],
+            answer: "Hydraulic"
+        },
+        {
+            question: "12. What is a common disadvantage of using a pneumatic gripper?",
+            options: ["It requires large floor space", "It is easy to damage", "It needs precise system control", "It has low strength"],
+            answer: "It needs precise system control"
+        },
+        {
+            question: "13. What is a common disadvantage of using an electric gripper?",
+            options: ["It requires precise system control", "It requires large floor space", "It is easy to damage", "It is mechanically simple"],
+            answer: "It is easy to damage"
+        },
+        {
+            question: "14. What is a common disadvantage of using a hydraulic gripper?",
+            options: ["It requires large floor space", "It needs precise system control", "It is easy to damage", "It has poor accuracy"],
+            answer: "It requires large floor space"
+        },
+        {
+            question: "15. Using an encompassing (e.g., V-groove) or retention finger shape in gripper design is primarily done to:",
+            options: ["Reduce weight", "Increase stability", "Enhance visual appeal", "Lower the cost"],
+            answer: "Increase stability"
+        },
+        {
+            question: "16. Which of the following sensors are commonly considered for use in gripper finger design?",
+            options: ["Hall effect, proximity, and tactile sensors", "Radar and sonar", "Thermocouple and LVDT", "Barometer and anemometer"],
+            answer: "Hall effect, proximity, and tactile sensors"
+        },
+        {
+            question: "17. A fruit harvesting robot typically consists of a picking system, a moving system, and a:",
+            options: ["Recognition system", "Pneumatic system", "Hydraulic system", "Thermal system"],
+            answer: "Recognition system"
+        },
+        {
+            question: "18. Who created the general-purpose programming language C?",
+            options: ["Dennis Ritchie", "Guido van Rossum", "Alan Turing", "Bjarne Stroustrup"],
+            answer: "Dennis Ritchie"
+        },
+        {
+            question: "19. In what year was the C programming language released?",
+            options: ["1969", "1972", "1981", "1991"],
+            answer: "1972"
+        },
+        {
+            question: "20. The C programming language is strongly associated with which operating system?",
+            options: ["Windows", "Linux", "UNIX", "macOS"],
+            answer: "UNIX"
+        },
+        {
+            question: "21. What is the core difference between C and C++?",
+            options: ["C++ requires less memory", "C++ supports object-oriented programming", "C is faster than C++", "C is used only for web applications"],
+            answer: "C++ supports object-oriented programming"
+        },
+        {
+            question: "22. What does the acronym GCC stand for in the context of C programming?",
+            options: ["Graphical Code Compiler", "GNU Compiler Collection", "General C Compiler", "Graphic Computer Code"],
+            answer: "GNU Compiler Collection"
+        },
+        {
+            question: "23. In C, which function acts as the primary starting point where program execution begins?",
+            options: ["void setup()", "void loop()", "int main()", "print()"],
+            answer: "int main()"
+        },
+        {
+            question: "24. In C programming, every statement must terminate with which symbol?",
+            options: ["Colon (:)", "Period (.)", "Semicolon (;)", "Comma (,)"],
+            answer: "Semicolon (;)"
+        },
+        {
+            question: "25. Which statement is used to conclude the execution of the main function in C?",
+            options: ["end;", "stop;", "return 0;", "break;"],
+            answer: "return 0;"
+        },
+        {
+            question: "26. Which primary data type in C is used to store whole numbers?",
+            options: ["float", "char", "int", "double"],
+            answer: "int"
+        },
+        {
+            question: "27. Which primary data type in C is used to store numbers containing decimals?",
+            options: ["int", "char", "float", "boolean"],
+            answer: "float"
+        },
+        {
+            question: "28. Which format specifier acts as a placeholder for integers in a C printf() function?",
+            options: ["%f", "%c", "%d or %i", "%s"],
+            answer: "%d or %i"
+        },
+        {
+            question: "29. Which format specifier acts as a placeholder for characters in a C printf() function?",
+            options: ["%f", "%d", "%c", "%i"],
+            answer: "%c"
+        },
+        {
+            question: "30. Which function is utilized in C to display values or text to the screen?",
+            options: ["display()", "echo()", "print()", "printf()"],
+            answer: "printf()"
+        },
+        {
+            question: "31. What does GUI stand for in the context of MATLAB?",
+            options: ["General Utility Interface", "Graphical User Interface", "Graphic Unit Integration", "Guided User Interaction"],
+            answer: "Graphical User Interface"
+        },
+        {
+            question: "32. What does GUIDE stand for in MATLAB app building?",
+            options: ["Graphical User Interface Development Environment", "Graphic Unit Integrated Design Engine", "General User Interface Design Environment", "Guided User Interaction Development Engine"],
+            answer: "Graphical User Interface Development Environment"
+        },
+        {
+            question: "33. In MATLAB GUIDE, which file extension contains the GUI figure layout and components?",
+            options: [".m", ".c", ".fig", ".py"],
+            answer: ".fig"
+        },
+        {
+            question: "34. In MATLAB GUIDE, which file extension contains the code that controls the GUI, including initialization and callbacks?",
+            options: [".m", ".fig", ".c", ".txt"],
+            answer: ".m"
+        },
+        {
+            question: "35. What is a function that executes automatically when a specific user interaction occurs on a graphics object called?",
+            options: ["A loop", "A callback", "A format specifier", "A transducer"],
+            answer: "A callback"
+        },
+        {
+            question: "36. In what year was Arduino developed by the Interaction Design Institute Ivrea in Italy?",
+            options: ["1999", "2005", "2010", "2012"],
+            answer: "2005"
+        },
+        {
+            question: "37. Which Arduino board is a compact, breadboard-friendly board based on the ATmega328?",
+            options: ["Arduino Mega", "Arduino Leonardo", "Arduino Nano", "Arduino Uno"],
+            answer: "Arduino Nano"
+        },
+        {
+            question: "38. Which Arduino board is built on the ATmega2560 and is designed for complex projects requiring extensive I/O capacity?",
+            options: ["Arduino Nano", "Arduino Mega", "Arduino Uno", "Arduino Leonardo"],
+            answer: "Arduino Mega"
+        },
+        {
+            question: "39. Which Arduino board was the first to feature a microcontroller with built-in USB communication, allowing it to emulate a mouse or keyboard?",
+            options: ["Arduino Uno", "Arduino Mega", "Arduino Nano", "Arduino Leonardo"],
+            answer: "Arduino Leonardo"
+        },
+        {
+            question: "40. In an Arduino program structure, which function executes only once upon startup or after a reset?",
+            options: ["loop()", "setup()", "main()", "init()"],
+            answer: "setup()"
+        },
+        {
+            question: "41. In an Arduino program structure, which function runs repeatedly in an infinite cycle?",
+            options: ["setup()", "main()", "loop()", "while()"],
+            answer: "loop()"
+        },
+        {
+            question: "42. Connecting an Arduino to a PC via USB powers the device and facilitates what kind of data transfer?",
+            options: ["Parallel data transfer", "Wireless data transfer", "Serial data transfer", "Bluetooth data transfer"],
+            answer: "Serial data transfer"
+        },
+        {
+            question: "43. On the Arduino Nano, labels A0-A7 map directly to which internal port register?",
+            options: ["Port B", "Port C", "Port D", "Port E"],
+            answer: "Port C"
+        },
+        {
+            question: "44. The 1st Industrial Revolution (1760-1840) introduced the Steam Power Engine, Iron Production, and:",
+            options: ["The Assembly Line", "Electricity", "The Textile Machine", "The Personal Computer"],
+            answer: "The Textile Machine"
+        },
+        {
+            question: "45. The 2nd Industrial Revolution (1870-1914) introduced the Internal Combustion Engine, Electricity, and:",
+            options: ["The Personal Computer", "Mass Production / Assembly Line", "Autonomous Robots", "The Internet"],
+            answer: "Mass Production / Assembly Line"
+        },
+        {
+            question: "46. The 3rd Industrial Revolution (1969-2010) brought about Automation, Electronics, and:",
+            options: ["The Internet", "Iron Production", "The Telephone", "Additive Manufacturing"],
+            answer: "The Internet"
+        },
+        {
+            question: "47. According to the timeline, in what year was the Personal Computer introduced during the 3rd Industrial Revolution?",
+            options: ["1969", "1981", "1989", "1994"],
+            answer: "1981"
+        },
+        {
+            question: "48. The 4th Industrial Revolution (2011-present) features AI, Digital Twins, and:",
+            options: ["The Textile Machine", "The Internal Combustion Engine", "Additive Manufacturing", "Morse Code"],
+            answer: "Additive Manufacturing"
+        },
+        {
+            question: "49. Who coined the term IoT (Internet of Things) in 1999?",
+            options: ["Kevin Ashton", "Dennis Ritchie", "George Devol", "Alan Turing"],
+            answer: "Kevin Ashton"
+        },
+        {
+            question: "50. Which Industrial Revolution is characterized by Autonomous Robots, Cybersecurity, VR/AR, and Cloud Computing?",
+            options: ["1st Industry Revolution", "2nd Industry Revolution", "3rd Industry Revolution", "4th Industry Revolution"],
+            answer: "4th Industry Revolution"
+        }
+    ];
 
     // STATE VARIABLES
     let activeData = [];
@@ -657,6 +1342,15 @@
     const realTimeScoreEl = document.getElementById('real-time-score');
     const nextBtn = document.getElementById('next-btn');
 
+    // Fisher-Yates Shuffle Function
+    function shuffleArray(array) {
+        let shuffled = [...array]; // Make a copy so we don't permanently alter the original
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
     // LOGIC
     function startQuiz(quizID) {
         if (quizID === 'U0') {
@@ -665,6 +1359,12 @@
         } else if (quizID === 'U1') {
             activeData = quizU1;
             quizTitle.innerText = "U1: Intro to Robotics & Concepts Quiz";
+        } else if (quizID === 'U2') {
+            activeData = quizU2;
+            quizTitle.innerText = "U2: Robot Sensors Quiz";
+        } else if (quizID === 'U3') {
+            activeData = quizU3;
+            quizTitle.innerText = "U3: Robot Grippers & Programming Quiz";
         }
 
         currentQuestion = 0;
@@ -675,6 +1375,7 @@
         
         loadQuestion();
     }
+ 
 
     function loadQuestion() {
         nextBtn.style.display = 'none';
