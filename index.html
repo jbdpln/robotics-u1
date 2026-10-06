@@ -32,6 +32,21 @@
             border-bottom: 1px solid #3a3a4a;
             padding-bottom: 15px;
         }
+        /* PROGRESS BAR STYLES */
+        .progress-bar-container {
+            width: 100%;
+            background-color: #313142;
+            height: 6px;
+            border-radius: 3px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
         .header-info {
             display: flex;
             justify-content: space-between;
@@ -70,38 +85,66 @@
             cursor: not-allowed;
         }
         .correct {
-            background-color: #4CAF50 !important;
+            background-color: #1c3d26 !important; /* Darker green background */
             border-color: #4CAF50 !important;
             color: white !important;
             font-weight: bold;
         }
         .wrong {
-            background-color: #F44336 !important;
+            background-color: #3d1c1c !important; /* Darker red background */
             border-color: #F44336 !important;
             color: white !important;
             font-weight: bold;
         }
+        /* FEEDBACK / TRIVIA BOX STYLES */
+        .feedback-box {
+            display: none;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            border-left: 5px solid;
+            background-color: #1e293b;
+        }
+        .feedback-box.correct-feedback {
+            border-left-color: #4CAF50;
+        }
+        .feedback-box.wrong-feedback {
+            border-left-color: #F44336;
+        }
+        .feedback-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+        .feedback-correct-title { color: #4CAF50; }
+        .feedback-wrong-title { color: #F44336; }
+        .feedback-text {
+            color: #e2e8f0;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+        
         .action-btn {
-            background-color: #4da6ff;
-            color: #1a1a24;
+            background-color: #4CAF50;
+            color: #ffffff;
             font-weight: bold;
             text-align: center;
             margin-top: 20px;
+            border-color: #4CAF50;
         }
         .action-btn:hover {
+            background-color: #45a049 !important;
+            border-color: #45a049 !important;
+        }
+        .menu-btn {
+            background-color: #4da6ff;
+        }
+        .menu-btn:hover {
             background-color: #3388dd !important;
         }
-        #quiz-screen, #score-screen {
-            display: none;
-        }
-        #next-btn {
-            display: none;
-        }
-        .menu-desc {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #ccc;
-        }
+        #quiz-screen, #score-screen { display: none; }
+        #next-btn { display: none; }
+        .menu-desc { text-align: center; margin-bottom: 30px; color: #ccc; }
     </style>
 </head>
 <body>
@@ -110,21 +153,35 @@
 <div class="quiz-container" id="menu-screen">
     <h2>Robotics Reviewer Quizzes</h2>
     <p class="menu-desc">Select a module to begin testing your knowledge.</p>
-    <button class="option action-btn" onclick="startQuiz('U0')">U0: History of Robotics</button>
-    <button class="option action-btn" onclick="startQuiz('U1')">U1: Intro to Robotics & Concepts</button>
-    <button class="option action-btn" onclick="startQuiz('U2')">U2: Robot Sensors</button>
-    <button class="option action-btn" onclick="startQuiz('U3')">U3: Robot Grippers & Programming</button>
+    <button class="option action-btn menu-btn" onclick="startQuiz('U0')">U0: History of Robotics</button>
+    <button class="option action-btn menu-btn" onclick="startQuiz('U1')">U1: Intro to Robotics & Concepts</button>
+    <button class="option action-btn menu-btn" onclick="startQuiz('U2')">U2: Robot Sensors</button>
+    <button class="option action-btn menu-btn" onclick="startQuiz('U3')">U3: Robot Grippers & Programming</button>
 </div>
 
 <!-- QUIZ SCREEN -->
 <div class="quiz-container" id="quiz-screen">
     <h2 id="quiz-title">Quiz</h2>
+    
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progress-bar"></div>
+    </div>
+
     <div class="header-info">
         <span id="progress">Question 1 of X</span>
         <span id="real-time-score">Score: 0</span>
     </div>
+    
     <div class="question" id="question">Loading question...</div>
     <div id="options"></div>
+
+    <!-- TRIVIA / FEEDBACK BOX -->
+    <div class="feedback-box" id="feedback-box">
+        <div class="feedback-title" id="feedback-title"></div>
+        <div class="feedback-text" id="feedback-text"></div>
+    </div>
+
     <button class="option action-btn" id="next-btn" onclick="nextQuestion()">Next Question</button>
 </div>
 
@@ -132,7 +189,7 @@
 <div class="quiz-container" id="score-screen">
     <h2>Quiz Completed!</h2>
     <p style="text-align: center; font-size: 1.2em;">Your final score: <strong id="score"></strong> out of <strong id="total"></strong></p>
-    <button class="option action-btn" onclick="returnToMenu()">Return to Main Menu</button>
+    <button class="option action-btn menu-btn" onclick="returnToMenu()">Return to Main Menu</button>
 </div>
 
 <script>
@@ -1342,6 +1399,10 @@
     const progressEl = document.getElementById('progress');
     const realTimeScoreEl = document.getElementById('real-time-score');
     const nextBtn = document.getElementById('next-btn');
+    const progressBar = document.getElementById('progress-bar');
+    const feedbackBox = document.getElementById('feedback-box');
+    const feedbackTitle = document.getElementById('feedback-title');
+    const feedbackText = document.getElementById('feedback-text');
 
     // Fisher-Yates Shuffle Function
     function shuffleArray(array) {
@@ -1371,9 +1432,7 @@
             quizTitle.innerText = "U3: Robot Grippers & Programming Quiz";
         }
 
-        // Shuffle the questions before starting
         activeData = shuffleArray(selectedQuiz);
-
         currentQuestion = 0;
         score = 0;
         
@@ -1385,6 +1444,7 @@
 
     function loadQuestion() {
         nextBtn.style.display = 'none';
+        feedbackBox.style.display = 'none';
         optionsEl.innerHTML = '';
         
         const currentQuizData = activeData[currentQuestion];
@@ -1392,7 +1452,14 @@
         realTimeScoreEl.innerText = `Score: ${score}`;
         questionEl.innerText = currentQuizData.question;
 
-        currentQuizData.options.forEach(option => {
+        // Update progress bar width based on current question
+        const progressPercent = (currentQuestion / activeData.length) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+
+        // Shuffle options for the current question so they aren't always in the same order
+        const randomizedOptions = shuffleArray(currentQuizData.options);
+
+        randomizedOptions.forEach(option => {
             const button = document.createElement('button');
             button.innerText = option;
             button.classList.add('option');
@@ -1405,14 +1472,21 @@
         const currentQuizData = activeData[currentQuestion];
         const allButtons = optionsEl.children;
         
+        // Disable buttons after clicking
         for (let btn of allButtons) {
             btn.disabled = true;
         }
 
+        // Check Answer & Show Feedback Box
         if (selected === currentQuizData.answer) {
             buttonElement.classList.add('correct');
             score++;
             realTimeScoreEl.innerText = `Score: ${score}`;
+            
+            feedbackBox.className = 'feedback-box correct-feedback';
+            feedbackTitle.innerHTML = '✔ Correct!';
+            feedbackTitle.className = 'feedback-title feedback-correct-title';
+            feedbackText.innerHTML = `Great job! The answer is exactly <strong>"${currentQuizData.answer}"</strong>.`;
         } else {
             buttonElement.classList.add('wrong');
             for (let btn of allButtons) {
@@ -1420,7 +1494,18 @@
                     btn.classList.add('correct');
                 }
             }
+            
+            feedbackBox.className = 'feedback-box wrong-feedback';
+            feedbackTitle.innerHTML = '✖ Incorrect';
+            feedbackTitle.className = 'feedback-title feedback-wrong-title';
+            feedbackText.innerHTML = `The correct answer was: <strong>"${currentQuizData.answer}"</strong>.`;
         }
+
+        feedbackBox.style.display = 'block';
+
+        // Fill progress bar for the completed question
+        const progressPercent = ((currentQuestion + 1) / activeData.length) * 100;
+        progressBar.style.width = `${progressPercent}%`;
 
         nextBtn.style.display = 'block';
         if (currentQuestion === activeData.length - 1) {
