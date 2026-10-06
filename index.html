@@ -113,7 +113,7 @@
     <button class="option action-btn" onclick="startQuiz('U0')">U0: History of Robotics</button>
     <button class="option action-btn" onclick="startQuiz('U1')">U1: Intro to Robotics & Concepts</button>
     <button class="option action-btn" onclick="startQuiz('U2')">U2: Robot Sensors</button>
-    <button class="option action-btn" onclick="startQuiz('U3')">U3: Robot Grippers</button>
+    <button class="option action-btn" onclick="startQuiz('U3')">U3: Robot Grippers & Programming</button>
 </div>
 
 <!-- QUIZ SCREEN -->
@@ -136,936 +136,938 @@
 </div>
 
 <script>
-   // U0: HISTORY OF ROBOTICS DATA (Expanded to 50 Questions)
+    // U0: HISTORY OF ROBOTICS DATA
     const quizU0 = [
         {
-            question: "1. Who built his version of a calculator in 1642?",
+            question: "Who built his version of a calculator in 1642?",
             options: ["Blaise Pascal", "Charles Babbage", "George Boole", "Alan Turing"],
             answer: "Blaise Pascal"
         },
         {
-            question: "2. Who is famous for the 1752 kite experiment proving that lightning is a form of electricity?",
+            question: "Who is famous for the 1752 kite experiment proving that lightning is a form of electricity?",
             options: ["Thomas Edison", "Nikola Tesla", "Benjamin Franklin", "George Boole"],
             answer: "Benjamin Franklin"
         },
         {
-            question: "3. Who invented the textile machine operated by punch cards in 1801?",
+            question: "Who invented the textile machine operated by punch cards in 1801?",
             options: ["Thomas Edison", "Joseph-Marie Jacquard", "Nikola Tesla", "Jack Kilby"],
             answer: "Joseph-Marie Jacquard"
         },
         {
-            question: "4. Who designed the analytical engine in 1835, considered the 'world's first general-purpose computer'?",
+            question: "Who designed the analytical engine in 1835, considered the 'world's first general-purpose computer'?",
             options: ["Charles Babbage", "Alan Turing", "George Boole", "Warren S. McCulloch"],
             answer: "Charles Babbage"
         },
         {
-            question: "5. Who conducted mathematical analysis on logic in 1847, now known as Boolean Algebra?",
+            question: "Who conducted mathematical analysis on logic in 1847, now known as Boolean Algebra?",
             options: ["Alan Turing", "George Boole", "Blaise Pascal", "Charles Babbage"],
             answer: "George Boole"
         },
         {
-            question: "6. Who conceptualized the modern AC induction motor in 1882?",
+            question: "Who conceptualized the modern AC induction motor in 1882?",
             options: ["Thomas Edison", "Nikola Tesla", "Jack Kilby", "Raymond Goertz"],
             answer: "Nikola Tesla"
         },
         {
-            question: "7. What did Thomas Edison invent in 1887?",
+            question: "What did Thomas Edison invent in 1887?",
             options: ["The phonograph", "The lightbulb", "The talking doll", "The motion picture camera"],
             answer: "The talking doll"
         },
         {
-            question: "8. In 1892, Seward Babbitt designed a motorized crane equipped with what specific feature to remove ingots from a furnace?",
+            question: "In 1892, Seward Babbitt designed a motorized crane equipped with what specific feature to remove ingots from a furnace?",
             options: ["A tele-operator", "A gripper", "A camera", "A pneumatic drill"],
             answer: "A gripper"
         },
         {
-            question: "9. The first reference to the word 'robot' appeared in 1921 in a play written by:",
+            question: "The first reference to the word 'robot' appeared in 1921 in a play written by:",
             options: ["Isaac Asimov", "Norbert Wiener", "Karel Čapek", "George Devol"],
             answer: "Karel Čapek"
         },
         {
-            question: "10. What is the title of the play that introduced the word 'robot'?",
+            question: "What is the title of the play that introduced the word 'robot'?",
             options: ["Runaround", "Rossum's Universal Robots", "Cybernetics", "The Analytical Engine"],
             answer: "Rossum's Universal Robots"
         },
         {
-            question: "11. The Czech word 'robota' loosely translates to:",
+            question: "The Czech word 'robota' loosely translates to:",
             options: ["Artificial intelligence", "Mechanical man", "Compulsory servitude or forced labor", "Helper or assistant"],
             answer: "Compulsory servitude or forced labor"
         },
         {
-            question: "12. In 1937, who introduced a concept evaluating a machine's ability to exhibit intelligent behavior?",
+            question: "In 1937, who introduced a concept evaluating a machine's ability to exhibit intelligent behavior?",
             options: ["Alan Turing", "George Boole", "Isaac Asimov", "Norbert Wiener"],
             answer: "Alan Turing"
         },
         {
-            question: "13. What is the name of the assessment used to measure a machine's ability to exhibit intelligent behavior?",
+            question: "What is the name of the assessment used to measure a machine's ability to exhibit intelligent behavior?",
             options: ["The Boole Logic Test", "The Turing Test", "The Asimov Assessment", "The Cybernetics Standard"],
             answer: "The Turing Test"
         },
         {
-            question: "14. Who published the short story 'Runaround' in 1942, formulating the 'Three Laws of Robotics'?",
+            question: "Who published the short story 'Runaround' in 1942, formulating the 'Three Laws of Robotics'?",
             options: ["Karel Čapek", "Isaac Asimov", "Norbert Wiener", "George Devol"],
             answer: "Isaac Asimov"
         },
         {
-            question: "15. According to the Three Laws of Robotics, which law states a robot must obey orders given by humans?",
+            question: "According to the Three Laws of Robotics, which law states a robot must obey orders given by humans?",
             options: ["First Law", "Second Law", "Third Law", "Fourth Law"],
             answer: "Second Law"
         },
         {
-            question: "16. According to the Three Laws of Robotics, which law states a robot must protect its own existence?",
+            question: "According to the Three Laws of Robotics, which law states a robot must protect its own existence?",
             options: ["First Law", "Second Law", "Third Law", "Fourth Law"],
             answer: "Third Law"
         },
         {
-            question: "17. Who published 'A Logical Calculus of the Ideas Immanent in Nervous Activity' in 1943?",
+            question: "Who published 'A Logical Calculus of the Ideas Immanent in Nervous Activity' in 1943?",
             options: ["McCulloch and Pitts", "Devol and Engelberger", "Turing and Boole", "Wiener and Goertz"],
             answer: "McCulloch and Pitts"
         },
         {
-            question: "18. What was the first mathematical and computational model of a biological neuron called?",
+            question: "What was the first mathematical and computational model of a biological neuron called?",
             options: ["Turing Machine", "McCulloch-Pitts Neuron Model", "Cybernetic Neural Net", "Boolean Synapse"],
             answer: "McCulloch-Pitts Neuron Model"
         },
         {
-            question: "19. In neural terminology, what is the connecting point where an input signal is passed to another neuron?",
+            question: "In neural terminology, what is the connecting point where an input signal is passed to another neuron?",
             options: ["Synapse", "Axon", "Node", "Receptor"],
             answer: "Synapse"
         },
         {
-            question: "20. Who patented a general-purpose playback device for controlling machines in 1946?",
+            question: "Who patented a general-purpose playback device for controlling machines in 1946?",
             options: ["Joseph Engelberger", "George Devol", "Marvin Minsky", "Jack Kilby"],
             answer: "George Devol"
         },
         {
-            question: "21. Who published the book 'Cybernetics' in 1948?",
+            question: "Who published the book 'Cybernetics' in 1948?",
             options: ["Walter Pitts", "Norbert Wiener", "Marvin Minsky", "Alan Turing"],
             answer: "Norbert Wiener"
         },
         {
-            question: "22. The book 'Cybernetics' describes communications and control in which types of systems?",
+            question: "The book 'Cybernetics' describes communications and control in which types of systems?",
             options: ["Mechanical and hydraulic", "Electronic, mechanical, and biological", "Digital and analog", "Space and aeronautical"],
             answer: "Electronic, mechanical, and biological"
         },
         {
-            question: "23. Who designed a tele-operator equipped with an articulated arm for the Atomic Energy Commission in 1951?",
+            question: "Who designed a tele-operator equipped with an articulated arm for the Atomic Energy Commission in 1951?",
             options: ["George Devol", "Raymond Goertz", "Joseph Engelberger", "Marvin Minsky"],
             answer: "Raymond Goertz"
         },
         {
-            question: "24. Who designed the first programmable robot and coined the term 'universal automation' in 1954?",
+            question: "Who designed the first programmable robot and coined the term 'universal automation' in 1954?",
             options: ["George Devol", "Joseph Engelberger", "Marvin Minsky", "Isaac Asimov"],
             answer: "George Devol"
         },
         {
-            question: "25. Who joined George Devol in 1956 to form the first successful robot manufacturing company?",
+            question: "Who joined George Devol in 1956 to form the first successful robot manufacturing company?",
             options: ["Norbert Wiener", "Marvin Minsky", "Joseph Engelberger", "Seward Babbitt"],
             answer: "Joseph Engelberger"
         },
         {
-            question: "26. What was the name of the first successful robot manufacturing company?",
+            question: "What was the name of the first successful robot manufacturing company?",
             options: ["Cybernetics Inc.", "Unimation", "Robotics Dynamics", "ASIMO Corp."],
             answer: "Unimation"
         },
         {
-            question: "27. Who created the first microchip in 1958?",
+            question: "Who created the first microchip in 1958?",
             options: ["Jack Kilby", "George Devol", "Joseph Engelberger", "Marvin Minsky"],
             answer: "Jack Kilby"
         },
         {
-            question: "28. In 1961, George Devol received a patent for an arm-type industrial robot used by which company?",
+            question: "In 1961, George Devol received a patent for an arm-type industrial robot used by which company?",
             options: ["Ford", "Toyota", "General Motors (GM)", "Honda"],
             answer: "General Motors (GM)"
         },
         {
-            question: "29. Who designed the 'Tentacle Arm' in 1968?",
+            question: "Who designed the 'Tentacle Arm' in 1968?",
             options: ["Raymond Goertz", "Marvin Minsky", "Hiroshi Makino", "Marcelo Ang"],
             answer: "Marvin Minsky"
         },
         {
-            question: "30. How many joints did the Minsky Tentacle Arm have for added mobility options?",
+            question: "How many joints did the Minsky Tentacle Arm have for added mobility options?",
             options: ["6 joints", "8 joints", "10 joints", "12 joints"],
             answer: "12 joints"
         },
         {
-            question: "31. What is the name of the world's first anthropomorphic robot created by Waseda University between 1970 and 1973?",
+            question: "What is the name of the world's first anthropomorphic robot created by Waseda University between 1970 and 1973?",
             options: ["ASIMO", "WABOT-1", "P2 robot", "Sojourner"],
             answer: "WABOT-1"
         },
         {
-            question: "32. Which bipedal humanoid robot, introduced in 1997, could walk smoothly for over 30 minutes?",
+            question: "Which bipedal humanoid robot, introduced in 1997, could walk smoothly for over 30 minutes?",
             options: ["ASIMO", "WABOT-1", "P2 robot", "Sojourner"],
             answer: "P2 robot"
         },
         {
-            question: "33. Which company introduces the da Vinci medical robotic system?",
+            question: "Which company introduces the da Vinci medical robotic system?",
             options: ["Honda", "SpaceX", "Intuitive Surgical Inc.", "Unimation"],
             answer: "Intuitive Surgical Inc."
         },
         {
-            question: "34. In what year was the da Vinci medical robotic system approved for laparoscopic surgery?",
+            question: "In what year was the da Vinci medical robotic system approved for laparoscopic surgery?",
             options: ["1997", "1999", "2000", "2006"],
             answer: "2000"
         },
         {
-            question: "35. Honda created which Advanced Step in Innovative Mobility robot in 2000?",
+            question: "Honda created which Advanced Step in Innovative Mobility robot in 2000?",
             options: ["P2", "P3", "ASIMO", "WABOT-2"],
             answer: "ASIMO"
         },
         {
-            question: "36. Waseda University created which robot in 2000 to reproduce human vocal movement?",
+            question: "Waseda University created which robot in 2000 to reproduce human vocal movement?",
             options: ["ASIMO", "Waseda Talker No. 1", "WABOT-1", "Sojourner"],
             answer: "Waseda Talker No. 1"
         },
         {
-            question: "37. In 2012, which company became the first privately owned company to launch and dock a robotic capsule with the International Space Station?",
+            question: "In 2012, which company became the first privately owned company to launch and dock a robotic capsule with the International Space Station?",
             options: ["NASA", "SpaceX", "Honda", "Unimation"],
             answer: "SpaceX"
         },
         {
-            question: "38. What was the name of the SpaceX robotic capsule that docked with the ISS?",
+            question: "What was the name of the SpaceX robotic capsule that docked with the ISS?",
             options: ["The Falcon", "The Dragon", "Sojourner", "Curiosity"],
             answer: "The Dragon"
         },
         {
-            question: "39. What does the acronym SCOT stand for in the context of the National University of Singapore's driverless car project?",
+            question: "What does the acronym SCOT stand for in the context of the National University of Singapore's driverless car project?",
             options: ["Shared Computer Operated Transport", "System Controlled Operation Tracker", "Simulated Computer Oriented Transport", "Sensory Controlled Operating Technology"],
             answer: "Shared Computer Operated Transport"
         },
         {
-            question: "40. The SCOT project was led by Marcelo Ang in collaboration with which institution?",
+            question: "The SCOT project was led by Marcelo Ang in collaboration with which institution?",
             options: ["Waseda University", "Massachusetts Institute of Technology (MIT)", "De La Salle University", "Stanford University"],
             answer: "Massachusetts Institute of Technology (MIT)"
         },
         {
-            question: "41. The BRAVE project developed by De La Salle University stands for:",
+            question: "The BRAVE project developed by De La Salle University stands for:",
             options: ["Bipedal Robotic Automated Vehicle Engine", "Bomb Removal Automated Vehicle", "Basic Research Autonomous Vehicle Explorer", "Biological Reconnaissance Automated Vehicle"],
             answer: "Bomb Removal Automated Vehicle"
         },
         {
-            question: "42. Which NASA Mars rover was the first to be deployed on Mars?",
+            question: "Which NASA Mars rover was the first to be deployed on Mars?",
             options: ["Sojourner", "Curiosity", "Perseverance", "Spirit"],
             answer: "Sojourner"
         },
         {
-            question: "43. Which of the following NASA Mars rovers is noted as having been stuck on Mars?",
+            question: "Which of the following NASA Mars rovers is noted as having been stuck on Mars?",
             options: ["Opportunity", "Curiosity", "Perseverance", "Spirit"],
             answer: "Spirit"
         },
         {
-            question: "44. The SCARA robot arm, developed by Hiroshi Makino in 1978, stands for:",
+            question: "The SCARA robot arm, developed by Hiroshi Makino in 1978, stands for:",
             options: ["Selective Compliant Articulated Robot Arm", "Systematic Computer Automated Robotic Arm", "Sensory Controlled Articulated Robot Arm", "Simulated Compliant Automated Robotic Arm"],
             answer: "Selective Compliant Articulated Robot Arm"
         },
         {
-            question: "45. How many axes does the standard SCARA robot possess?",
+            question: "How many axes does the standard SCARA robot possess?",
             options: ["3 axes", "4 axes", "5 axes", "6 axes"],
             answer: "4 axes"
         },
         {
-            question: "46. Who coined the phrase 'data is the new oil' in relation to Data Mining?",
+            question: "Who coined the phrase 'data is the new oil' in relation to Data Mining?",
             options: ["Kevin Ashton", "Clive Humby", "Alan Turing", "Norbert Wiener"],
             answer: "Clive Humby"
         },
         {
-            question: "47. Which term is defined as the scientific process of extracting valuable information from both structured and unstructured data?",
+            question: "Which term is defined as the scientific process of extracting valuable information from both structured and unstructured data?",
             options: ["Data Mining", "Machine Learning", "Data Science", "Cybernetics"],
             answer: "Data Science"
         },
         {
-            question: "48. Which era of the Industrial Revolution introduced the steam power engine and textile machines?",
+            question: "Which era of the Industrial Revolution introduced the steam power engine and textile machines?",
             options: ["1st Industry Revolution", "2nd Industry Revolution", "3rd Industry Revolution", "4th Industry Revolution"],
             answer: "1st Industry Revolution"
         },
         {
-            question: "49. The 3rd Industrial Revolution, spanning roughly from 1969 to 2010, is most associated with:",
+            question: "The 3rd Industrial Revolution, spanning roughly from 1969 to 2010, is most associated with:",
             options: ["Internal Combustion and Assembly Lines", "Steam Power and Iron Production", "Personal Computers, Electronics, and the Internet", "AI, Autonomous Robots, and IoT"],
             answer: "Personal Computers, Electronics, and the Internet"
         },
         {
-            question: "50. Who coined the term 'IoT' (Internet of Things) in 1999, laying ground for the 4th Industrial Revolution?",
+            question: "Who coined the term 'IoT' (Internet of Things) in 1999, laying ground for the 4th Industrial Revolution?",
             options: ["Clive Humby", "Kevin Ashton", "Marcelo Ang", "Hiroshi Makino"],
             answer: "Kevin Ashton"
         }
     ];
+
     // U1: INTRO TO ROBOTICS & CONCEPTS DATA
     const quizU1 = [
         {
-            question: "1. Who coined the word 'robot' in a 1921 play?",
+            question: "Who coined the word 'robot' in a 1921 play?",
             options: ["Isaac Asimov", "Karel Čapek", "George Devol", "Joseph Engelberger"],
             answer: "Karel Čapek"
         },
         {
-            question: "2. Which author first introduced the term 'robotics' in 1941?",
+            question: "Which author first introduced the term 'robotics' in 1941?",
             options: ["Isaac Asimov", "Karel Čapek", "Norbert Wiener", "Alan Turing"],
             answer: "Isaac Asimov"
         },
         {
-            question: "3. According to Asimov's Three Laws of Robotics, what is the First Law?",
+            question: "According to Asimov's Three Laws of Robotics, what is the First Law?",
             options: ["A robot must protect its own existence.", "A robot must obey orders given by human beings.", "A robot may not injure a human being, or, through inaction, allow a human being to come to harm.", "A robot must always prioritize its programming."],
             answer: "A robot may not injure a human being, or, through inaction, allow a human being to come to harm."
         },
         {
-            question: "4. Which component of a robot acts as its 'muscles' by producing motion using electricity, pneumatics, or hydraulics?",
+            question: "Which component of a robot acts as its 'muscles' by producing motion using electricity, pneumatics, or hydraulics?",
             options: ["End Effectors", "Actuators", "Sensors", "Manipulator"],
             answer: "Actuators"
         },
         {
-            question: "5. Which robot component converts physical phenomena into electronic signals, acting as the robot's 'eyes'?",
+            question: "Which robot component converts physical phenomena into electronic signals, acting as the robot's 'eyes'?",
             options: ["Sensors", "Communicator", "Controller", "End Effectors"],
             answer: "Sensors"
         },
         {
-            question: "6. The degree of freedom (DOF) associated with a wrist's side-to-side motion is called:",
+            question: "The degree of freedom (DOF) associated with a wrist's side-to-side motion is called:",
             options: ["Pitch", "Roll", "Yaw", "Sweep"],
             answer: "Yaw"
         },
         {
-            question: "7. Which type of robot classification refers to a machine that operates within a work envelope combining polar articulation with rectilinear motion?",
+            question: "Which type of robot classification refers to a machine that operates within a work envelope combining polar articulation with rectilinear motion?",
             options: ["Cylindrical Robot", "Rectilinear Robot", "Spherical Robot", "Fully Articulated Robot"],
             answer: "Spherical Robot"
         },
         {
-            question: "8. Which robot classification by control system memorizes and records motion paths to repeat them continuously without further guidance?",
+            question: "Which robot classification by control system memorizes and records motion paths to repeat them continuously without further guidance?",
             options: ["Fixed Sequence", "Playback Robots", "Numerically Controlled Robots", "Intelligent Robots"],
             answer: "Playback Robots"
         },
         {
-            question: "9. When selecting a robot, which factor describes the ability of the robot to return to a specific position consistently over multiple cycles?",
+            question: "When selecting a robot, which factor describes the ability of the robot to return to a specific position consistently over multiple cycles?",
             options: ["Resolution", "Accuracy", "Work Volume", "Repeatability"],
             answer: "Repeatability"
         },
         {
-            question: "10. What does the term 'MATLAB' stand for?",
+            question: "What does the term 'MATLAB' stand for?",
             options: ["Mathematics Laboratory", "Matrix Laboratory", "Machine Learning Laboratory", "Manipulator Laboratory"],
             answer: "Matrix Laboratory"
         },
         {
-            question: "11. In the MATLAB default layout, which window is the primary interface for entering commands and running scripts/functions?",
+            question: "In the MATLAB default layout, which window is the primary interface for entering commands and running scripts/functions?",
             options: ["Figure Window", "Workspace", "Command Window", "Current Folder"],
             answer: "Command Window"
         },
         {
-            question: "12. Which MATLAB window allows you to view variables in memory, including their names, sizes, types, and values?",
+            question: "Which MATLAB window allows you to view variables in memory, including their names, sizes, types, and values?",
             options: ["Workspace", "Command History", "Editor", "Figure Window"],
             answer: "Workspace"
         },
         {
-            question: "13. What symbol is used at the end of a MATLAB command to suppress output in the Command Window?",
+            question: "What symbol is used at the end of a MATLAB command to suppress output in the Command Window?",
             options: ["Colon (:)", "Comma (,)", "Semicolon (;)", "Period (.)"],
             answer: "Semicolon (;)"
         },
         {
-            question: "14. Which symbol signifies a comment in MATLAB code?",
+            question: "Which symbol signifies a comment in MATLAB code?",
             options: ["//", "%", "#", "/*"],
             answer: "%"
         },
         {
-            question: "15. What is the command used to clear the MATLAB Command Window without removing variables?",
+            question: "What is the command used to clear the MATLAB Command Window without removing variables?",
             options: ["clear", "close all", "clc", "delete"],
             answer: "clc"
         },
         {
-            question: "16. In MATLAB arithmetic, what is the symbol used for left division?",
+            question: "In MATLAB arithmetic, what is the symbol used for left division?",
             options: ["/", "\\", "^", "%"],
             answer: "\\"
         },
         {
-            question: "17. According to MATLAB's order of precedence, which operation is executed first?",
+            question: "According to MATLAB's order of precedence, which operation is executed first?",
             options: ["Exponentiation", "Multiplication", "Addition", "Parentheses"],
             answer: "Parentheses"
         },
         {
-            question: "18. Which MATLAB display format provides a fixed-point output with 15 decimal digits?",
+            question: "Which MATLAB display format provides a fixed-point output with 15 decimal digits?",
             options: ["format short", "format long", "format bank", "format short e"],
             answer: "format long"
         },
         {
-            question: "19. Which MATLAB function rounds a value toward minus infinity?",
+            question: "Which MATLAB function rounds a value toward minus infinity?",
             options: ["ceil(x)", "floor(x)", "fix(x)", "round(x)"],
             answer: "floor(x)"
         },
         {
-            question: "20. Which MATLAB math function calculates the natural logarithm?",
+            question: "Which MATLAB math function calculates the natural logarithm?",
             options: ["log10(x)", "ln(x)", "exp(x)", "log(x)"],
             answer: "ln(x)"
         },
         {
-            question: "21. What is the predefined MATLAB variable that represents the smallest difference?",
+            question: "What is the predefined MATLAB variable that represents the smallest difference?",
             options: ["inf", "NaN", "eps", "ans"],
             answer: "eps"
         },
         {
-            question: "22. Which MATLAB command lists variables along with their size, bytes, and class?",
+            question: "Which MATLAB command lists variables along with their size, bytes, and class?",
             options: ["who", "whos", "clear", "disp"],
             answer: "whos"
         },
         {
-            question: "23. What is the maximum number of characters allowed for a MATLAB variable name?",
+            question: "What is the maximum number of characters allowed for a MATLAB variable name?",
             options: ["31", "63", "128", "255"],
             answer: "63"
         },
         {
-            question: "24. Which of the following is a rule for naming variables in MATLAB?",
+            question: "Which of the following is a rule for naming variables in MATLAB?",
             options: ["It must begin with a digit.", "It can include spaces.", "It is not case-sensitive.", "It must begin with a letter."],
             answer: "It must begin with a letter."
         },
         {
-            question: "25. What file extension is automatically added when you save a script file in MATLAB?",
+            question: "What file extension is automatically added when you save a script file in MATLAB?",
             options: [".mat", ".script", ".m", ".fig"],
             answer: ".m"
         },
         {
-            question: "26. In linear algebra, a drawback of the graphical method occurs when the lines overlap completely. What does this indicate?",
+            question: "In linear algebra, a drawback of the graphical method occurs when the lines overlap completely. What does this indicate?",
             options: ["No solution", "Infinite solutions", "Ill-conditioned system", "Singular point"],
             answer: "Infinite solutions"
         },
         {
-            question: "27. What type of linear system is characterized by slopes that are very close, making the intersection difficult to detect visually?",
+            question: "What type of linear system is characterized by slopes that are very close, making the intersection difficult to detect visually?",
             options: ["Symmetric", "Infinite", "Ill-conditioned", "Identity"],
             answer: "Ill-conditioned"
         },
         {
-            question: "28. Which mathematical rule is noted as being best suited for small systems (like 2x2 or 3x3 matrices) due to computational cost?",
+            question: "Which mathematical rule is noted as being best suited for small systems (like 2x2 or 3x3 matrices) due to computational cost?",
             options: ["Gauss Elimination", "LU Decomposition", "Cramer's Rule", "Crout's Method"],
             answer: "Cramer's Rule"
         },
         {
-            question: "29. In the matrix element a_ij, what does the first subscript (i) indicate?",
+            question: "In the matrix element a_ij, what does the first subscript (i) indicate?",
             options: ["Column", "Row", "Diagonal", "Dimension"],
             answer: "Row"
         },
         {
-            question: "30. What is a column vector?",
+            question: "What is a column vector?",
             options: ["A vector of dimension 1 x m.", "A square matrix.", "A vector of dimension n x 1.", "A matrix with zeroes on the diagonal."],
             answer: "A vector of dimension n x 1."
         },
         {
-            question: "31. A square matrix where all off-diagonal elements are zero is called a:",
+            question: "A square matrix where all off-diagonal elements are zero is called a:",
             options: ["Symmetric matrix", "Diagonal matrix", "Banded matrix", "Identity matrix"],
             answer: "Diagonal matrix"
         },
         {
-            question: "32. What type of matrix has a diagonal of 1's and zeroes everywhere else?",
+            question: "What type of matrix has a diagonal of 1's and zeroes everywhere else?",
             options: ["Identity matrix", "Lower triangular matrix", "Trace matrix", "Symmetric matrix"],
             answer: "Identity matrix"
         },
         {
-            question: "33. In an upper triangular matrix, where are the zero elements located?",
+            question: "In an upper triangular matrix, where are the zero elements located?",
             options: ["Above the main diagonal", "Below the main diagonal", "On the main diagonal", "On the off-diagonal edges"],
             answer: "Below the main diagonal"
         },
         {
-            question: "34. In order to multiply two matrices [A] and [B], what condition must be met?",
+            question: "In order to multiply two matrices [A] and [B], what condition must be met?",
             options: ["Both must be square matrices.", "The exterior dimensions must be equal.", "The number of columns of the left matrix must equal the number of rows of the right matrix.", "The matrices must have identical values."],
             answer: "The number of columns of the left matrix must equal the number of rows of the right matrix."
         },
         {
-            question: "35. Swapping the rows and columns of a matrix produces its:",
+            question: "Swapping the rows and columns of a matrix produces its:",
             options: ["Trace", "Augmentation", "Identity", "Transpose"],
             answer: "Transpose"
         },
         {
-            question: "36. The sum of the main-diagonal elements of a matrix is called its:",
+            question: "The sum of the main-diagonal elements of a matrix is called its:",
             options: ["Transpose", "Determinant", "Trace", "Augmentation"],
             answer: "Trace"
         },
         {
-            question: "37. Appending columns to a coefficient matrix with constant vectors forms a(n):",
+            question: "Appending columns to a coefficient matrix with constant vectors forms a(n):",
             options: ["Banded matrix", "Identity matrix", "Symmetric matrix", "Augmented matrix"],
             answer: "Augmented matrix"
         },
         {
-            question: "38. In the matrix equation [A]{X} = {B}, what does [A] represent?",
+            question: "In the matrix equation [A]{X} = {B}, what does [A] represent?",
             options: ["The unknowns vector", "The constant vector", "The coefficient matrix", "The trace matrix"],
             answer: "The coefficient matrix"
         },
         {
-            question: "39. In the matrix equation [A]{X} = {B}, what does {B} represent?",
+            question: "In the matrix equation [A]{X} = {B}, what does {B} represent?",
             options: ["The coefficient matrix", "The unknown vector", "The constant vector", "The identity matrix"],
             answer: "The constant vector"
         },
         {
-            question: "40. Which of the following is an example of an algebraic direct method for solving linear equations?",
+            question: "Which of the following is an example of an algebraic direct method for solving linear equations?",
             options: ["Cramer's Rule", "LU Decomposition", "Graphical Method", "Ill-conditioned Mapping"],
             answer: "LU Decomposition"
         },
         {
-            question: "41. An upper triangular system is typically solved using which substitution method?",
+            question: "An upper triangular system is typically solved using which substitution method?",
             options: ["Forward Substitution", "Back Substitution", "Diagonal Substitution", "Crout's Substitution"],
             answer: "Back Substitution"
         },
         {
-            question: "42. A lower triangular system is typically solved using which substitution method?",
+            question: "A lower triangular system is typically solved using which substitution method?",
             options: ["Forward Substitution", "Back Substitution", "Diagonal Substitution", "Crout's Substitution"],
             answer: "Forward Substitution"
         },
         {
-            question: "43. Which linear algebraic method transforms equations into matrix form and reduces them to an upper triangular form?",
+            question: "Which linear algebraic method transforms equations into matrix form and reduces them to an upper triangular form?",
             options: ["Diagonal Form", "Gauss-Elimination", "Cramer's Rule", "Trace summation"],
             answer: "Gauss-Elimination"
         },
         {
-            question: "44. In Gauss-Elimination, what is the term for the equation containing the specific coefficient used to eliminate variables in subsequent rows?",
+            question: "In Gauss-Elimination, what is the term for the equation containing the specific coefficient used to eliminate variables in subsequent rows?",
             options: ["Target Equation", "Constant Equation", "Pivot Equation", "Trace Equation"],
             answer: "Pivot Equation"
         },
         {
-            question: "45. Which method utilizes a diagonal form matrix where coefficients are only on the diagonal?",
+            question: "Which method utilizes a diagonal form matrix where coefficients are only on the diagonal?",
             options: ["Gauss-Jordan Method", "LU Decomposition", "Choleski's Method", "Crout's Method"],
             answer: "Gauss-Jordan Method"
         },
         {
-            question: "46. LU Decomposition factors a coefficient matrix into which two matrices?",
+            question: "LU Decomposition factors a coefficient matrix into which two matrices?",
             options: ["A Left matrix and an Upper matrix", "A Lower Triangular matrix and an Upper Triangular matrix", "A Linear matrix and an Undefined matrix", "A Lower matrix and an Unknown vector"],
             answer: "A Lower Triangular matrix and an Upper Triangular matrix"
         },
         {
-            question: "47. Which of the following is NOT a method used to solve LU Decomposition?",
+            question: "Which of the following is NOT a method used to solve LU Decomposition?",
             options: ["Gauss Elimination", "Crout's Method", "Choleski's Method", "Gauss-Jordan Method"],
             answer: "Gauss-Jordan Method"
         },
         {
-            question: "48. In the context of MATLAB operations, what is the result of rem(13,5)?",
+            question: "In the context of MATLAB operations, what is the result of rem(13,5)?",
             options: ["2", "2.6", "3", "1"],
             answer: "3"
         },
         {
-            question: "49. What type of robot works strictly in three linear directions (up/down, left/right, front/back)?",
+            question: "What type of robot works strictly in three linear directions (up/down, left/right, front/back)?",
             options: ["Cylindrical Robot", "Rectilinear / Cartesian Robot", "Fully Articulated Robot", "Spherical Robot"],
             answer: "Rectilinear / Cartesian Robot"
         },
         {
-            question: "50. What is a highly flexible robot with multiple joints commonly used in welding and painting?",
+            question: "What is a highly flexible robot with multiple joints commonly used in welding and painting?",
             options: ["Spherical Robot", "Fully Articulated Robot", "Cylindrical Robot", "Rectilinear Robot"],
             answer: "Fully Articulated Robot"
         }
     ];
-    // U2: ROBOT SENSORS DATA
+
+    // U2: ROBOT SENSORS & PYTHON PROGRAMMING DATA
     const quizU2 = [
         {
-            question: "1. What is defined as a device that converts one form of energy into another form?",
+            question: "What is defined as a device that converts one form of energy into another form?",
             options: ["Actuator", "Transducer", "Controller", "Flip-Flop"],
             answer: "Transducer"
         },
         {
-            question: "2. The word 'Transducer' is the collective term used for both Sensors and:",
+            question: "The word 'Transducer' is the collective term used for both Sensors and:",
             options: ["Controllers", "Manipulators", "Actuators", "Encoders"],
             answer: "Actuators"
         },
         {
-            question: "3. Which of the following is a sensor used to measure temperature?",
+            question: "Which of the following is a sensor used to measure temperature?",
             options: ["LVDT", "Thermocouple", "Strain Gauge", "Photodiode"],
             answer: "Thermocouple"
         },
         {
-            question: "4. What is the base SI unit for Illuminance?",
+            question: "What is the base SI unit for Illuminance?",
             options: ["Candela", "Lux", "Tesla", "Pascal"],
             answer: "Lux"
         },
         {
-            question: "5. What is the base SI unit for Magnetic Flux Density?",
+            question: "What is the base SI unit for Magnetic Flux Density?",
             options: ["Newton", "Decibel", "Tesla", "Ampere"],
             answer: "Tesla"
         },
         {
-            question: "6. Which type of transducer requires an external power source for operation?",
+            question: "Which type of transducer requires an external power source for operation?",
             options: ["Active Sensor", "Passive Sensor", "Proximity Sensor", "Ultrasonic Sensor"],
             answer: "Passive Sensor"
         },
         {
-            question: "7. A photocell (Light Dependent Resistor) is an example of which type of sensor?",
+            question: "A photocell (Light Dependent Resistor) is an example of which type of sensor?",
             options: ["Active Sensor", "Passive Sensor", "Inductive Sensor", "Capacitive Sensor"],
             answer: "Passive Sensor"
         },
         {
-            question: "8. Which type of sensor generates a signal, transmits it, and measures the reflected signal from the target?",
+            question: "Which type of sensor generates a signal, transmits it, and measures the reflected signal from the target?",
             options: ["Active Sensor", "Passive Sensor", "Contact Sensor", "LDR Sensor"],
             answer: "Active Sensor"
         },
         {
-            question: "9. Which of the following is an example of an active sensor?",
+            question: "Which of the following is an example of an active sensor?",
             options: ["Thermistor", "Strain Gauge", "LIDAR", "Potentiometer"],
             answer: "LIDAR"
         },
         {
-            question: "10. Which sensor detects an object when it approaches the detection boundary without physical contact?",
+            question: "Which sensor detects an object when it approaches the detection boundary without physical contact?",
             options: ["Proximity Sensor", "Tactile Sensor", "Carbon Microphone", "Load Cell"],
             answer: "Proximity Sensor"
         },
         {
-            question: "11. The maximum detection distance of a proximity sensor is called the:",
+            question: "The maximum detection distance of a proximity sensor is called the:",
             options: ["Actual distance", "Usable range", "Nominal range", "Blocking range"],
             answer: "Nominal range"
         },
         {
-            question: "12. In a proximity sensor block diagram, which part is responsible for the emission of the electrostatic or electromagnetic field?",
+            question: "In a proximity sensor block diagram, which part is responsible for the emission of the electrostatic or electromagnetic field?",
             options: ["Oscillator", "Demodulator", "Flip-Flop", "Sensing Face"],
             answer: "Sensing Face"
         },
         {
-            question: "13. In a proximity sensor, which component extracts signal amplitude from the oscillating carrier?",
+            question: "In a proximity sensor, which component extracts signal amplitude from the oscillating carrier?",
             options: ["Oscillator", "Flip-Flop", "Demodulator", "Output"],
             answer: "Demodulator"
         },
         {
-            question: "14. Which sensor relies on the effect of a magnet approaching a high turns ratio coil to detect ferrous and non-ferrous metals?",
+            question: "Which sensor relies on the effect of a magnet approaching a high turns ratio coil to detect ferrous and non-ferrous metals?",
             options: ["Capacitive Proximity Sensor", "Inductive Proximity Sensor", "Ultrasonic Sensor", "Photoelectric Sensor"],
             answer: "Inductive Proximity Sensor"
         },
         {
-            question: "15. Which proximity sensor produces an electrostatic field and can sense nonmetallic materials like paper, glass, and liquids?",
+            question: "Which proximity sensor produces an electrostatic field and can sense nonmetallic materials like paper, glass, and liquids?",
             options: ["Inductive Proximity Sensor", "Capacitive Proximity Sensor", "Magnetic Sensor", "Sonar Sensor"],
             answer: "Capacitive Proximity Sensor"
         },
         {
-            question: "16. The sensing surface of a capacitive sensor is formed by:",
+            question: "The sensing surface of a capacitive sensor is formed by:",
             options: ["A Piezoelectric disk", "A high turns ratio coil", "Two concentrically shaped metal electrodes", "A light-dependent resistor"],
             answer: "Two concentrically shaped metal electrodes"
         },
         {
-            question: "17. The detection ability of a capacitive proximity sensor depends heavily on what property of the target?",
+            question: "The detection ability of a capacitive proximity sensor depends heavily on what property of the target?",
             options: ["Magnetic flux", "Dielectric constant", "Temperature", "Weight"],
             answer: "Dielectric constant"
         },
         {
-            question: "18. What is the dielectric constant of Water?",
+            question: "What is the dielectric constant of Water?",
             options: ["1", "5", "25.8", "80"],
             answer: "80"
         },
         {
-            question: "19. What is the dielectric constant of Air Vacuum?",
+            question: "What is the dielectric constant of Air Vacuum?",
             options: ["1", "2.2", "4", "80"],
             answer: "1"
         },
         {
-            question: "20. The sensitivity of a capacitive sensor is primarily affected by the density of the substance and its:",
+            question: "The sensitivity of a capacitive sensor is primarily affected by the density of the substance and its:",
             options: ["Color", "Moisture content", "Velocity", "Illuminance"],
             answer: "Moisture content"
         },
         {
-            question: "21. A common application for capacitive sensors because of differing dielectric constants is:",
+            question: "A common application for capacitive sensors because of differing dielectric constants is:",
             options: ["Measuring wind speed", "Level detection through a barrier (like a plastic container)", "Reading barcodes", "Decoding text"],
             answer: "Level detection through a barrier (like a plastic container)"
         },
         {
-            question: "22. Ultrasonic proximity sensors use a transducer to send and receive:",
+            question: "Ultrasonic proximity sensors use a transducer to send and receive:",
             options: ["Electromagnetic waves", "Infrared light", "High-frequency sound signals", "X-rays"],
             answer: "High-frequency sound signals"
         },
         {
-            question: "23. In an ultrasonic sensor, what component is mounted on the surface to vibrate and produce sound waves?",
+            question: "In an ultrasonic sensor, what component is mounted on the surface to vibrate and produce sound waves?",
             options: ["Capacitor", "Inductive Coil", "Piezoelectric Ceramic disk", "Photodiode"],
             answer: "Piezoelectric Ceramic disk"
         },
         {
-            question: "24. In an ultrasonic sensor, the time interval between the transmitted signal and the echo is directly proportional to the:",
+            question: "In an ultrasonic sensor, the time interval between the transmitted signal and the echo is directly proportional to the:",
             options: ["Size of the object", "Distance between the object and the sensor", "Temperature of the air", "Dielectric constant of the object"],
             answer: "Distance between the object and the sensor"
         },
         {
-            question: "25. What happens when an object is placed in the 'Blind Zone' of an ultrasonic sensor (typically 6 to 80 cm directly in front)?",
+            question: "What happens when an object is placed in the 'Blind Zone' of an ultrasonic sensor (typically 6 to 80 cm directly in front)?",
             options: ["It produces a perfectly stable output", "It produces an unstable output", "It increases the sensor's range", "It changes the sensor's frequency"],
             answer: "It produces an unstable output"
         },
         {
-            question: "26. What term describes when objects beyond the upper limit of an ultrasonic sensor do not produce a change in output?",
+            question: "What term describes when objects beyond the upper limit of an ultrasonic sensor do not produce a change in output?",
             options: ["Mutual Interference", "Blanking out the background", "Demodulation", "Oscillation"],
             answer: "Blanking out the background"
         },
         {
-            question: "27. The approximate angle of the main cone in an ultrasonic sensor's radiation pattern is:",
+            question: "The approximate angle of the main cone in an ultrasonic sensor's radiation pattern is:",
             options: ["3°", "5°", "45°", "90°"],
             answer: "5°"
         },
         {
-            question: "28. What term refers to the angle between the half-power (-3db) points of the main lobe?",
+            question: "What term refers to the angle between the half-power (-3db) points of the main lobe?",
             options: ["Usable Range", "Blind Zone", "Beamwidth", "Free Zone"],
             answer: "Beamwidth"
         },
         {
-            question: "29. What occurs when two sonar devices are mounted too close to each other, causing echoes to reflect to the wrong sensor?",
+            question: "What occurs when two sonar devices are mounted too close to each other, causing echoes to reflect to the wrong sensor?",
             options: ["Demodulation", "Mutual Interference", "Blanking", "Reflex Mode"],
             answer: "Mutual Interference"
         },
         {
-            question: "30. When aligning an ultrasonic sensor directly to a flat surface, the maximum deviation angle must be:",
+            question: "When aligning an ultrasonic sensor directly to a flat surface, the maximum deviation angle must be:",
             options: ["±1°", "±3°", "±10°", "±45°"],
             answer: "±3°"
         },
         {
-            question: "31. Coarse-grained materials, such as sand, can have an angular deviation of as much as:",
+            question: "Coarse-grained materials, such as sand, can have an angular deviation of as much as:",
             options: ["3°", "5°", "15°", "45°"],
             answer: "45°"
         },
         {
-            question: "32. Why do coarse-grained materials allow for a larger angular deviation in ultrasonic sensing?",
+            question: "Why do coarse-grained materials allow for a larger angular deviation in ultrasonic sensing?",
             options: ["They absorb all the sound", "The sound is reflected over a larger angle", "They have a high dielectric constant", "They emit their own signals"],
             answer: "The sound is reflected over a larger angle"
         },
         {
-            question: "33. How can you blank out an interfering object located in the vicinity of a sound cone?",
+            question: "How can you blank out an interfering object located in the vicinity of a sound cone?",
             options: ["Increase the voltage", "Use an aperture made of a sound-absorbing material (e.g., rock wool)", "Change the dielectric constant", "Use a metal reflector"],
             answer: "Use an aperture made of a sound-absorbing material (e.g., rock wool)"
         },
         {
-            question: "34. Which ultrasonic operating mode is the standard mode where objects traveling into the sound cone cause the output to switch states?",
+            question: "Which ultrasonic operating mode is the standard mode where objects traveling into the sound cone cause the output to switch states?",
             options: ["Diffuse Mode", "Reflex Mode", "Thru-Beam Mode", "Passive Mode"],
             answer: "Diffuse Mode"
         },
         {
-            question: "35. Which operating mode is typically used in applications where the target is NOT a good sound absorber, relying on a reflector?",
+            question: "Which operating mode is typically used in applications where the target is NOT a good sound absorber, relying on a reflector?",
             options: ["Diffuse Mode", "Reflex Mode", "Thru-Beam Mode", "Inductive Mode"],
             answer: "Reflex Mode"
         },
         {
-            question: "36. Which operating mode consists of a separate transmitter and receiver where the target interrupts the beam?",
+            question: "Which operating mode consists of a separate transmitter and receiver where the target interrupts the beam?",
             options: ["Diffuse Mode", "Reflex Mode", "Thru-Beam Mode", "Capacitive Mode"],
             answer: "Thru-Beam Mode"
         },
         {
-            question: "37. How does a change in temperature generally affect an ultrasonic sensor?",
+            question: "How does a change in temperature generally affect an ultrasonic sensor?",
             options: ["It stops the sensor from working entirely", "Sonic wave speed changes by 0.17%/°K", "It changes the dielectric constant", "It reverses the echo direction"],
             answer: "Sonic wave speed changes by 0.17%/°K"
         },
         {
-            question: "38. Will an ultrasonic sensor operate in a vacuum?",
+            question: "Will an ultrasonic sensor operate in a vacuum?",
             options: ["Yes, but with reduced range", "Yes, sound travels faster in a vacuum", "No, sensors will not operate in a vacuum", "Yes, if the voltage is increased"],
             answer: "No, sensors will not operate in a vacuum"
         },
         {
-            question: "39. How does increasing humidity affect the sound velocity of an ultrasonic sensor?",
+            question: "How does increasing humidity affect the sound velocity of an ultrasonic sensor?",
             options: ["Velocity decreases", "Velocity increases, giving the impression of a shorter distance", "Velocity stops completely", "It has no effect on velocity"],
             answer: "Velocity increases, giving the impression of a shorter distance"
         },
         {
-            question: "40. At what wind speed do air currents cause an ultrasonic sensor to receive no echo?",
+            question: "At what wind speed do air currents cause an ultrasonic sensor to receive no echo?",
             options: ["<50 km/h", "50-100 km/h", ">100 km/h", "0 km/h"],
             answer: ">100 km/h"
         },
         {
-            question: "41. By definition, what process extracts, characterizes, and interprets information from images of a 3-dimensional world?",
+            question: "By definition, what process extracts, characterizes, and interprets information from images of a 3-dimensional world?",
             options: ["Data Mining", "Robotic Vision", "Ultrasonic Sensing", "Telemetry"],
             answer: "Robotic Vision"
         },
         {
-            question: "42. Which field traditionally refers to the use of computer vision in industrial or practical applications?",
+            question: "Which field traditionally refers to the use of computer vision in industrial or practical applications?",
             options: ["Machine Vision", "Artificial Intelligence", "Deep Learning", "Data Science"],
             answer: "Machine Vision"
         },
         {
-            question: "43. Which of the following is NOT listed as an advantage of Machine Vision?",
+            question: "Which of the following is NOT listed as an advantage of Machine Vision?",
             options: ["Faster than manual systems", "Consistent and reliable", "Requires frequent breaks to avoid fatigue", "Can operate well in space-constrained environments"],
             answer: "Requires frequent breaks to avoid fatigue"
         },
         {
-            question: "44. In machine vision applications, measuring multiple diameters of a bottleneck is an example of:",
+            question: "In machine vision applications, measuring multiple diameters of a bottleneck is an example of:",
             options: ["Counting", "Measurement", "Decoding", "Surface Inspection"],
             answer: "Measurement"
         },
         {
-            question: "45. In machine vision applications, identifying the presence or absence of a part (like missing pieces) is an example of:",
+            question: "In machine vision applications, identifying the presence or absence of a part (like missing pieces) is an example of:",
             options: ["Counting", "Measurement", "Decoding", "Pose Verification"],
             answer: "Counting"
         },
         {
-            question: "46. Which machine vision application reads alphanumeric characters and barcodes to track products or validate data?",
+            question: "Which machine vision application reads alphanumeric characters and barcodes to track products or validate data?",
             options: ["Counting", "Measurement", "Decoding", "Plane Reconstruction"],
             answer: "Decoding"
         },
         {
-            question: "47. In the robotic vision process, what step occurs immediately after 'Image capture'?",
+            question: "In the robotic vision process, what step occurs immediately after 'Image capture'?",
             options: ["Connectivity and response", "Actuation", "Image processing", "Data Mining"],
             answer: "Image processing"
         },
         {
-            question: "48. During 'Image processing' in robotic vision, how is the image analyzed?",
+            question: "During 'Image processing' in robotic vision, how is the image analyzed?",
             options: ["By listening to echoes", "By pixel, comparing colors and shapes against programmed database images", "By measuring dielectric constants", "By calculating magnetic flux"],
             answer: "By pixel, comparing colors and shapes against programmed database images"
         },
         {
-            question: "49. Which of the following spectrums is an example of an 'Operation Scope' that Machine Vision can see but human vision cannot?",
+            question: "Which of the following spectrums is an example of an 'Operation Scope' that Machine Vision can see but human vision cannot?",
             options: ["Visible Light", "RGB", "X-ray / UV / IR", "Grayscale"],
             answer: "X-ray / UV / IR"
         },
         {
-            question: "50. Integrating AI and vision systems into collaborative robots (cobots) helps ensure precision in repetitive tasks where humans would tire. This advantage is known as:",
+            question: "Integrating AI and vision systems into collaborative robots (cobots) helps ensure precision in repetitive tasks where humans would tire. This advantage is known as:",
             options: ["Promoting a Safe Workplace", "Ensures Product Consistency", "Decoding", "Blanking out objects"],
             answer: "Ensures Product Consistency"
         },
         {
-            question: "51. Which robotic vision advantage stops cobots when obstructions are detected?",
+            question: "Which robotic vision advantage stops cobots when obstructions are detected?",
             options: ["Reduces Operating Costs", "Promotes a Safe Workplace", "Increases Efficiency", "Ensures Product Consistency"],
             answer: "Promotes a Safe Workplace"
         },
         {
-            question: "52. Though an investment, robot vision yields returns through efficiency, quality, and safety improvements. This refers to:",
+            question: "Though an investment, robot vision yields returns through efficiency, quality, and safety improvements. This refers to:",
             options: ["Promotes a Safe Workplace", "Reduces Operating Costs", "Connectivity and response", "Machine Learning"],
             answer: "Reduces Operating Costs"
         },
         {
-            question: "53. Python can be used on a server to create what type of applications?",
+            question: "Python can be used on a server to create what type of applications?",
             options: ["Microcontroller firmware", "Web applications", "Operating systems", "Hardware drivers"],
             answer: "Web applications"
         },
         {
-            question: "54. Python dominates as the de facto platform for new technologies and ranked #1 in which 2021 index?",
+            question: "Python dominates as the de facto platform for new technologies and ranked #1 in which 2021 index?",
             options: ["TIOBE Index", "IEEE Spectrum Ranking", "StackOverflow Survey", "GitHub Octoverse"],
             answer: "IEEE Spectrum Ranking"
         },
         {
-            question: "55. In the context of AI, Python powers machine learning models, natural language processing, and:",
+            question: "In the context of AI, Python powers machine learning models, natural language processing, and:",
             options: ["Computer vision", "Pneumatic actuation", "Hardware assembly", "Circuit board printing"],
             answer: "Computer vision"
         },
         {
-            question: "56. Python's syntax is known for its similarity to:",
+            question: "Python's syntax is known for its similarity to:",
             options: ["C++", "Assembly Language", "The English language", "Binary code"],
             answer: "The English language"
         },
         {
-            question: "57. Because Python uses an interpreter system, code execution allows for:",
+            question: "Because Python uses an interpreter system, code execution allows for:",
             options: ["Manual memory allocation", "Hardware-level interrupts", "Rapid prototyping", "Slower compilation times"],
             answer: "Rapid prototyping"
         },
         {
-            question: "58. Which of the following is NOT a programming style supported by Python?",
+            question: "Which of the following is NOT a programming style supported by Python?",
             options: ["Procedural", "Object-oriented", "Functional", "Manual memory management"],
             answer: "Manual memory management"
         },
         {
-            question: "59. What does the acronym 'Pandas' stand for?",
+            question: "What does the acronym 'Pandas' stand for?",
             options: ["Python Data Analysis", "Python Advanced Network Data", "Procedural Analytics", "Predictive And Numerical Data"],
             answer: "Python Data Analysis"
         },
         {
-            question: "60. What does the acronym 'NumPy' stand for?",
+            question: "What does the acronym 'NumPy' stand for?",
             options: ["Numerical Python", "Number Processing", "Neural Python", "Natural Parameters"],
             answer: "Numerical Python"
         },
         {
-            question: "61. Which distribution of Python and R is designed to simplify package management and deployment?",
+            question: "Which distribution of Python and R is designed to simplify package management and deployment?",
             options: ["Spyder", "Anaconda", "Jupyter", "TensorFlow"],
             answer: "Anaconda"
         },
         {
-            question: "62. What does SPYDER stand for?",
+            question: "What does SPYDER stand for?",
             options: ["System Python Deployment Environment", "Scientific Python Development Environment", "Simulated Program Yielding Data", "Server Python Design Engine"],
             answer: "Scientific Python Development Environment"
         },
         {
-            question: "63. Spyder is a powerful Python IDE known for advanced editing, debugging, and:",
+            question: "Spyder is a powerful Python IDE known for advanced editing, debugging, and:",
             options: ["Hardware assembly", "Introspection features", "Cloud deployment", "Database hosting"],
             answer: "Introspection features"
         },
         {
-            question: "64. Which interface is described as a next-generation web-based user interface for Project Jupyter?",
+            question: "Which interface is described as a next-generation web-based user interface for Project Jupyter?",
             options: ["JupyterLab", "Google Colab", "Anaconda Navigator", "Spyder"],
             answer: "JupyterLab"
         },
         {
-            question: "65. Which environment allows editing and running human-readable documents while describing data analysis?",
+            question: "Which environment allows editing and running human-readable documents while describing data analysis?",
             options: ["Command Prompt", "Jupyter Notebook", "Notepad", "Terminal"],
             answer: "Jupyter Notebook"
         },
         {
-            question: "66. Google Colaboratory allows you to write and execute Python in your browser with zero configuration and free access to:",
+            question: "Google Colaboratory allows you to write and execute Python in your browser with zero configuration and free access to:",
             options: ["Unlimited cloud storage", "Premium datasets", "GPUs", "Private servers"],
             answer: "GPUs"
         },
         {
-            question: "67. Which command is used in the terminal or command prompt to check the installed Python version?",
+            question: "Which command is used in the terminal or command prompt to check the installed Python version?",
             options: ["python -v", "python --version", "check python", "run python"],
             answer: "python --version"
         },
         {
-            question: "68. How can Python syntax be executed immediately without saving a file?",
+            question: "How can Python syntax be executed immediately without saving a file?",
             options: ["By writing directly in the Command Line", "By compiling to a .exe", "By using a punch card", "By writing in an HTML file"],
             answer: "By writing directly in the Command Line"
         },
         {
-            question: "69. What file extension is used when saving and running a Python script from the Command Line?",
+            question: "What file extension is used when saving and running a Python script from the Command Line?",
             options: [".html", ".m", ".py", ".c"],
             answer: ".py"
         },
         {
-            question: "70. What does Python use to indicate a block of code?",
+            question: "What does Python use to indicate a block of code?",
             options: ["Curly brackets {}", "Semicolons ;", "Indentation", "Parentheses ()"],
             answer: "Indentation"
         },
         {
-            question: "71. What type of error occurs if you miss the required indentation in a Python statement?",
+            question: "What type of error occurs if you miss the required indentation in a Python statement?",
             options: ["Runtime Error", "Syntax Error", "Logic Error", "Compilation Error"],
             answer: "Syntax Error"
         },
         {
-            question: "72. Which of the following is a common use of Python mentioned in the reviewer?",
+            question: "Which of the following is a common use of Python mentioned in the reviewer?",
             options: ["Web scraping", "Building microchips", "Soldering circuits", "Hydraulic control"],
             answer: "Web scraping"
         },
         {
-            question: "73. What is a group of pre-built modules that help complete common tasks with fewer lines of code?",
+            question: "What is a group of pre-built modules that help complete common tasks with fewer lines of code?",
             options: ["A Python Library", "An IDE", "An Interpreter", "A Compiler"],
             answer: "A Python Library"
         },
         {
-            question: "74. Which Python library is a high-level API that typically uses TensorFlow as a backend?",
+            question: "Which Python library is a high-level API that typically uses TensorFlow as a backend?",
             options: ["NumPy", "Pandas", "Keras", "Matplotlib"],
             answer: "Keras"
         },
         {
-            question: "75. Which Python library is used for plotting and data visualization, such as line charts and histograms?",
+            question: "Which Python library is used for plotting and data visualization, such as line charts and histograms?",
             options: ["PyTorch", "Matplotlib", "Theano", "Scikit-learn"],
             answer: "Matplotlib"
         },
         {
-            question: "76. Which Python library is foundational for numerical computing and features fast n-dimensional arrays?",
+            question: "Which Python library is foundational for numerical computing and features fast n-dimensional arrays?",
             options: ["Pandas", "NumPy", "TensorFlow", "Keras"],
             answer: "NumPy"
         },
         {
-            question: "77. Which Python library specializes in data analysis and manipulation with fast DataFrame operations?",
+            question: "Which Python library specializes in data analysis and manipulation with fast DataFrame operations?",
             options: ["Matplotlib", "NumPy", "PyTorch", "Pandas"],
             answer: "Pandas"
         },
         {
-            question: "78. Which deep learning framework uses dynamic computation graphs and is flexible and fast?",
+            question: "Which deep learning framework uses dynamic computation graphs and is flexible and fast?",
             options: ["PyTorch", "Pandas", "Matplotlib", "NumPy"],
             answer: "PyTorch"
         },
         {
-            question: "79. Which scalable deep learning framework was written in C++ with Python APIs?",
+            question: "Which scalable deep learning framework was written in C++ with Python APIs?",
             options: ["Theano", "TensorFlow", "Keras", "Scikit-learn"],
             answer: "TensorFlow"
         },
         {
-            question: "80. In robotics technology, Python is ideal for sensor integration, autonomous decision-making, and:",
+            question: "In robotics technology, Python is ideal for sensor integration, autonomous decision-making, and:",
             options: ["Motion control", "Welding metals", "Replacing hydraulic fluid", "Circuit board printing"],
             answer: "Motion control"
         },
         {
-            question: "81. Python allows developers to write programs with _____ than some other languages.",
+            question: "Python allows developers to write programs with _____ than some other languages.",
             options: ["More lines", "Fewer lines", "Strict memory limits", "Manual compilers"],
             answer: "Fewer lines"
         },
         {
-            question: "82. Google Colab is highly recommended for students, AI researchers, and:",
+            question: "Google Colab is highly recommended for students, AI researchers, and:",
             options: ["Data scientists", "Hardware engineers", "Civil engineers", "Animators"],
             answer: "Data scientists"
         },
         {
-            question: "83. What command is used to output text like 'Five is greater than two!' in Python?",
+            question: "What command is used to output text like 'Five is greater than two!' in Python?",
             options: ["echo()", "disp()", "printf()", "print()"],
             answer: "print()"
         },
         {
-            question: "84. According to the IEEE Spectrum Ranking 2021, which language ranked #2 behind Python?",
+            question: "According to the IEEE Spectrum Ranking 2021, which language ranked #2 behind Python?",
             options: ["Java", "C++", "C", "C#"],
             answer: "C"
         },
         {
-            question: "85. According to the IEEE Spectrum Ranking 2021, which language ranked #3?",
+            question: "According to the IEEE Spectrum Ranking 2021, which language ranked #3?",
             options: ["Java", "JavaScript", "C#", "R"],
             answer: "Java"
         }
@@ -1074,252 +1076,252 @@
     // U3: ROBOT GRIPPERS & PROGRAMMING DATA
     const quizU3 = [
         {
-            question: "1. What is defined as a device that enables the holding of an object to be manipulated?",
+            question: "What is defined as a device that enables the holding of an object to be manipulated?",
             options: ["Actuator", "Sensor", "Gripper", "Controller"],
             answer: "Gripper"
         },
         {
-            question: "2. Mechanical devices attached to the end of a robot's arm to interact with objects are called robot grippers and:",
+            question: "Mechanical devices attached to the end of a robot's arm to interact with objects are called robot grippers and:",
             options: ["End effectors", "Base joints", "Microcontrollers", "Transducers"],
             answer: "End effectors"
         },
         {
-            question: "3. Which type of gripper has jaws that move in a parallel motion in relation to the gripper body?",
+            question: "Which type of gripper has jaws that move in a parallel motion in relation to the gripper body?",
             options: ["Angular Gripper", "Toggle Gripper", "Parallel Gripper", "Internal Gripper"],
             answer: "Parallel Gripper"
         },
         {
-            question: "4. Which type of gripper is described as accurate, simple, inexpensive, and widely used?",
+            question: "Which type of gripper is described as accurate, simple, inexpensive, and widely used?",
             options: ["Angular Gripper", "Parallel Gripper", "Toggle Gripper", "External Gripper"],
             answer: "Parallel Gripper"
         },
         {
-            question: "5. Which gripper opens and closes around a central pivot point using a sweeping or arcing motion?",
+            question: "Which gripper opens and closes around a central pivot point using a sweeping or arcing motion?",
             options: ["Angular Gripper", "Parallel Gripper", "Toggle Gripper", "Internal Gripper"],
             answer: "Angular Gripper"
         },
         {
-            question: "6. Which gripper type is ideal when jaws need to move up and out of the way in a limited space?",
+            question: "Which gripper type is ideal when jaws need to move up and out of the way in a limited space?",
             options: ["Parallel Gripper", "Angular Gripper", "Magnetic Gripper", "Toggle Gripper"],
             answer: "Angular Gripper"
         },
         {
-            question: "7. Which gripper uses an over-center lock to provide a high grip force to weight ratio?",
+            question: "Which gripper uses an over-center lock to provide a high grip force to weight ratio?",
             options: ["Parallel Gripper", "Angular Gripper", "Toggle Gripper", "Internal Gripper"],
             answer: "Toggle Gripper"
         },
         {
-            question: "8. What type of gripper allows locking based on the part's geometry?",
+            question: "What type of gripper allows locking based on the part's geometry?",
             options: ["External Gripper", "Internal Gripper", "Parallel Gripper", "Toggle Gripper"],
             answer: "Internal Gripper"
         },
         {
-            question: "9. Which gripper drive mechanism is known for smaller units, quick assembly, and a high cycle rate?",
+            question: "Which gripper drive mechanism is known for smaller units, quick assembly, and a high cycle rate?",
             options: ["Electric Motors", "Pneumatic", "Hydraulic", "Magnetic"],
             answer: "Pneumatic"
         },
         {
-            question: "10. Which gripper drive mechanism is known for high accuracy, repeatability, less floor space, and low cost?",
+            question: "Which gripper drive mechanism is known for high accuracy, repeatability, less floor space, and low cost?",
             options: ["Pneumatic", "Hydraulic", "Electric Motors", "Combustion"],
             answer: "Electric Motors"
         },
         {
-            question: "11. Which gripper drive mechanism provides high strength and speed, making it suitable for large robots handling heavy loads?",
+            question: "Which gripper drive mechanism provides high strength and speed, making it suitable for large robots handling heavy loads?",
             options: ["Pneumatic", "Electric Motors", "Hydraulic", "Spring-loaded"],
             answer: "Hydraulic"
         },
         {
-            question: "12. What is a common disadvantage of using a pneumatic gripper?",
+            question: "What is a common disadvantage of using a pneumatic gripper?",
             options: ["It requires large floor space", "It is easy to damage", "It needs precise system control", "It has low strength"],
             answer: "It needs precise system control"
         },
         {
-            question: "13. What is a common disadvantage of using an electric gripper?",
+            question: "What is a common disadvantage of using an electric gripper?",
             options: ["It requires precise system control", "It requires large floor space", "It is easy to damage", "It is mechanically simple"],
             answer: "It is easy to damage"
         },
         {
-            question: "14. What is a common disadvantage of using a hydraulic gripper?",
+            question: "What is a common disadvantage of using a hydraulic gripper?",
             options: ["It requires large floor space", "It needs precise system control", "It is easy to damage", "It has poor accuracy"],
             answer: "It requires large floor space"
         },
         {
-            question: "15. Using an encompassing (e.g., V-groove) or retention finger shape in gripper design is primarily done to:",
+            question: "Using an encompassing (e.g., V-groove) or retention finger shape in gripper design is primarily done to:",
             options: ["Reduce weight", "Increase stability", "Enhance visual appeal", "Lower the cost"],
             answer: "Increase stability"
         },
         {
-            question: "16. Which of the following sensors are commonly considered for use in gripper finger design?",
+            question: "Which of the following sensors are commonly considered for use in gripper finger design?",
             options: ["Hall effect, proximity, and tactile sensors", "Radar and sonar", "Thermocouple and LVDT", "Barometer and anemometer"],
             answer: "Hall effect, proximity, and tactile sensors"
         },
         {
-            question: "17. A fruit harvesting robot typically consists of a picking system, a moving system, and a:",
+            question: "A fruit harvesting robot typically consists of a picking system, a moving system, and a:",
             options: ["Recognition system", "Pneumatic system", "Hydraulic system", "Thermal system"],
             answer: "Recognition system"
         },
         {
-            question: "18. Who created the general-purpose programming language C?",
+            question: "Who created the general-purpose programming language C?",
             options: ["Dennis Ritchie", "Guido van Rossum", "Alan Turing", "Bjarne Stroustrup"],
             answer: "Dennis Ritchie"
         },
         {
-            question: "19. In what year was the C programming language released?",
+            question: "In what year was the C programming language released?",
             options: ["1969", "1972", "1981", "1991"],
             answer: "1972"
         },
         {
-            question: "20. The C programming language is strongly associated with which operating system?",
+            question: "The C programming language is strongly associated with which operating system?",
             options: ["Windows", "Linux", "UNIX", "macOS"],
             answer: "UNIX"
         },
         {
-            question: "21. What is the core difference between C and C++?",
+            question: "What is the core difference between C and C++?",
             options: ["C++ requires less memory", "C++ supports object-oriented programming", "C is faster than C++", "C is used only for web applications"],
             answer: "C++ supports object-oriented programming"
         },
         {
-            question: "22. What does the acronym GCC stand for in the context of C programming?",
+            question: "What does the acronym GCC stand for in the context of C programming?",
             options: ["Graphical Code Compiler", "GNU Compiler Collection", "General C Compiler", "Graphic Computer Code"],
             answer: "GNU Compiler Collection"
         },
         {
-            question: "23. In C, which function acts as the primary starting point where program execution begins?",
+            question: "In C, which function acts as the primary starting point where program execution begins?",
             options: ["void setup()", "void loop()", "int main()", "print()"],
             answer: "int main()"
         },
         {
-            question: "24. In C programming, every statement must terminate with which symbol?",
+            question: "In C programming, every statement must terminate with which symbol?",
             options: ["Colon (:)", "Period (.)", "Semicolon (;)", "Comma (,)"],
             answer: "Semicolon (;)"
         },
         {
-            question: "25. Which statement is used to conclude the execution of the main function in C?",
+            question: "Which statement is used to conclude the execution of the main function in C?",
             options: ["end;", "stop;", "return 0;", "break;"],
             answer: "return 0;"
         },
         {
-            question: "26. Which primary data type in C is used to store whole numbers?",
+            question: "Which primary data type in C is used to store whole numbers?",
             options: ["float", "char", "int", "double"],
             answer: "int"
         },
         {
-            question: "27. Which primary data type in C is used to store numbers containing decimals?",
+            question: "Which primary data type in C is used to store numbers containing decimals?",
             options: ["int", "char", "float", "boolean"],
             answer: "float"
         },
         {
-            question: "28. Which format specifier acts as a placeholder for integers in a C printf() function?",
+            question: "Which format specifier acts as a placeholder for integers in a C printf() function?",
             options: ["%f", "%c", "%d or %i", "%s"],
             answer: "%d or %i"
         },
         {
-            question: "29. Which format specifier acts as a placeholder for characters in a C printf() function?",
+            question: "Which format specifier acts as a placeholder for characters in a C printf() function?",
             options: ["%f", "%d", "%c", "%i"],
             answer: "%c"
         },
         {
-            question: "30. Which function is utilized in C to display values or text to the screen?",
+            question: "Which function is utilized in C to display values or text to the screen?",
             options: ["display()", "echo()", "print()", "printf()"],
             answer: "printf()"
         },
         {
-            question: "31. What does GUI stand for in the context of MATLAB?",
+            question: "What does GUI stand for in the context of MATLAB?",
             options: ["General Utility Interface", "Graphical User Interface", "Graphic Unit Integration", "Guided User Interaction"],
             answer: "Graphical User Interface"
         },
         {
-            question: "32. What does GUIDE stand for in MATLAB app building?",
+            question: "What does GUIDE stand for in MATLAB app building?",
             options: ["Graphical User Interface Development Environment", "Graphic Unit Integrated Design Engine", "General User Interface Design Environment", "Guided User Interaction Development Engine"],
             answer: "Graphical User Interface Development Environment"
         },
         {
-            question: "33. In MATLAB GUIDE, which file extension contains the GUI figure layout and components?",
+            question: "In MATLAB GUIDE, which file extension contains the GUI figure layout and components?",
             options: [".m", ".c", ".fig", ".py"],
             answer: ".fig"
         },
         {
-            question: "34. In MATLAB GUIDE, which file extension contains the code that controls the GUI, including initialization and callbacks?",
+            question: "In MATLAB GUIDE, which file extension contains the code that controls the GUI, including initialization and callbacks?",
             options: [".m", ".fig", ".c", ".txt"],
             answer: ".m"
         },
         {
-            question: "35. What is a function that executes automatically when a specific user interaction occurs on a graphics object called?",
+            question: "What is a function that executes automatically when a specific user interaction occurs on a graphics object called?",
             options: ["A loop", "A callback", "A format specifier", "A transducer"],
             answer: "A callback"
         },
         {
-            question: "36. In what year was Arduino developed by the Interaction Design Institute Ivrea in Italy?",
+            question: "In what year was Arduino developed by the Interaction Design Institute Ivrea in Italy?",
             options: ["1999", "2005", "2010", "2012"],
             answer: "2005"
         },
         {
-            question: "37. Which Arduino board is a compact, breadboard-friendly board based on the ATmega328?",
+            question: "Which Arduino board is a compact, breadboard-friendly board based on the ATmega328?",
             options: ["Arduino Mega", "Arduino Leonardo", "Arduino Nano", "Arduino Uno"],
             answer: "Arduino Nano"
         },
         {
-            question: "38. Which Arduino board is built on the ATmega2560 and is designed for complex projects requiring extensive I/O capacity?",
+            question: "Which Arduino board is built on the ATmega2560 and is designed for complex projects requiring extensive I/O capacity?",
             options: ["Arduino Nano", "Arduino Mega", "Arduino Uno", "Arduino Leonardo"],
             answer: "Arduino Mega"
         },
         {
-            question: "39. Which Arduino board was the first to feature a microcontroller with built-in USB communication, allowing it to emulate a mouse or keyboard?",
+            question: "Which Arduino board was the first to feature a microcontroller with built-in USB communication, allowing it to emulate a mouse or keyboard?",
             options: ["Arduino Uno", "Arduino Mega", "Arduino Nano", "Arduino Leonardo"],
             answer: "Arduino Leonardo"
         },
         {
-            question: "40. In an Arduino program structure, which function executes only once upon startup or after a reset?",
+            question: "In an Arduino program structure, which function executes only once upon startup or after a reset?",
             options: ["loop()", "setup()", "main()", "init()"],
             answer: "setup()"
         },
         {
-            question: "41. In an Arduino program structure, which function runs repeatedly in an infinite cycle?",
+            question: "In an Arduino program structure, which function runs repeatedly in an infinite cycle?",
             options: ["setup()", "main()", "loop()", "while()"],
             answer: "loop()"
         },
         {
-            question: "42. Connecting an Arduino to a PC via USB powers the device and facilitates what kind of data transfer?",
+            question: "Connecting an Arduino to a PC via USB powers the device and facilitates what kind of data transfer?",
             options: ["Parallel data transfer", "Wireless data transfer", "Serial data transfer", "Bluetooth data transfer"],
             answer: "Serial data transfer"
         },
         {
-            question: "43. On the Arduino Nano, labels A0-A7 map directly to which internal port register?",
+            question: "On the Arduino Nano, labels A0-A7 map directly to which internal port register?",
             options: ["Port B", "Port C", "Port D", "Port E"],
             answer: "Port C"
         },
         {
-            question: "44. The 1st Industrial Revolution (1760-1840) introduced the Steam Power Engine, Iron Production, and:",
+            question: "The 1st Industrial Revolution (1760-1840) introduced the Steam Power Engine, Iron Production, and:",
             options: ["The Assembly Line", "Electricity", "The Textile Machine", "The Personal Computer"],
             answer: "The Textile Machine"
         },
         {
-            question: "45. The 2nd Industrial Revolution (1870-1914) introduced the Internal Combustion Engine, Electricity, and:",
+            question: "The 2nd Industrial Revolution (1870-1914) introduced the Internal Combustion Engine, Electricity, and:",
             options: ["The Personal Computer", "Mass Production / Assembly Line", "Autonomous Robots", "The Internet"],
             answer: "Mass Production / Assembly Line"
         },
         {
-            question: "46. The 3rd Industrial Revolution (1969-2010) brought about Automation, Electronics, and:",
+            question: "The 3rd Industrial Revolution (1969-2010) brought about Automation, Electronics, and:",
             options: ["The Internet", "Iron Production", "The Telephone", "Additive Manufacturing"],
             answer: "The Internet"
         },
         {
-            question: "47. According to the timeline, in what year was the Personal Computer introduced during the 3rd Industrial Revolution?",
+            question: "According to the timeline, in what year was the Personal Computer introduced during the 3rd Industrial Revolution?",
             options: ["1969", "1981", "1989", "1994"],
             answer: "1981"
         },
         {
-            question: "48. The 4th Industrial Revolution (2011-present) features AI, Digital Twins, and:",
+            question: "The 4th Industrial Revolution (2011-present) features AI, Digital Twins, and:",
             options: ["The Textile Machine", "The Internal Combustion Engine", "Additive Manufacturing", "Morse Code"],
             answer: "Additive Manufacturing"
         },
         {
-            question: "49. Who coined the term IoT (Internet of Things) in 1999?",
+            question: "Who coined the term IoT (Internet of Things) in 1999?",
             options: ["Kevin Ashton", "Dennis Ritchie", "George Devol", "Alan Turing"],
             answer: "Kevin Ashton"
         },
         {
-            question: "50. Which Industrial Revolution is characterized by Autonomous Robots, Cybersecurity, VR/AR, and Cloud Computing?",
+            question: "Which Industrial Revolution is characterized by Autonomous Robots, Cybersecurity, VR/AR, and Cloud Computing?",
             options: ["1st Industry Revolution", "2nd Industry Revolution", "3rd Industry Revolution", "4th Industry Revolution"],
             answer: "4th Industry Revolution"
         }
@@ -1343,15 +1345,16 @@
 
     // Fisher-Yates Shuffle Function
     function shuffleArray(array) {
-        let shuffled = [...array]; // Make a copy so we don't permanently alter the original
+        let shuffled = [...array];
         for (let i = shuffled.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
         }
         return shuffled;
     }
+
     // LOGIC
-  function startQuiz(quizID) {
+    function startQuiz(quizID) {
         let selectedQuiz = [];
         
         if (quizID === 'U0') {
