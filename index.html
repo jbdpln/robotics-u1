@@ -1726,22 +1726,29 @@
             selectedQuiz = quizU3;
             quizTitle.innerText = "U3: Robot Grippers & Programming Quiz";
         } else if (quizID === 'MASTER') {
-            const allQuestions = [...quizU0, ...quizU1, ...quizU2, ...quizU3];
-            selectedQuiz = shuffleArray(allQuestions).slice(0, 50);
-            quizTitle.innerText = "★ MASTER EXAM MODE (50 Random Questions) ★";
+            // Master Exam: Equal representation across all 4 modules
+            const sampleU0 = shuffleArray(quizU0).slice(0, 13); // Gets 13 random questions
+            const sampleU1 = shuffleArray(quizU1).slice(0, 13); // Gets 13 random questions
+            const sampleU2 = shuffleArray(quizU2).slice(0, 12); // Gets 12 random questions
+            const sampleU3 = shuffleArray(quizU3).slice(0, 12); // Gets 12 random questions
+            
+            // Combine them into a single 50-item array
+            selectedQuiz = [...sampleU0, ...sampleU1, ...sampleU2, ...sampleU3];
+            quizTitle.innerText = "★ MASTER EXAM MODE (50 Mixed Questions) ★";
         }
 
+        // Shuffle the final selected questions so the modules are mixed up
         activeData = shuffleArray(selectedQuiz);
+        
         currentQuestion = 0;
         score = 0;
-        wrongAnswersReview = [];
+        wrongAnswersReview = []; // Reset the review tracker
         
         menuScreen.style.display = 'none';
         quizScreen.style.display = 'block';
         
         loadQuestion();
     }
-
     function loadQuestion() {
         nextBtn.style.display = 'none';
         feedbackBox.style.display = 'none';
