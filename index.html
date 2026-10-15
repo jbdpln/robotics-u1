@@ -32,6 +32,7 @@
             border-bottom: 1px solid #3a3a4a;
             padding-bottom: 15px;
         }
+        /* PROGRESS BAR STYLES */
         .progress-bar-container {
             width: 100%;
             background-color: #313142;
@@ -80,7 +81,9 @@
             color: #1a1a24;
             font-weight: bold;
         }
-        .option:disabled { cursor: not-allowed; }
+        .option:disabled {
+            cursor: not-allowed;
+        }
         .correct {
             background-color: #1c3d26 !important;
             border-color: #4CAF50 !important;
@@ -93,6 +96,7 @@
             color: white !important;
             font-weight: bold;
         }
+        /* FEEDBACK / TRIVIA BOX STYLES */
         .feedback-box {
             display: none;
             padding: 15px;
@@ -106,20 +110,20 @@
         .feedback-title {
             font-weight: bold;
             font-size: 1.1em;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
         .feedback-correct-title { color: #4CAF50; }
         .feedback-wrong-title { color: #F44336; }
         .feedback-text {
             color: #e2e8f0;
             font-size: 0.95em;
-            line-height: 1.5;
+            line-height: 1.4;
         }
         .rationale {
-            margin-top: 8px;
-            padding-top: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
             border-top: 1px dashed #4a4a5a;
-            color: #a8b2d1;
+            color: #94a3b8;
         }
         .action-btn {
             background-color: #4CAF50;
@@ -139,11 +143,13 @@
         .master-btn { background-color: #9d4edd; border-color: #9d4edd; color: white;}
         .master-btn:hover { background-color: #7b2cbf !important; border-color: #7b2cbf !important;}
 
-        #quiz-screen, #score-screen { display: none; }
+        .iden-btn { background-color: #f44336; border-color: #f44336; color: white;}
+        .iden-btn:hover { background-color: #d32f2f !important; border-color: #d32f2f !important;}
+
+        #quiz-screen, #score-screen, #flashcard-screen { display: none; }
         #next-btn { display: none; }
         .menu-desc { text-align: center; margin-bottom: 30px; color: #ccc; }
 
-        /* REVIEW SECTION STYLES */
         .review-container {
             margin-top: 30px;
             max-height: 400px;
@@ -161,10 +167,21 @@
         .review-q { font-weight: bold; margin-bottom: 10px; color: #4da6ff;}
         .review-wrong { color: #F44336; margin-bottom: 5px;}
         .review-correct { color: #4CAF50; }
+
+        /* FLASHCARD SPECIFIC STYLES */
+        #fc-answer-box {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #1c3d26;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
-
+    
 <!-- MAIN MENU SCREEN -->
 <div class="quiz-container" id="menu-screen">
     <h2>Robotics Reviewer Quizzes</h2>
@@ -173,48 +190,55 @@
     <button class="option action-btn menu-btn" onclick="startQuiz('U1')">U1: Intro to Robotics & Concepts</button>
     <button class="option action-btn menu-btn" onclick="startQuiz('U2')">U2: Robot Sensors</button>
     <button class="option action-btn menu-btn" onclick="startQuiz('U3')">U3: Robot Grippers & Programming</button>
+    
+    <button class="option action-btn menu-btn" style="background-color: #ff9800; border-color: #ff9800; color: white;" onclick="startQuiz('TF')">True or False Exam</button>
+    <button class="option action-btn iden-btn" onclick="startFlashcards()">Flashcards: Identification Mode</button>
+    
     <button class="option action-btn master-btn" onclick="startQuiz('MASTER')">★ MASTER EXAM MODE (All Modules) ★</button>
-    <button class="option action-btn master-btn" onclick="startQuiz('TRUE OR FALSE')">★ TRUE OR FALSE (All Modules) ★</button>
 </div>
 
-<!-- QUIZ SCREEN -->
+<!-- MULTIPLE CHOICE QUIZ SCREEN -->
 <div class="quiz-container" id="quiz-screen">
     <h2 id="quiz-title">Quiz</h2>
-    
-    <div class="progress-bar-container">
-        <div class="progress-bar-fill" id="progress-bar"></div>
-    </div>
-
-    <div class="header-info">
-        <span id="progress">Question 1 of X</span>
-        <span id="real-time-score">Score: 0</span>
-    </div>
-    
+    <div class="progress-bar-container"><div class="progress-bar-fill" id="progress-bar"></div></div>
+    <div class="header-info"><span id="progress">Question 1 of X</span><span id="real-time-score">Score: 0</span></div>
     <div class="question" id="question">Loading question...</div>
     <div id="options"></div>
-
     <div class="feedback-box" id="feedback-box">
         <div class="feedback-title" id="feedback-title"></div>
         <div class="feedback-text" id="feedback-text"></div>
     </div>
-
     <button class="option action-btn" id="next-btn" onclick="nextQuestion()">Next Question</button>
+</div>
+
+<!-- FLASHCARD / IDENTIFICATION SCREEN -->
+<div class="quiz-container" id="flashcard-screen">
+    <h2>Identification Review</h2>
+    <div class="progress-bar-container"><div class="progress-bar-fill" id="fc-progress-bar"></div></div>
+    <div class="header-info"><span id="fc-progress">Card 1 of 100</span><span>Mental Check!</span></div>
+    
+    <div class="question" id="fc-question" style="min-height: 80px; text-align: center; font-size: 1.3em;">Loading...</div>
+    
+    <button class="option action-btn" id="reveal-btn" onclick="revealAnswer()" style="background-color: #4da6ff; border-color: #4da6ff; color: #1a1a24;">Reveal Answer</button>
+    
+    <div id="fc-answer-box">
+        <span style="color: #a8b2d1; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px;">The correct answer is:</span><br>
+        <strong id="fc-answer" style="font-size: 1.5em; color: white; display: block; margin-top: 10px;"></strong>
+    </div>
+
+    <button class="option action-btn" id="fc-next-btn" onclick="nextFlashcard()" style="display: none;">Next Card</button>
+    <button class="option action-btn" id="fc-finish-btn" onclick="returnToMenu()" style="display: none; background-color: #F44336; border-color: #F44336;">End Review</button>
 </div>
 
 <!-- SCORE SCREEN -->
 <div class="quiz-container" id="score-screen">
     <h2>Quiz Completed!</h2>
     <p style="text-align: center; font-size: 1.2em;">Your final score: <strong id="score"></strong> out of <strong id="total"></strong></p>
-    
-    <div id="review-area" class="review-container">
-        <!-- Javascript will inject missed questions here -->
-    </div>
-
+    <div id="review-area" class="review-container"></div>
     <button class="option action-btn menu-btn" onclick="returnToMenu()">Return to Main Menu</button>
 </div>
 
 <script>
-    
     // U0: HISTORY OF ROBOTICS DATA
     const quizU0 = [
         {
@@ -2186,16 +2210,128 @@
         "4th Industry Revolution": "2011-present: Features AI, Autonomous Robots, IoT, Cybersecurity, VR/AR, Cloud Computing, and Additive Manufacturing."
     };
 
+   // NEW: 100 IDENTIFICATION QUESTIONS (FLASHCARD DATA)
+    const quizIden = [
+        // HISTORY (U0)
+        { q: "Who built his version of a calculator in 1642?", a: "Blaise Pascal" },
+        { q: "Who is famous for the 1752 kite experiment proving that lightning is electricity?", a: "Benjamin Franklin" },
+        { q: "Who invented the textile machine operated by punch cards in 1801?", a: "Joseph-Marie Jacquard" },
+        { q: "Who designed the analytical engine in 1835?", a: "Charles Babbage" },
+        { q: "Who conducted mathematical analysis on logic in 1847?", a: "George Boole" },
+        { q: "Who conceptualized the modern AC induction motor in 1882?", a: "Nikola Tesla" },
+        { q: "What did Thomas Edison invent in 1887?", a: "The talking doll" },
+        { q: "Who designed a motorized crane equipped with a gripper in 1892?", a: "Seward Babbitt" },
+        { q: "Who is the Czech playwright that coined the word 'robot' in 1921?", a: "Karel Čapek" },
+        { q: "What is the title of the play that introduced the word 'robot'?", a: "Rossum's Universal Robots" },
+        { q: "Who introduced a concept evaluating a machine's ability to exhibit intelligent behavior in 1937?", a: "Alan Turing" },
+        { q: "Who published the short story 'Runaround' in 1942, formulating the Three Laws of Robotics?", a: "Isaac Asimov" },
+        { q: "Who published 'A Logical Calculus of the Ideas Immanent in Nervous Activity' in 1943?", a: "McCulloch and Pitts" },
+        { q: "Who patented a general-purpose playback device for controlling machines in 1946?", a: "George Devol" },
+        { q: "Who published the book 'Cybernetics' in 1948?", a: "Norbert Wiener" },
+        { q: "Who designed a tele-operator equipped with an articulated arm for the Atomic Energy Commission in 1951?", a: "Raymond Goertz" },
+        { q: "Who coined the term 'universal automation' in 1954?", a: "George Devol" },
+        { q: "Who joined George Devol in 1956 to form the first successful robot manufacturing company?", a: "Joseph Engelberger" },
+        { q: "What was the name of the first successful robot manufacturing company?", a: "Unimation" },
+        { q: "Who created the first microchip in 1958?", a: "Jack Kilby" },
+        { q: "Who designed the 'Tentacle Arm' in 1968?", a: "Marvin Minsky" },
+        { q: "What is the name of the world's first anthropomorphic robot created by Waseda University?", a: "WABOT-1" },
+        { q: "Which bipedal humanoid robot, introduced in 1997, could walk smoothly for over 30 minutes?", a: "P2 robot" },
+        { q: "Which medical robotic system was approved for laparoscopic surgery in 2000?", a: "da Vinci medical robotic system" },
+        { q: "What does the acronym ASIMO stand for?", a: "Advanced Step in Innovative Mobility" },
+        { q: "What was the name of the SpaceX robotic capsule that docked with the ISS in 2012?", a: "The Dragon" },
+        { q: "What does the acronym SCOT stand for in the context of the driverless car project?", a: "Shared Computer Operated Transport" },
+        { q: "What does the acronym BRAVE developed by De La Salle University stand for?", a: "Bomb Removal Automated Vehicle" },
+        { q: "Which NASA Mars rover was the first to be deployed on Mars?", a: "Sojourner" },
+        { q: "Which of the NASA Mars rovers is noted as having been stuck on Mars?", a: "Spirit" },
+        { q: "What does the acronym SCARA stand for?", a: "Selective Compliant Articulated Robot Arm" },
+        { q: "Who coined the phrase 'data is the new oil'?", a: "Clive Humby" },
+        { q: "Who coined the term 'IoT' (Internet of Things) in 1999?", a: "Kevin Ashton" },
+        { q: "Which era of the Industrial Revolution introduced the steam power engine and textile machines?", a: "1st Industrial Revolution" },
+        { q: "Which era of the Industrial Revolution introduced the Assembly Line and Mass Production?", a: "2nd Industrial Revolution" },
+        { q: "Which era of the Industrial Revolution introduced the Personal Computer and the Internet?", a: "3rd Industrial Revolution" },
+        { q: "Which era of the Industrial Revolution features AI, Autonomous Robots, and Digital Twins?", a: "4th Industrial Revolution" },
+
+        // ROBOTICS CONCEPTS (U1)
+        { q: "Which component of a robot acts as its 'muscles'?", a: "Actuators" },
+        { q: "Which component of a robot acts as its 'eyes' by converting physical phenomena into electronic signals?", a: "Sensors" },
+        { q: "What term describes the mechanical devices attached to the end of a robot's arm (the 'hands')?", a: "End Effectors" },
+        { q: "What is the degree of freedom associated with a wrist's side-to-side motion?", a: "Yaw" },
+        { q: "What is the degree of freedom associated with a wrist's up and down motion?", a: "Pitch" },
+        { q: "What type of robot works strictly in three linear directions (up/down, left/right, front/back)?", a: "Rectilinear / Cartesian Robot" },
+        { q: "Which robot classification memorizes and records motion paths to repeat them continuously?", a: "Playback Robots" },
+        { q: "When selecting a robot, what factor describes its ability to return to a specific position consistently?", a: "Repeatability" },
+        { q: "What factor describes the smallest incremental movement that the robot can detect or execute?", a: "Resolution" },
+        { q: "What does the term 'MATLAB' stand for?", a: "Matrix Laboratory" },
+        { q: "In the MATLAB layout, which window is the primary interface for entering commands?", a: "Command Window" },
+        { q: "Which MATLAB window allows you to view variables in memory, their sizes, and types?", a: "Workspace" },
+        { q: "What symbol is used at the end of a MATLAB command to suppress output?", a: "Semicolon (;)" },
+        { q: "What symbol signifies a comment in MATLAB code?", a: "Percentage sign (%)" },
+        { q: "What is the command used to clear the MATLAB Command Window without removing variables?", a: "clc" },
+        { q: "Which MATLAB math function calculates the natural logarithm?", a: "log(x)" },
+        { q: "What is the predefined MATLAB variable that represents the smallest difference?", a: "eps" },
+        { q: "What file extension is automatically added when you save a script file in MATLAB?", a: ".m" },
+        { q: "In linear algebra, what happens to the graphical method when the lines overlap completely?", a: "Infinite solutions" },
+        { q: "What type of linear system is characterized by slopes that are very close to each other?", a: "Ill-conditioned system" },
+        { q: "Which mathematical rule is noted as being best suited for small systems (like 2x2 or 3x3 matrices)?", a: "Cramer's Rule" },
+        { q: "What do you call a square matrix where all off-diagonal elements are zero?", a: "Diagonal matrix" },
+        { q: "What do you call a matrix that has a diagonal of 1's and zeroes everywhere else?", a: "Identity matrix" },
+        { q: "Swapping the rows and columns of a matrix produces its what?", a: "Transpose" },
+        { q: "The sum of the main-diagonal elements of a matrix is called its what?", a: "Trace" },
+        { q: "Appending columns to a coefficient matrix with constant vectors forms what type of matrix?", a: "Augmented matrix" },
+        { q: "Which linear algebraic method transforms equations into matrix form and reduces them to an upper triangular form?", a: "Gauss-Elimination" },
+        { q: "LU Decomposition factors a coefficient matrix into which two matrices?", a: "A Lower Triangular matrix and an Upper Triangular matrix" },
+
+        // SENSORS & VISION (U2)
+        { q: "What is defined as a device that converts one form of energy into another form?", a: "Transducer" },
+        { q: "What is the base SI unit for Illuminance?", a: "Lux" },
+        { q: "What is the base SI unit for Magnetic Flux Density?", a: "Tesla" },
+        { q: "Which type of transducer requires an external power source for operation?", a: "Passive Sensor" },
+        { q: "Which type of sensor generates a signal, transmits it, and measures the reflected signal?", a: "Active Sensor" },
+        { q: "Which sensor detects an object when it approaches the detection boundary without physical contact?", a: "Proximity Sensor" },
+        { q: "In a proximity sensor, which component extracts signal amplitude from the oscillating carrier?", a: "Demodulator" },
+        { q: "Which proximity sensor produces an electrostatic field and can sense nonmetallic materials?", a: "Capacitive Proximity Sensor" },
+        { q: "What property of the target heavily dictates the detection ability of a capacitive proximity sensor?", a: "Dielectric constant" },
+        { q: "In an ultrasonic sensor, what component is mounted on the surface to vibrate and produce sound waves?", a: "Piezoelectric Ceramic disk" },
+        { q: "What do you call the zone (6-80 cm directly in front of an ultrasonic sensor) that produces an unstable output?", a: "Blind Zone" },
+        { q: "What term refers to the angle between the half-power (-3db) points of the main lobe in a radiation pattern?", a: "Beamwidth" },
+        { q: "What occurs when two sonar devices are mounted too close to each other, causing echoes to reflect to the wrong sensor?", a: "Mutual Interference" },
+        { q: "Which ultrasonic operating mode uses a separate transmitter and receiver?", a: "Thru-Beam Mode" },
+        { q: "By definition, what process extracts, characterizes, and interprets information from images of a 3-dimensional world?", a: "Robotic Vision" },
+        { q: "Which machine vision application reads alphanumeric characters and barcodes to validate data?", a: "Decoding" },
+
+        // PYTHON, GRIPPERS & PROGRAMMING (U3)
+        { q: "What is the name of the programming language created by Guido van Rossum in 1991?", a: "Python" },
+        { q: "What does the Python library acronym 'Pandas' stand for?", a: "Python Data Analysis" },
+        { q: "Which deep learning framework uses dynamic computation graphs and is known to be flexible and fast?", a: "PyTorch" },
+        { q: "What is the name of the powerful Python IDE known for advanced editing, debugging, and introspection features?", a: "Spyder" },
+        { q: "What does the acronym GUI stand for in the context of MATLAB?", a: "Graphical User Interface" },
+        { q: "What is a function that executes automatically when a specific user interaction occurs on a graphics object called?", a: "A callback" },
+        { q: "Which type of gripper features jaws that move in a parallel motion in relation to the gripper body?", a: "Parallel Gripper" },
+        { q: "Which gripper uses a pivot movement that acts as an over-center lock to provide a high grip force to weight ratio?", a: "Toggle Gripper" },
+        { q: "Which gripper drive mechanism provides high strength and speed, making it suitable for large robots handling heavy loads?", a: "Hydraulic" },
+        { q: "Who created the general-purpose programming language C?", a: "Dennis Ritchie" },
+        { q: "In C programming, what format specifier acts as a placeholder for floating-point decimals?", a: "%f" },
+        { q: "What function is utilized in C to display values or text to the screen?", a: "printf()" },
+        { q: "Which statement is used to conclude the execution of the main function in C?", a: "return 0;" },
+        { q: "In what year was Arduino developed by the Interaction Design Institute Ivrea in Italy?", a: "2005" },
+        { q: "Which Arduino board was the first to feature a microcontroller with built-in USB communication (allowing mouse/keyboard emulation)?", a: "Arduino Leonardo" },
+        { q: "In an Arduino program structure, which function runs repeatedly in an infinite cycle?", a: "loop()" }
+    ];
+
     // STATE VARIABLES
     let activeData = [];
     let currentQuestion = 0;
     let score = 0;
-    let wrongAnswersReview = [];
+    let wrongAnswersReview = []; 
+    let activeIdenData = []; // State for flashcards
+    let currentCard = 0;     // State for flashcards
 
     // DOM ELEMENTS
     const menuScreen = document.getElementById('menu-screen');
     const quizScreen = document.getElementById('quiz-screen');
     const scoreScreen = document.getElementById('score-screen');
+    const flashcardScreen = document.getElementById('flashcard-screen'); // New
+    
     const quizTitle = document.getElementById('quiz-title');
     const questionEl = document.getElementById('question');
     const optionsEl = document.getElementById('options');
@@ -2208,6 +2344,16 @@
     const feedbackText = document.getElementById('feedback-text');
     const reviewArea = document.getElementById('review-area');
 
+    // FLASHCARD DOM ELEMENTS
+    const fcQuestion = document.getElementById('fc-question');
+    const fcAnswerBox = document.getElementById('fc-answer-box');
+    const fcAnswer = document.getElementById('fc-answer');
+    const fcRevealBtn = document.getElementById('reveal-btn');
+    const fcNextBtn = document.getElementById('fc-next-btn');
+    const fcFinishBtn = document.getElementById('fc-finish-btn');
+    const fcProgress = document.getElementById('fc-progress');
+    const fcProgressBar = document.getElementById('fc-progress-bar');
+
     function shuffleArray(array) {
         let shuffled = [...array];
         for (let i = shuffled.length - 1; i > 0; i--) {
@@ -2217,6 +2363,7 @@
         return shuffled;
     }
 
+    // MULTIPLE CHOICE QUIZ LOGIC
     function startQuiz(quizID) {
         let selectedQuiz = [];
         
@@ -2236,29 +2383,26 @@
             selectedQuiz = quizTF;
             quizTitle.innerText = "True or False Exam";
         } else if (quizID === 'MASTER') {
-            // Master Exam: Equal representation across all 4 modules
-            const sampleU0 = shuffleArray(quizU0).slice(0, 13); // Gets 13 random questions
-            const sampleU1 = shuffleArray(quizU1).slice(0, 13); // Gets 13 random questions
-            const sampleU2 = shuffleArray(quizU2).slice(0, 12); // Gets 12 random questions
-            const sampleU3 = shuffleArray(quizU3).slice(0, 12); // Gets 12 random questions
-            
-            // Combine them into a single 50-item array
+            const sampleU0 = shuffleArray(quizU0).slice(0, 13);
+            const sampleU1 = shuffleArray(quizU1).slice(0, 13);
+            const sampleU2 = shuffleArray(quizU2).slice(0, 12);
+            const sampleU3 = shuffleArray(quizU3).slice(0, 12);
             selectedQuiz = [...sampleU0, ...sampleU1, ...sampleU2, ...sampleU3];
             quizTitle.innerText = "★ MASTER EXAM MODE (50 Mixed Questions) ★";
         }
 
-        // Shuffle the final selected questions
         activeData = shuffleArray(selectedQuiz);
-        
         currentQuestion = 0;
         score = 0;
-        wrongAnswersReview = []; // Reset the review tracker
+        wrongAnswersReview = [];
         
         menuScreen.style.display = 'none';
+        flashcardScreen.style.display = 'none';
         quizScreen.style.display = 'block';
         
         loadQuestion();
     }
+
     function loadQuestion() {
         nextBtn.style.display = 'none';
         feedbackBox.style.display = 'none';
@@ -2314,7 +2458,6 @@
                 correct: currentQuizData.answer
             });
 
-            // Look up the distractor term in the dictionary
             let definitionText = "";
             if (termDictionary[selected]) {
                 definitionText = `<div class="rationale"><strong>Wait, what is ${selected}?</strong><br>${termDictionary[selected]}</div>`;
@@ -2374,7 +2517,58 @@
 
     function returnToMenu() {
         scoreScreen.style.display = 'none';
+        flashcardScreen.style.display = 'none';
         menuScreen.style.display = 'block';
+    }
+
+
+    // ==========================================
+    // FLASHCARD / IDENTIFICATION LOGIC
+    // ==========================================
+    function startFlashcards() {
+        activeIdenData = shuffleArray(quizIden);
+        currentCard = 0;
+        
+        menuScreen.style.display = 'none';
+        quizScreen.style.display = 'none';
+        flashcardScreen.style.display = 'block';
+        
+        loadFlashcard();
+    }
+
+    function loadFlashcard() {
+        const currentData = activeIdenData[currentCard];
+        
+        fcProgress.innerText = `Card ${currentCard + 1} of ${activeIdenData.length}`;
+        const progressPercent = (currentCard / activeIdenData.length) * 100;
+        fcProgressBar.style.width = `${progressPercent}%`;
+
+        fcQuestion.innerText = currentData.q;
+        fcAnswer.innerText = currentData.a;
+        
+        fcAnswerBox.style.display = 'none';
+        fcNextBtn.style.display = 'none';
+        fcFinishBtn.style.display = 'none';
+        fcRevealBtn.style.display = 'block';
+    }
+
+    function revealAnswer() {
+        fcRevealBtn.style.display = 'none';
+        fcAnswerBox.style.display = 'block';
+        
+        const progressPercent = ((currentCard + 1) / activeIdenData.length) * 100;
+        fcProgressBar.style.width = `${progressPercent}%`;
+
+        if (currentCard === activeIdenData.length - 1) {
+            fcFinishBtn.style.display = 'block';
+        } else {
+            fcNextBtn.style.display = 'block';
+        }
+    }
+
+    function nextFlashcard() {
+        currentCard++;
+        loadFlashcard();
     }
 </script>
 
