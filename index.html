@@ -174,6 +174,7 @@
     <button class="option action-btn menu-btn" onclick="startQuiz('U2')">U2: Robot Sensors</button>
     <button class="option action-btn menu-btn" onclick="startQuiz('U3')">U3: Robot Grippers & Programming</button>
     <button class="option action-btn master-btn" onclick="startQuiz('MASTER')">★ MASTER EXAM MODE (All Modules) ★</button>
+    <button class="option action-btn master-btn" onclick="startQuiz('TRUE OR FALSE')">★ TRUE OR FALSE (All Modules) ★</button>
 </div>
 
 <!-- QUIZ SCREEN -->
@@ -1405,6 +1406,512 @@
         }
     ];
 
+  // TRUE OR FALSE EXAM DATA (100 Questions)
+    const quizTF = [
+        // --- ORIGINAL 50 QUESTIONS ---
+        {
+            question: "Karel Čapek coined the term 'robotics' in his 1921 play 'Rossum's Universal Robots'.",
+            options: ["True", "False"],
+            answer: "False" // He coined "robot". Isaac Asimov coined "robotics".
+        },
+        {
+            question: "The McCulloch-Pitts Neuron Model, published in 1943, was the first mathematical and computational model of a biological neuron.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Unimation, the first successful robot manufacturing company, was formed by George Devol and Marvin Minsky.",
+            options: ["True", "False"],
+            answer: "False" // It was George Devol and Joseph Engelberger.
+        },
+        {
+            question: "According to Asimov's Three Laws, a robot's primary directive is to protect its own existence above all else.",
+            options: ["True", "False"],
+            answer: "False" // Protecting its own existence is the Third Law. The First Law is not injuring a human.
+        },
+        {
+            question: "The degree of freedom associated with a robot wrist's side-to-side motion is called Yaw.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "A cylindrical robot operates strictly in three linear directions: up/down, left/right, and front/back.",
+            options: ["True", "False"],
+            answer: "False" // That defines a Rectilinear/Cartesian robot.
+        },
+        {
+            question: "Playback robots memorize and record motion paths, allowing them to repeat tasks continuously without further guidance.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Resolution describes the ability of a robot to return to a specific position consistently over multiple cycles.",
+            options: ["True", "False"],
+            answer: "False" // That defines Repeatability. Resolution is the smallest incremental movement.
+        },
+        {
+            question: "In MATLAB, the fix(x) function rounds a value toward minus infinity.",
+            options: ["True", "False"],
+            answer: "False" // floor(x) rounds toward minus infinity. fix(x) rounds toward zero.
+        },
+        {
+            question: "MATLAB variable names can be up to 63 characters long and are case-sensitive.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "A double forward slash (//) is used to signify a comment in MATLAB code.",
+            options: ["True", "False"],
+            answer: "False" // The percentage sign (%) is used for comments in MATLAB.
+        },
+        {
+            question: "In linear algebra, an ill-conditioned system is characterized by slopes that are very close, making the intersection difficult to detect visually.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "In a symmetric matrix, all off-diagonal elements are exactly zero.",
+            options: ["True", "False"],
+            answer: "False" // That defines a Diagonal matrix. A symmetric matrix means mirrored elements across the diagonal.
+        },
+        {
+            question: "For matrix multiplication [A][B] to be valid, the number of columns in [A] must equal the number of rows in [B].",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The trace of a matrix is obtained by swapping its rows and its columns.",
+            options: ["True", "False"],
+            answer: "False" // Swapping rows and columns produces the Transpose. Trace is the sum of the main diagonal.
+        },
+        {
+            question: "LU Decomposition factors a coefficient matrix into a Lower Triangular matrix and an Upper Triangular matrix.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "An upper triangular system is typically solved using forward substitution.",
+            options: ["True", "False"],
+            answer: "False" // Upper triangular systems use Back Substitution. Lower triangular uses Forward Substitution.
+        },
+        {
+            question: "A transducer is a collective term that can apply to both sensors and actuators, as it converts one form of energy into another.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "A Light Dependent Resistor (LDR) is an example of an active sensor because it generates its own light signal.",
+            options: ["True", "False"],
+            answer: "False" // It is a passive sensor because it relies on an external light stimulus.
+        },
+        {
+            question: "Capacitive proximity sensors can detect nonmetallic materials like paper and glass, whereas inductive proximity sensors rely on magnetic fields to detect metals.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The sensitivity of a capacitive sensor is entirely unaffected by the moisture content of the target substance.",
+            options: ["True", "False"],
+            answer: "False" // Moisture content highly affects the sensitivity because it changes the dielectric constant.
+        },
+        {
+            question: "In an ultrasonic sensor, an object placed in the blind zone (typically 6 to 80 cm directly in front) will produce an unstable output.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "'Blanking out the background' refers to reducing the operating frequency of a sensor to ignore small dust particles.",
+            options: ["True", "False"],
+            answer: "False" // It refers to ignoring objects beyond the upper limit of the sensor's range.
+        },
+        {
+            question: "The sound velocity of an ultrasonic sensor decreases by approximately 3.6% between sea level and 3 km above sea level due to pressure changes.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Ultrasonic sensors work perfectly in a vacuum because there is no air resistance to slow down the high-frequency sound pulses.",
+            options: ["True", "False"],
+            answer: "False" // They cannot operate in a vacuum because sound requires a medium to travel.
+        },
+        {
+            question: "In ultrasonic sensing, coarse-grained materials like sand can have an angular deviation of up to 45 degrees because sound reflects over a larger angle.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Thru-beam ultrasonic sensors rely on a reflector placed at a preset operating range to bounce the pulse back to the sensor.",
+            options: ["True", "False"],
+            answer: "False" // That describes Reflex Mode. Thru-beam uses a separate transmitter and receiver.
+        },
+        {
+            question: "High humidity leads to an increase in sound velocity, giving an ultrasonic sensor the impression of a shorter distance to the target.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Machine vision primarily focuses on the mathematical extraction of 3D features, while computer vision is restricted to industrial quality control.",
+            options: ["True", "False"],
+            answer: "False" // Reversed. Machine vision is used for industrial automation; computer vision is the broader field.
+        },
+        {
+            question: "Identifying missing pieces inside a packaged box using a camera is an example of a 'Counting' application in machine vision.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Python is a low-level, compiled programming language primarily used for embedded microcontroller firmware.",
+            options: ["True", "False"],
+            answer: "False" // Python is a high-level, interpreted programming language.
+        },
+        {
+            question: "In Python, indentation is not just for readability; it is syntactically significant and indicates a block of code.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The Python library 'NumPy' is mainly used for creating data visualizations like histograms and scatterplots.",
+            options: ["True", "False"],
+            answer: "False" // Matplotlib is used for visualization. NumPy is for numerical computing and arrays.
+        },
+        {
+            question: "Keras is a high-level deep learning API in Python that typically uses TensorFlow as a backend to simplify complex neural network workflows.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Google Colab is an offline Desktop IDE similar to Spyder, requiring heavy local installation and configuration.",
+            options: ["True", "False"],
+            answer: "False" // Google Colab is a web-based, zero-configuration cloud environment.
+        },
+        {
+            question: "A toggle gripper uses a pivot movement that acts as an over-center lock, providing a high grip force-to-weight ratio.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Hydraulic gripper drives are known for their small footprint, low cost, and fast assembly, but suffer from low strength.",
+            options: ["True", "False"],
+            answer: "False" // Hydraulic drives are known for high strength and speed but take up a large floor space.
+        },
+        {
+            question: "An angular gripper features jaws that open and close around a central pivot point using a sweeping or arcing motion.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "C++ is a purely procedural programming language, while C is an object-oriented extension of C++.",
+            options: ["True", "False"],
+            answer: "False" // Reversed. C is procedural, and C++ is the object-oriented extension of C.
+        },
+        {
+            question: "In C programming, every statement must terminate with a semicolon.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The '%f' format specifier is used in C's printf() function as a placeholder for character variables.",
+            options: ["True", "False"],
+            answer: "False" // '%f' is for floating-point values. '%c' is for characters.
+        },
+        {
+            question: "The 'int main()' function is the primary starting point where program execution begins in a C application.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The Arduino Leonardo is built on the ATmega2560 and is designed for complex projects requiring 54 digital I/O pins.",
+            options: ["True", "False"],
+            answer: "False" // That describes the Arduino Mega. The Leonardo is known for its built-in USB HID communication.
+        },
+        {
+            question: "The setup() function in an Arduino sketch executes only once upon startup or after a reset.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "On the Arduino Nano, the analog pins A0-A7 map directly to internal port B.",
+            options: ["True", "False"],
+            answer: "False" // They map to Port C. (D2-D13 map to B and D).
+        },
+        {
+            question: "The Arduino Software (IDE) relies on USB connections to facilitate both seamless program uploads and serial data transfer for debugging.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The 1st Industrial Revolution introduced mass production, the assembly line, and electricity.",
+            options: ["True", "False"],
+            answer: "False" // That was the 2nd Industrial Revolution. The 1st introduced steam power and textiles.
+        },
+        {
+            question: "The 3rd Industrial Revolution, spanning roughly from 1969 to 2010, is heavily associated with the introduction of personal computers, electronics, and the internet.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The term 'Internet of Things' (IoT) was coined during the 1st Industrial Revolution by Charles Babbage.",
+            options: ["True", "False"],
+            answer: "False" // It was coined in 1999 by Kevin Ashton.
+        },
+        {
+            question: "Additive manufacturing, cybersecurity, and digital twins are hallmark technologies of the 4th Industrial Revolution.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+
+        // --- NEW 50 CHALLENGING QUESTIONS ---
+        {
+            question: "Charles Babbage's analytical engine design in 1835 is considered the world's first general-purpose computer.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Benjamin Franklin's 1752 kite experiment proved that magnetism is a form of electricity.",
+            options: ["True", "False"],
+            answer: "False" // Proved lightning is a form of electricity.
+        },
+        {
+            question: "In 1951, Raymond Goertz designed the first programmable robot and coined the term 'universal automation'.",
+            options: ["True", "False"],
+            answer: "False" // George Devol did this in 1954. Goertz designed a tele-operator arm.
+        },
+        {
+            question: "Norbert Wiener's 1948 book 'Cybernetics' describes communications and control in electronic, mechanical, and biological systems.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The SCOT project, an autonomous driverless car, was developed exclusively by De La Salle University.",
+            options: ["True", "False"],
+            answer: "False" // Developed by NUS and MIT. DLSU developed BRAVE.
+        },
+        {
+            question: "The communicator of a robot is responsible for producing motion using electricity, pneumatics, or hydraulics.",
+            options: ["True", "False"],
+            answer: "False" // Actuators produce motion.
+        },
+        {
+            question: "Wrist roll refers to the up and down motion of the robot's wrist.",
+            options: ["True", "False"],
+            answer: "False" // Pitch is up and down; roll is rotation about the forearm axis.
+        },
+        {
+            question: "A spherical robot operates within a work envelope combining polar articulation with rectilinear motion.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Numerically Controlled Robots are simple pick-and-place machines that strictly follow a variable sequence without digital data.",
+            options: ["True", "False"],
+            answer: "False" // NC robots are servo-controlled by digital data.
+        },
+        {
+            question: "Continuous path programming produces only a two-position, 'bang-bang' motion.",
+            options: ["True", "False"],
+            answer: "False" // Positive Stop produces bang-bang motion.
+        },
+        {
+            question: "In MATLAB, the command 'clc' removes all variables from the memory workspace.",
+            options: ["True", "False"],
+            answer: "False" // 'clc' clears the Command Window; 'clear' removes variables.
+        },
+        {
+            question: "The predefined MATLAB variable 'eps' represents the smallest difference.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The MATLAB function 'ceil(x)' rounds a value toward minus infinity.",
+            options: ["True", "False"],
+            answer: "False" // ceil rounds toward infinity; floor rounds toward minus infinity.
+        },
+        {
+            question: "In MATLAB arithmetic, the '^' symbol is used to represent left division.",
+            options: ["True", "False"],
+            answer: "False" // '^' is exponentiation, '\' is left division.
+        },
+        {
+            question: "The 'format bank' command configures MATLAB to display numbers with exactly two decimal digits.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The trace of a matrix is calculated by multiplying all the main-diagonal elements together.",
+            options: ["True", "False"],
+            answer: "False" // It is the sum of the main-diagonal elements.
+        },
+        {
+            question: "A banded matrix is one where all elements are zero except for a specific band around the main diagonal.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "In the matrix equation [A]{X} = {B}, {B} represents the unknown vector.",
+            options: ["True", "False"],
+            answer: "False" // {B} represents the constant vector; {X} is the unknown vector.
+        },
+        {
+            question: "The Gauss-Jordan Method transforms linear equations into a diagonal form matrix where coefficients are only on the diagonal.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "A passive sensor generates its own signal, transmits it, and measures the reflected signal from the target.",
+            options: ["True", "False"],
+            answer: "False" // That describes an Active Sensor.
+        },
+        {
+            question: "The base SI unit for magnetic flux density is the Tesla.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Inductive proximity sensors rely on the dielectric constant of the target, making them suitable for sensing nonmetallic materials like wood.",
+            options: ["True", "False"],
+            answer: "False" // That describes Capacitive sensors. Inductive sensors rely on high turns ratio coils to detect metals.
+        },
+        {
+            question: "The sensing surface of a capacitive sensor is formed by two concentrically shaped metal electrodes of an unwound capacitor.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "According to the reviewer, water has a dielectric constant of 80, making it easier to detect with a capacitive sensor than an air vacuum.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "An ultrasonic sensor operates by producing high-frequency electromagnetic fields to measure distance.",
+            options: ["True", "False"],
+            answer: "False" // It uses high-frequency sound signals.
+        },
+        {
+            question: "When two sonar devices are mounted too close to each other, mutual interference can occur, causing echoes to reflect to the wrong sensor.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The maximum angular deviation for aligning an ultrasonic sensor directly to a flat liquid surface is exactly 45 degrees.",
+            options: ["True", "False"],
+            answer: "False" // It's +/- 3 degrees. Coarse-grained material can have up to 45 degrees.
+        },
+        {
+            question: "In diffuse mode operation, objects traveling in any direction into the operating range of the sound cone will cause the sensor output to switch states.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "In reflex mode, an ultrasonic sensor relies on a separate transmitter and receiver to interrupt a constant sound beam.",
+            options: ["True", "False"],
+            answer: "False" // That is Thru-Beam mode. Reflex mode uses a reflector.
+        },
+        {
+            question: "As humidity increases, the sound velocity of an ultrasonic sensor also increases, leading to the impression of a shorter distance to the target.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Machine vision traditionally refers to the capture of images across wide consumer applications, while computer vision is restricted solely to industrial process control.",
+            options: ["True", "False"],
+            answer: "False" // Reversed. Machine vision is used for industrial automation; computer vision is the broader field.
+        },
+        {
+            question: "In the robotic vision process, the 'Connectivity and response' step occurs immediately after image processing.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Python is an interpreted, high-level, general-purpose programming language that was released in 1991.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The Python library Pandas is foundational for numerical computing and building fast n-dimensional arrays, whereas NumPy is used for DataFrames.",
+            options: ["True", "False"],
+            answer: "False" // Swapped. Pandas is DataFrames/Analysis, NumPy is numerical/n-dimensional arrays.
+        },
+        {
+            question: "JupyterLab is described as a next-generation web-based user interface for Project Jupyter.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "Anaconda is a distribution of Python and R specifically designed to simplify package management and deployment for web development.",
+            options: ["True", "False"],
+            answer: "False" // It is designed for scientific computing.
+        },
+        {
+            question: "An angular gripper features jaws that open and close around a central pivot point using a sweeping or arcing motion.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "A pneumatic gripper drive mechanism provides high accuracy and repeatability but is highly susceptible to motor damage.",
+            options: ["True", "False"],
+            answer: "False" // That describes Electric Motors.
+        },
+        {
+            question: "Incorporating an encompassing or V-groove finger shape in a gripper's design is primarily done to increase stability.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The C programming language was created by Bjarne Stroustrup in 1972.",
+            options: ["True", "False"],
+            answer: "False" // It was Dennis Ritchie. Bjarne created C++.
+        },
+        {
+            question: "The core difference between C and C++ is that C++ supports object-oriented programming, whereas C is procedural.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "In the C programming language, the '%d' or '%i' format specifiers act as placeholders for floating-point decimals.",
+            options: ["True", "False"],
+            answer: "False" // They are for integers. '%f' is for floats.
+        },
+        {
+            question: "The '#include <stdio.h>' header file library in C is required to allow input/output operations like the printf() function.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The Arduino Leonardo was the first Arduino development board to feature a microcontroller with built-in USB communication.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "In an Arduino program structure, the loop() function executes only once upon startup or after a hardware reset.",
+            options: ["True", "False"],
+            answer: "False" // That is the setup() function.
+        },
+        {
+            question: "On the Arduino Nano, the analog pins A0-A7 map directly to the internal port C register.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "The 1st Industrial Revolution introduced the internal combustion engine and mass production assembly lines.",
+            options: ["True", "False"],
+            answer: "False" // That was the 2nd Industrial Revolution. 1st was steam power and textiles.
+        },
+        {
+            question: "The personal computer, electronics, and the internet were major hallmarks of the 3rd Industrial Revolution.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "'Digital Twin' and 'Additive Manufacturing' are characteristics associated with the 4th Industrial Revolution.",
+            options: ["True", "False"],
+            answer: "True"
+        },
+        {
+            question: "'Data Mining' is the term coined by Kevin Ashton in 1999 to describe structured data pipelines.",
+            options: ["True", "False"],
+            answer: "False" // Clive Humby coined "data is the new oil" for Data Mining. Kevin Ashton coined "IoT".
+        }
+    ];
 // EXPANDED DICTIONARY OF TERMS FOR INCORRECT ANSWERS
     const termDictionary = {
         // PUP VMGO & DATA
@@ -1725,6 +2232,9 @@
         } else if (quizID === 'U3') {
             selectedQuiz = quizU3;
             quizTitle.innerText = "U3: Robot Grippers & Programming Quiz";
+        } else if (quizID === 'TF') {
+            selectedQuiz = quizTF;
+            quizTitle.innerText = "True or False Exam";
         } else if (quizID === 'MASTER') {
             // Master Exam: Equal representation across all 4 modules
             const sampleU0 = shuffleArray(quizU0).slice(0, 13); // Gets 13 random questions
@@ -1737,7 +2247,7 @@
             quizTitle.innerText = "★ MASTER EXAM MODE (50 Mixed Questions) ★";
         }
 
-        // Shuffle the final selected questions so the modules are mixed up
+        // Shuffle the final selected questions
         activeData = shuffleArray(selectedQuiz);
         
         currentQuestion = 0;
