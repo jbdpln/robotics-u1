@@ -137,19 +137,35 @@
             background-color: #45a049 !important;
             border-color: #45a049 !important;
         }
-        .menu-btn { background-color: #4da6ff; border-color: #4da6ff; color: #1a1a24; }
-        .menu-btn:hover { background-color: #3388dd !important; border-color: #3388dd !important; }
-        
-        .master-btn { background-color: #9d4edd; border-color: #9d4edd; color: white;}
-        .master-btn:hover { background-color: #7b2cbf !important; border-color: #7b2cbf !important;}
+        /* --- NEW MONOCHROMATIC GRADIENT BUTTONS --- */
+        .btn-mod { 
+            background: linear-gradient(135deg, #5eb0ff, #4da6ff); 
+            border: none; 
+            color: #1a1a24; 
+        }
+        .btn-mod:hover { background: linear-gradient(135deg, #4da6ff, #3388dd); }
 
-        .iden-btn { background-color: #f44336; border-color: #f44336; color: white;}
-        .iden-btn:hover { background-color: #d32f2f !important; border-color: #d32f2f !important;}
+        .btn-tf { 
+            background: linear-gradient(135deg, #3388dd, #2779d6); 
+            border: none; 
+            color: #ffffff; 
+        }
+        .btn-tf:hover { background: linear-gradient(135deg, #2779d6, #1b68c2); }
 
-        #quiz-screen, #score-screen, #flashcard-screen { display: none; }
-        #next-btn { display: none; }
-        .menu-desc { text-align: center; margin-bottom: 30px; color: #ccc; }
+        .btn-flash { 
+            background: linear-gradient(135deg, #2779d6, #175eab); 
+            border: none; 
+            color: #ffffff; 
+        }
+        .btn-flash:hover { background: linear-gradient(135deg, #175eab, #0f4b8f); }
 
+        .btn-master { 
+            background: linear-gradient(135deg, #175eab, #0a4282); 
+            border: none; 
+            color: #ffffff; 
+            box-shadow: 0 4px 10px rgba(10, 66, 130, 0.4);
+        }
+        .btn-master:hover { background: linear-gradient(135deg, #0f4b8f, #063166); }
         .review-container {
             margin-top: 30px;
             max-height: 400px;
@@ -186,15 +202,16 @@
 <div class="quiz-container" id="menu-screen">
     <h2>Robotics Reviewer Quizzes</h2>
     <p class="menu-desc">Select a module to begin testing your knowledge.</p>
-    <button class="option action-btn menu-btn" onclick="startQuiz('U0')">U0: History of Robotics</button>
-    <button class="option action-btn menu-btn" onclick="startQuiz('U1')">U1: Intro to Robotics & Concepts</button>
-    <button class="option action-btn menu-btn" onclick="startQuiz('U2')">U2: Robot Sensors</button>
-    <button class="option action-btn menu-btn" onclick="startQuiz('U3')">U3: Robot Grippers & Programming</button>
     
-    <button class="option action-btn menu-btn" style="background-color: #ff9800; border-color: #ff9800; color: white;" onclick="startQuiz('TF')">True or False Exam</button>
-    <button class="option action-btn iden-btn" onclick="startFlashcards()">Flashcards: Identification Mode</button>
+    <button class="option action-btn btn-mod" onclick="startQuiz('U0')">U0: History of Robotics</button>
+    <button class="option action-btn btn-mod" onclick="startQuiz('U1')">U1: Intro to Robotics & Concepts</button>
+    <button class="option action-btn btn-mod" onclick="startQuiz('U2')">U2: Robot Sensors</button>
+    <button class="option action-btn btn-mod" onclick="startQuiz('U3')">U3: Robot Grippers & Programming</button>
     
-    <button class="option action-btn master-btn" onclick="startQuiz('MASTER')">★ MASTER EXAM MODE (All Modules) ★</button>
+    <button class="option action-btn btn-tf" onclick="startQuiz('TF')">True or False Exam</button>
+    <button class="option action-btn btn-flash" onclick="startFlashcards()">Flashcards: Identification Mode</button>
+    
+    <button class="option action-btn btn-master" onclick="startQuiz('MASTER')">★ MASTER EXAM MODE (All Modules) ★</button>
 </div>
 
 <!-- MULTIPLE CHOICE QUIZ SCREEN -->
@@ -1432,508 +1449,607 @@
 
   // TRUE OR FALSE EXAM DATA (100 Questions)
     const quizTF = [
-        // --- ORIGINAL 50 QUESTIONS ---
         {
             question: "Karel Čapek coined the term 'robotics' in his 1921 play 'Rossum's Universal Robots'.",
             options: ["True", "False"],
-            answer: "False" // He coined "robot". Isaac Asimov coined "robotics".
+            answer: "False",
+            trivia: "Karel Čapek coined the word 'robot'. It was Isaac Asimov who coined 'robotics'."
         },
         {
             question: "The McCulloch-Pitts Neuron Model, published in 1943, was the first mathematical and computational model of a biological neuron.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "It was published in 'A Logical Calculus of the Ideas Immanent in Nervous Activity'."
         },
         {
             question: "Unimation, the first successful robot manufacturing company, was formed by George Devol and Marvin Minsky.",
             options: ["True", "False"],
-            answer: "False" // It was George Devol and Joseph Engelberger.
+            answer: "False",
+            trivia: "It was formed by George Devol and Joseph Engelberger in 1956."
         },
         {
             question: "According to Asimov's Three Laws, a robot's primary directive is to protect its own existence above all else.",
             options: ["True", "False"],
-            answer: "False" // Protecting its own existence is the Third Law. The First Law is not injuring a human.
+            answer: "False",
+            trivia: "Protecting its own existence is the Third Law. The First Law is that a robot may not injure a human."
         },
         {
             question: "The degree of freedom associated with a robot wrist's side-to-side motion is called Yaw.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "Pitch is up and down, Yaw is side-to-side, and Roll is rotation."
         },
         {
             question: "A cylindrical robot operates strictly in three linear directions: up/down, left/right, and front/back.",
             options: ["True", "False"],
-            answer: "False" // That defines a Rectilinear/Cartesian robot.
+            answer: "False",
+            trivia: "That defines a Rectilinear/Cartesian robot. A cylindrical robot has an arm that swings around its base."
         },
         {
             question: "Playback robots memorize and record motion paths, allowing them to repeat tasks continuously without further guidance.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "They record the path once and play it back continuously."
         },
         {
             question: "Resolution describes the ability of a robot to return to a specific position consistently over multiple cycles.",
             options: ["True", "False"],
-            answer: "False" // That defines Repeatability. Resolution is the smallest incremental movement.
+            answer: "False",
+            trivia: "That defines Repeatability. Resolution is the smallest incremental movement the robot can execute."
         },
         {
             question: "In MATLAB, the fix(x) function rounds a value toward minus infinity.",
             options: ["True", "False"],
-            answer: "False" // floor(x) rounds toward minus infinity. fix(x) rounds toward zero.
+            answer: "False",
+            trivia: "floor(x) rounds toward minus infinity. fix(x) rounds toward zero."
         },
         {
             question: "MATLAB variable names can be up to 63 characters long and are case-sensitive.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "They must also begin with a letter and contain no spaces."
         },
         {
             question: "A double forward slash (//) is used to signify a comment in MATLAB code.",
             options: ["True", "False"],
-            answer: "False" // The percentage sign (%) is used for comments in MATLAB.
+            answer: "False",
+            trivia: "The percentage sign (%) is used for comments in MATLAB."
         },
         {
             question: "In linear algebra, an ill-conditioned system is characterized by slopes that are very close, making the intersection difficult to detect visually.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "This is a major drawback of the graphical method."
         },
         {
             question: "In a symmetric matrix, all off-diagonal elements are exactly zero.",
             options: ["True", "False"],
-            answer: "False" // That defines a Diagonal matrix. A symmetric matrix means mirrored elements across the diagonal.
+            answer: "False",
+            trivia: "That defines a Diagonal matrix. A symmetric matrix has mirrored elements across the diagonal."
         },
         {
             question: "For matrix multiplication [A][B] to be valid, the number of columns in [A] must equal the number of rows in [B].",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "The interior dimensions must match."
         },
         {
             question: "The trace of a matrix is obtained by swapping its rows and its columns.",
             options: ["True", "False"],
-            answer: "False" // Swapping rows and columns produces the Transpose. Trace is the sum of the main diagonal.
+            answer: "False",
+            trivia: "Swapping rows and columns produces the Transpose. Trace is the sum of the main diagonal."
         },
         {
             question: "LU Decomposition factors a coefficient matrix into a Lower Triangular matrix and an Upper Triangular matrix.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "This can be solved using Gauss Elimination, Crout's Method, or Choleski's Method."
         },
         {
             question: "An upper triangular system is typically solved using forward substitution.",
             options: ["True", "False"],
-            answer: "False" // Upper triangular systems use Back Substitution. Lower triangular uses Forward Substitution.
+            answer: "False",
+            trivia: "Upper triangular systems use Back Substitution. Lower triangular uses Forward Substitution."
         },
         {
             question: "A transducer is a collective term that can apply to both sensors and actuators, as it converts one form of energy into another.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "A sensor converts physical phenomena into signals, while an actuator converts signals into motion."
         },
         {
             question: "A Light Dependent Resistor (LDR) is an example of an active sensor because it generates its own light signal.",
             options: ["True", "False"],
-            answer: "False" // It is a passive sensor because it relies on an external light stimulus.
+            answer: "False",
+            trivia: "It is a passive sensor because it relies on an external light stimulus."
         },
         {
             question: "Capacitive proximity sensors can detect nonmetallic materials like paper and glass, whereas inductive proximity sensors rely on magnetic fields to detect metals.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "Inductive sensors use a high turns ratio coil to detect ferrous and non-ferrous metals."
         },
         {
             question: "The sensitivity of a capacitive sensor is entirely unaffected by the moisture content of the target substance.",
             options: ["True", "False"],
-            answer: "False" // Moisture content highly affects the sensitivity because it changes the dielectric constant.
+            answer: "False",
+            trivia: "Moisture content highly affects the sensitivity because it drastically changes the dielectric constant (water has a constant of 80)."
         },
         {
             question: "In an ultrasonic sensor, an object placed in the blind zone (typically 6 to 80 cm directly in front) will produce an unstable output.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "The sensor cannot accurately measure objects that are too close to the face."
         },
         {
             question: "'Blanking out the background' refers to reducing the operating frequency of a sensor to ignore small dust particles.",
             options: ["True", "False"],
-            answer: "False" // It refers to ignoring objects beyond the upper limit of the sensor's range.
+            answer: "False",
+            trivia: "It refers to intentionally ignoring objects located beyond the upper limit of the sensor's preset operating range."
         },
         {
             question: "The sound velocity of an ultrasonic sensor decreases by approximately 3.6% between sea level and 3 km above sea level due to pressure changes.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "Environmental factors like pressure, temperature, and humidity directly affect sonic wave speed."
         },
         {
             question: "Ultrasonic sensors work perfectly in a vacuum because there is no air resistance to slow down the high-frequency sound pulses.",
             options: ["True", "False"],
-            answer: "False" // They cannot operate in a vacuum because sound requires a medium to travel.
+            answer: "False",
+            trivia: "They cannot operate in a vacuum at all because sound requires a physical medium (like air) to travel."
         },
         {
             question: "In ultrasonic sensing, coarse-grained materials like sand can have an angular deviation of up to 45 degrees because sound reflects over a larger angle.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "Flat surfaces are limited to a maximum deviation of ±3 degrees."
         },
         {
             question: "Thru-beam ultrasonic sensors rely on a reflector placed at a preset operating range to bounce the pulse back to the sensor.",
             options: ["True", "False"],
-            answer: "False" // That describes Reflex Mode. Thru-beam uses a separate transmitter and receiver.
+            answer: "False",
+            trivia: "That describes Reflex Mode. Thru-beam requires two separate devices: a dedicated transmitter and receiver."
         },
         {
             question: "High humidity leads to an increase in sound velocity, giving an ultrasonic sensor the impression of a shorter distance to the target.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "The increase in velocity from dry to moisture-saturated air is up to 2%."
         },
         {
             question: "Machine vision primarily focuses on the mathematical extraction of 3D features, while computer vision is restricted to industrial quality control.",
             options: ["True", "False"],
-            answer: "False" // Reversed. Machine vision is used for industrial automation; computer vision is the broader field.
+            answer: "False",
+            trivia: "It's the reverse. Machine vision is used for industrial automation; computer vision is the broader academic/analytical field."
         },
         {
             question: "Identifying missing pieces inside a packaged box using a camera is an example of a 'Counting' application in machine vision.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "Counting verifies the presence or absence of specific parts in a product."
         },
         {
             question: "Python is a low-level, compiled programming language primarily used for embedded microcontroller firmware.",
             options: ["True", "False"],
-            answer: "False" // Python is a high-level, interpreted programming language.
+            answer: "False",
+            trivia: "Python is a high-level, interpreted programming language used for web apps, data science, and AI."
         },
         {
             question: "In Python, indentation is not just for readability; it is syntactically significant and indicates a block of code.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "Missing required indentation will result in a Syntax Error."
         },
         {
             question: "The Python library 'NumPy' is mainly used for creating data visualizations like histograms and scatterplots.",
             options: ["True", "False"],
-            answer: "False" // Matplotlib is used for visualization. NumPy is for numerical computing and arrays.
+            answer: "False",
+            trivia: "Matplotlib is used for visualization. NumPy is foundational for numerical computing and n-dimensional arrays."
         },
         {
             question: "Keras is a high-level deep learning API in Python that typically uses TensorFlow as a backend to simplify complex neural network workflows.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "It provides a simpler interface to build neural networks on top of TensorFlow."
         },
         {
             question: "Google Colab is an offline Desktop IDE similar to Spyder, requiring heavy local installation and configuration.",
             options: ["True", "False"],
-            answer: "False" // Google Colab is a web-based, zero-configuration cloud environment.
+            answer: "False",
+            trivia: "Google Colab is a web-based, zero-configuration cloud environment that provides free access to GPUs."
         },
         {
             question: "A toggle gripper uses a pivot movement that acts as an over-center lock, providing a high grip force-to-weight ratio.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "The toggle mechanism locks the object mechanically without requiring continuous actuator force."
         },
         {
             question: "Hydraulic gripper drives are known for their small footprint, low cost, and fast assembly, but suffer from low strength.",
             options: ["True", "False"],
-            answer: "False" // Hydraulic drives are known for high strength and speed but take up a large floor space.
+            answer: "False",
+            trivia: "Hydraulic drives provide immense strength and speed but take up a large floor space. Pneumatics are small and fast."
         },
         {
             question: "An angular gripper features jaws that open and close around a central pivot point using a sweeping or arcing motion.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "It is ideal when jaws need to move up and out of the way in limited spaces."
         },
         {
             question: "C++ is a purely procedural programming language, while C is an object-oriented extension of C++.",
             options: ["True", "False"],
-            answer: "False" // Reversed. C is procedural, and C++ is the object-oriented extension of C.
+            answer: "False",
+            trivia: "C is procedural. C++ is the object-oriented extension of C."
         },
         {
             question: "In C programming, every statement must terminate with a semicolon.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "Failing to add the semicolon results in a compilation error."
         },
         {
             question: "The '%f' format specifier is used in C's printf() function as a placeholder for character variables.",
             options: ["True", "False"],
-            answer: "False" // '%f' is for floating-point values. '%c' is for characters.
+            answer: "False",
+            trivia: "'%f' is for floating-point decimals. '%c' is for characters."
         },
         {
             question: "The 'int main()' function is the primary starting point where program execution begins in a C application.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "The execution concludes when the block hits 'return 0;'."
         },
         {
             question: "The Arduino Leonardo is built on the ATmega2560 and is designed for complex projects requiring 54 digital I/O pins.",
             options: ["True", "False"],
-            answer: "False" // That describes the Arduino Mega. The Leonardo is known for its built-in USB HID communication.
+            answer: "False",
+            trivia: "That describes the Arduino Mega. The Leonardo is known for its built-in USB HID communication (mouse/keyboard emulation)."
         },
         {
             question: "The setup() function in an Arduino sketch executes only once upon startup or after a reset.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "After setup() completes, the loop() function runs continuously."
         },
         {
             question: "On the Arduino Nano, the analog pins A0-A7 map directly to internal port B.",
             options: ["True", "False"],
-            answer: "False" // They map to Port C. (D2-D13 map to B and D).
+            answer: "False",
+            trivia: "They map to Port C. Pins D2-D13 map to ports B and D."
         },
         {
             question: "The Arduino Software (IDE) relies on USB connections to facilitate both seamless program uploads and serial data transfer for debugging.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "The Serial Monitor can be used to send and receive commands to the board."
         },
         {
             question: "The 1st Industrial Revolution introduced mass production, the assembly line, and electricity.",
             options: ["True", "False"],
-            answer: "False" // That was the 2nd Industrial Revolution. The 1st introduced steam power and textiles.
+            answer: "False",
+            trivia: "That was the 2nd Industrial Revolution. The 1st introduced steam power and textiles."
         },
         {
             question: "The 3rd Industrial Revolution, spanning roughly from 1969 to 2010, is heavily associated with the introduction of personal computers, electronics, and the internet.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "The personal computer was introduced around 1981."
         },
         {
             question: "The term 'Internet of Things' (IoT) was coined during the 1st Industrial Revolution by Charles Babbage.",
             options: ["True", "False"],
-            answer: "False" // It was coined in 1999 by Kevin Ashton.
+            answer: "False",
+            trivia: "It was coined in 1999 by Kevin Ashton, bridging the 3rd and 4th Industrial Revolutions."
         },
         {
             question: "Additive manufacturing, cybersecurity, and digital twins are hallmark technologies of the 4th Industrial Revolution.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "The 4th revolution also includes AI, Autonomous Robots, and Cloud Computing."
         },
 
         // --- NEW 50 CHALLENGING QUESTIONS ---
         {
             question: "Charles Babbage's analytical engine design in 1835 is considered the world's first general-purpose computer.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "It featured concepts like a processor and memory well before modern computers."
         },
         {
             question: "Benjamin Franklin's 1752 kite experiment proved that magnetism is a form of electricity.",
             options: ["True", "False"],
-            answer: "False" // Proved lightning is a form of electricity.
+            answer: "False",
+            trivia: "It proved that lightning is a form of electricity, not magnetism."
         },
         {
             question: "In 1951, Raymond Goertz designed the first programmable robot and coined the term 'universal automation'.",
             options: ["True", "False"],
-            answer: "False" // George Devol did this in 1954. Goertz designed a tele-operator arm.
+            answer: "False",
+            trivia: "George Devol did this in 1954. Goertz designed a tele-operator articulated arm."
         },
         {
             question: "Norbert Wiener's 1948 book 'Cybernetics' describes communications and control in electronic, mechanical, and biological systems.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "He was a professor at MIT when he published the foundational book."
         },
         {
             question: "The SCOT project, an autonomous driverless car, was developed exclusively by De La Salle University.",
             options: ["True", "False"],
-            answer: "False" // Developed by NUS and MIT. DLSU developed BRAVE.
+            answer: "False",
+            trivia: "SCOT was developed by the National University of Singapore (NUS) and MIT. DLSU developed BRAVE."
         },
         {
             question: "The communicator of a robot is responsible for producing motion using electricity, pneumatics, or hydraulics.",
             options: ["True", "False"],
-            answer: "False" // Actuators produce motion.
+            answer: "False",
+            trivia: "Actuators produce motion. The communicator transmits info to a remote operator."
         },
         {
             question: "Wrist roll refers to the up and down motion of the robot's wrist.",
             options: ["True", "False"],
-            answer: "False" // Pitch is up and down; roll is rotation about the forearm axis.
+            answer: "False",
+            trivia: "Pitch is up and down. Roll is the rotation around the forearm axis."
         },
         {
             question: "A spherical robot operates within a work envelope combining polar articulation with rectilinear motion.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "It creates a spherical-shaped reachable workspace."
         },
         {
             question: "Numerically Controlled Robots are simple pick-and-place machines that strictly follow a variable sequence without digital data.",
             options: ["True", "False"],
-            answer: "False" // NC robots are servo-controlled by digital data.
+            answer: "False",
+            trivia: "They operate like NC machines and are explicitly controlled by digital data and servos."
         },
         {
             question: "Continuous path programming produces only a two-position, 'bang-bang' motion.",
             options: ["True", "False"],
-            answer: "False" // Positive Stop produces bang-bang motion.
+            answer: "False",
+            trivia: "Continuous path creates smooth paths. 'Positive Stop' creates bang-bang motion."
         },
         {
             question: "In MATLAB, the command 'clc' removes all variables from the memory workspace.",
             options: ["True", "False"],
-            answer: "False" // 'clc' clears the Command Window; 'clear' removes variables.
+            answer: "False",
+            trivia: "'clc' clears the text in the Command Window; 'clear' removes the variables."
         },
         {
             question: "The predefined MATLAB variable 'eps' represents the smallest difference.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "It represents a very tiny number, approximately 2.2204e-16."
         },
         {
             question: "The MATLAB function 'ceil(x)' rounds a value toward minus infinity.",
             options: ["True", "False"],
-            answer: "False" // ceil rounds toward infinity; floor rounds toward minus infinity.
+            answer: "False",
+            trivia: "ceil(x) rounds toward positive infinity; floor(x) rounds toward minus infinity."
         },
         {
             question: "In MATLAB arithmetic, the '^' symbol is used to represent left division.",
             options: ["True", "False"],
-            answer: "False" // '^' is exponentiation, '\' is left division.
+            answer: "False",
+            trivia: "'^' is for exponentiation. '\\' is used for left division."
         },
         {
             question: "The 'format bank' command configures MATLAB to display numbers with exactly two decimal digits.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "It is primarily used to represent currency/monetary values."
         },
         {
             question: "The trace of a matrix is calculated by multiplying all the main-diagonal elements together.",
             options: ["True", "False"],
-            answer: "False" // It is the sum of the main-diagonal elements.
+            answer: "False",
+            trivia: "Trace is the SUM of the main-diagonal elements, not the product."
         },
         {
             question: "A banded matrix is one where all elements are zero except for a specific band around the main diagonal.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "A tridiagonal matrix is an example of a banded matrix."
         },
         {
             question: "In the matrix equation [A]{X} = {B}, {B} represents the unknown vector.",
             options: ["True", "False"],
-            answer: "False" // {B} represents the constant vector; {X} is the unknown vector.
+            answer: "False",
+            trivia: "{B} is the constant vector. {X} represents the unknown vector."
         },
         {
             question: "The Gauss-Jordan Method transforms linear equations into a diagonal form matrix where coefficients are only on the diagonal.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "This method zeroes out elements both above and below the main diagonal."
         },
         {
             question: "A passive sensor generates its own signal, transmits it, and measures the reflected signal from the target.",
             options: ["True", "False"],
-            answer: "False" // That describes an Active Sensor.
+            answer: "False",
+            trivia: "That describes an Active Sensor (like LIDAR). Passive sensors respond to external stimuli (like ambient light)."
         },
         {
             question: "The base SI unit for magnetic flux density is the Tesla.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "Tesla represents Webers per square metre."
         },
         {
             question: "Inductive proximity sensors rely on the dielectric constant of the target, making them suitable for sensing nonmetallic materials like wood.",
             options: ["True", "False"],
-            answer: "False" // That describes Capacitive sensors. Inductive sensors rely on high turns ratio coils to detect metals.
+            answer: "False",
+            trivia: "Capacitive sensors rely on dielectric constants. Inductive sensors rely on high turns ratio coils to detect metals."
         },
         {
             question: "The sensing surface of a capacitive sensor is formed by two concentrically shaped metal electrodes of an unwound capacitor.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "When an object enters this field, it changes the capacitance in the oscillator circuit."
         },
         {
             question: "According to the reviewer, water has a dielectric constant of 80, making it easier to detect with a capacitive sensor than an air vacuum.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "Air vacuum has a dielectric constant of 1, meaning it is very hard to detect compared to water."
         },
         {
             question: "An ultrasonic sensor operates by producing high-frequency electromagnetic fields to measure distance.",
             options: ["True", "False"],
-            answer: "False" // It uses high-frequency sound signals.
+            answer: "False",
+            trivia: "It relies on high-frequency sound signals, not electromagnetic fields."
         },
         {
             question: "When two sonar devices are mounted too close to each other, mutual interference can occur, causing echoes to reflect to the wrong sensor.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "To avoid this, parallel or opposing sensors require a minimum spacing distance."
         },
         {
             question: "The maximum angular deviation for aligning an ultrasonic sensor directly to a flat liquid surface is exactly 45 degrees.",
             options: ["True", "False"],
-            answer: "False" // It's +/- 3 degrees. Coarse-grained material can have up to 45 degrees.
+            answer: "False",
+            trivia: "For flat surfaces and liquids, the maximum deviation is ±3°. Only coarse-grained materials (like sand) allow up to 45°."
         },
         {
             question: "In diffuse mode operation, objects traveling in any direction into the operating range of the sound cone will cause the sensor output to switch states.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "This is the standard, most common mode of ultrasonic sensor operation."
         },
         {
             question: "In reflex mode, an ultrasonic sensor relies on a separate transmitter and receiver to interrupt a constant sound beam.",
             options: ["True", "False"],
-            answer: "False" // That is Thru-Beam mode. Reflex mode uses a reflector.
+            answer: "False",
+            trivia: "That is Thru-Beam mode. Reflex mode uses a reflector bouncing sound back to a single transceiver unit."
         },
         {
             question: "As humidity increases, the sound velocity of an ultrasonic sensor also increases, leading to the impression of a shorter distance to the target.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "Sound travels slightly faster through moisture-saturated air."
         },
         {
             question: "Machine vision traditionally refers to the capture of images across wide consumer applications, while computer vision is restricted solely to industrial process control.",
             options: ["True", "False"],
-            answer: "False" // Reversed. Machine vision is used for industrial automation; computer vision is the broader field.
+            answer: "False",
+            trivia: "Reversed. Machine vision is specifically for industrial automation, while computer vision is the broader field."
         },
         {
             question: "In the robotic vision process, the 'Connectivity and response' step occurs immediately after image processing.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "Image Capture -> Image Processing -> Connectivity and Response."
         },
         {
             question: "Python is an interpreted, high-level, general-purpose programming language that was released in 1991.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "It was created by Guido van Rossum."
         },
         {
             question: "The Python library Pandas is foundational for numerical computing and building fast n-dimensional arrays, whereas NumPy is used for DataFrames.",
             options: ["True", "False"],
-            answer: "False" // Swapped. Pandas is DataFrames/Analysis, NumPy is numerical/n-dimensional arrays.
+            answer: "False",
+            trivia: "They are swapped. Pandas is for DataFrames and analysis. NumPy is for numerical n-dimensional arrays."
         },
         {
             question: "JupyterLab is described as a next-generation web-based user interface for Project Jupyter.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "It serves as an extensible environment for interactive computing."
         },
         {
             question: "Anaconda is a distribution of Python and R specifically designed to simplify package management and deployment for web development.",
             options: ["True", "False"],
-            answer: "False" // It is designed for scientific computing.
+            answer: "False",
+            trivia: "It is specifically designed for data science and scientific computing, not web development."
         },
         {
             question: "An angular gripper features jaws that open and close around a central pivot point using a sweeping or arcing motion.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "This type is ideal when jaws need to move up and out of the way in limited spaces."
         },
         {
             question: "A pneumatic gripper drive mechanism provides high accuracy and repeatability but is highly susceptible to motor damage.",
             options: ["True", "False"],
-            answer: "False" // That describes Electric Motors.
+            answer: "False",
+            trivia: "That describes Electric Motors. Pneumatics are fast and cheap but require precise system control."
         },
         {
             question: "Incorporating an encompassing or V-groove finger shape in a gripper's design is primarily done to increase stability.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "It prevents the object from slipping compared to flat fingers."
         },
         {
             question: "The C programming language was created by Bjarne Stroustrup in 1972.",
             options: ["True", "False"],
-            answer: "False" // It was Dennis Ritchie. Bjarne created C++.
+            answer: "False",
+            trivia: "It was created by Dennis Ritchie. Bjarne Stroustrup created C++."
         },
         {
             question: "The core difference between C and C++ is that C++ supports object-oriented programming, whereas C is procedural.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "C++ allows developers to use Classes and Objects."
         },
         {
             question: "In the C programming language, the '%d' or '%i' format specifiers act as placeholders for floating-point decimals.",
             options: ["True", "False"],
-            answer: "False" // They are for integers. '%f' is for floats.
+            answer: "False",
+            trivia: "They are for integers. '%f' is used for floats, and '%c' is used for characters."
         },
         {
             question: "The '#include <stdio.h>' header file library in C is required to allow input/output operations like the printf() function.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "'stdio.h' stands for Standard Input/Output."
         },
         {
             question: "The Arduino Leonardo was the first Arduino development board to feature a microcontroller with built-in USB communication.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "This allows it to directly emulate computer keyboards and mice natively."
         },
         {
             question: "In an Arduino program structure, the loop() function executes only once upon startup or after a hardware reset.",
             options: ["True", "False"],
-            answer: "False" // That is the setup() function.
+            answer: "False",
+            trivia: "That is the setup() function. loop() runs continuously in an infinite cycle."
         },
         {
             question: "On the Arduino Nano, the analog pins A0-A7 map directly to the internal port C register.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "Digital pins D2-D13 map to ports B and D."
         },
         {
             question: "The 1st Industrial Revolution introduced the internal combustion engine and mass production assembly lines.",
             options: ["True", "False"],
-            answer: "False" // That was the 2nd Industrial Revolution. 1st was steam power and textiles.
+            answer: "False",
+            trivia: "That was the 2nd Industrial Revolution. The 1st introduced steam power and textiles."
         },
         {
             question: "The personal computer, electronics, and the internet were major hallmarks of the 3rd Industrial Revolution.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "The 3rd era spans roughly from 1969 to 2010."
         },
         {
             question: "'Digital Twin' and 'Additive Manufacturing' are characteristics associated with the 4th Industrial Revolution.",
             options: ["True", "False"],
-            answer: "True"
+            answer: "True",
+            trivia: "It also includes AI, Cloud Computing, and IoT."
         },
         {
             question: "'Data Mining' is the term coined by Kevin Ashton in 1999 to describe structured data pipelines.",
             options: ["True", "False"],
-            answer: "False" // Clive Humby coined "data is the new oil" for Data Mining. Kevin Ashton coined "IoT".
+            answer: "False",
+            trivia: "Clive Humby coined 'data is the new oil' for Data Mining. Kevin Ashton coined 'IoT'."
         }
     ];
 // EXPANDED DICTIONARY OF TERMS FOR INCORRECT ANSWERS
@@ -2427,12 +2543,17 @@
         });
     }
 
-    function selectAnswer(selected, buttonElement) {
+  function selectAnswer(selected, buttonElement) {
         const currentQuizData = activeData[currentQuestion];
         const allButtons = optionsEl.children;
         
         for (let btn of allButtons) {
             btn.disabled = true;
+        }
+
+        let triviaText = "";
+        if (currentQuizData.trivia) {
+            triviaText = `<div class="rationale"><strong>Explanation:</strong><br>${currentQuizData.trivia}</div>`;
         }
 
         if (selected === currentQuizData.answer) {
@@ -2443,7 +2564,7 @@
             feedbackBox.className = 'feedback-box correct-feedback';
             feedbackTitle.innerHTML = '✔ Correct!';
             feedbackTitle.className = 'feedback-title feedback-correct-title';
-            feedbackText.innerHTML = `Great job! The answer is <strong>"${currentQuizData.answer}"</strong>.`;
+            feedbackText.innerHTML = `Great job! The answer is <strong>"${currentQuizData.answer}"</strong>.${triviaText}`;
         } else {
             buttonElement.classList.add('wrong');
             for (let btn of allButtons) {
@@ -2461,6 +2582,8 @@
             let definitionText = "";
             if (termDictionary[selected]) {
                 definitionText = `<div class="rationale"><strong>Wait, what is ${selected}?</strong><br>${termDictionary[selected]}</div>`;
+            } else if (currentQuizData.trivia) {
+                definitionText = `<div class="rationale"><strong>Explanation:</strong><br>${currentQuizData.trivia}</div>`;
             }
 
             feedbackBox.className = 'feedback-box wrong-feedback';
@@ -2481,7 +2604,6 @@
             nextBtn.innerText = "Next Question";
         }
     }
-
     function nextQuestion() {
         currentQuestion++;
         if (currentQuestion < activeData.length) {
