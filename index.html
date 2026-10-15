@@ -215,7 +215,7 @@
 </div>
 
 <!-- MULTIPLE CHOICE QUIZ SCREEN -->
-<div class="quiz-container" id="quiz-screen">
+<div class="quiz-container" id="quiz-screen" style="display: none;">
     <h2 id="quiz-title">Quiz</h2>
     <div class="progress-bar-container"><div class="progress-bar-fill" id="progress-bar"></div></div>
     <div class="header-info"><span id="progress">Question 1 of X</span><span id="real-time-score">Score: 0</span></div>
@@ -229,7 +229,7 @@
 </div>
 
 <!-- FLASHCARD / IDENTIFICATION SCREEN -->
-<div class="quiz-container" id="flashcard-screen">
+<div class="quiz-container" id="flashcard-screen" style="display: none;">
     <h2>Identification Review</h2>
     <div class="progress-bar-container"><div class="progress-bar-fill" id="fc-progress-bar"></div></div>
     <div class="header-info"><span id="fc-progress">Card 1 of 100</span><span>Mental Check!</span></div>
@@ -248,7 +248,7 @@
 </div>
 
 <!-- SCORE SCREEN -->
-<div class="quiz-container" id="score-screen">
+<div class="quiz-container" id="score-screen" style="display: none;">
     <h2>Quiz Completed!</h2>
     <p style="text-align: center; font-size: 1.2em;">Your final score: <strong id="score"></strong> out of <strong id="total"></strong></p>
     <div id="review-area" class="review-container"></div>
@@ -256,6 +256,12 @@
 </div>
 
 <script>
+    function hideAllScreens() {
+    menuScreen.style.display = 'none';
+    quizScreen.style.display = 'none';
+    flashcardScreen.style.display = 'none';
+    scoreScreen.style.display = 'none';
+}
     // U0: HISTORY OF ROBOTICS DATA
     const quizU0 = [
         {
@@ -2508,16 +2514,15 @@
         }
 
         activeData = shuffleArray(selectedQuiz);
-        currentQuestion = 0;
-        score = 0;
-        wrongAnswersReview = [];
-        
-        menuScreen.style.display = 'none';
-        flashcardScreen.style.display = 'none';
-        quizScreen.style.display = 'block';
-        
-        loadQuestion();
-    }
+    currentQuestion = 0;
+    score = 0;
+    wrongAnswersReview = [];
+    
+    hideAllScreens(); // Replaces the incomplete hide logic
+    quizScreen.style.display = 'block';
+    
+    loadQuestion();
+}
 
     function loadQuestion() {
         nextBtn.style.display = 'none';
@@ -2614,8 +2619,8 @@
     }
 
     function showScore() {
-        quizScreen.style.display = 'none';
-        scoreScreen.style.display = 'block';
+    hideAllScreens(); // Replaces quizScreen.style.display = 'none';
+    scoreScreen.style.display = 'block';
         document.getElementById('score').innerText = score;
         document.getElementById('total').innerText = activeData.length;
 
@@ -2638,25 +2643,23 @@
     }
 
     function returnToMenu() {
-        scoreScreen.style.display = 'none';
-        flashcardScreen.style.display = 'none';
-        menuScreen.style.display = 'block';
+    hideAllScreens(); // Replaces the incomplete hide logic
+    menuScreen.style.display = 'block';
     }
 
 
     // ==========================================
     // FLASHCARD / IDENTIFICATION LOGIC
     // ==========================================
-    function startFlashcards() {
-        activeIdenData = shuffleArray(quizIden);
-        currentCard = 0;
-        
-        menuScreen.style.display = 'none';
-        quizScreen.style.display = 'none';
-        flashcardScreen.style.display = 'block';
-        
-        loadFlashcard();
-    }
+   function startFlashcards() {
+    activeIdenData = shuffleArray(quizIden);
+    currentCard = 0;
+    
+    hideAllScreens(); // Replaces the incomplete hide logic
+    flashcardScreen.style.display = 'block';
+    
+    loadFlashcard();
+}
 
     function loadFlashcard() {
         const currentData = activeIdenData[currentCard];
