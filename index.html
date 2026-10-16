@@ -225,7 +225,10 @@
         <div class="feedback-title" id="feedback-title"></div>
         <div class="feedback-text" id="feedback-text"></div>
     </div>
-    <button class="option action-btn" id="next-btn" onclick="nextQuestion()">Next Question</button>
+   <div style="display: flex; gap: 15px; margin-top: 20px;">
+        <button class="option action-btn" id="prev-btn" onclick="prevQuestion()" style="margin-top: 0; display: none; background-color: #313142; border-color: #4a4a5a; color: white;">Previous</button>
+        <button class="option action-btn" id="next-btn" onclick="nextQuestion()" style="margin-top: 0;">Next/Skip</button>
+    </div>
 </div>
 
 <!-- FLASHCARD / IDENTIFICATION SCREEN -->
@@ -2485,8 +2488,7 @@
         return shuffled;
     }
 
-    // MULTIPLE CHOICE QUIZ LOGIC
-    function startQuiz(quizID) {
+   function startQuiz(quizID) {
         let selectedQuiz = [];
         
         if (quizID === 'U0') {
@@ -2513,21 +2515,40 @@
             quizTitle.innerText = "★ MASTER EXAM MODE (50 Mixed Questions) ★";
         }
 
-        activeData = shuffleArray(selectedQuiz);
-    currentQuestion = 0;
-    score = 0;
-    wrongAnswersReview = [];
-    
-    hideAllScreens(); // Replaces the incomplete hide logic
-    quizScreen.style.display = 'block';
-    
-    loadQuestion();
-}
+        // Deep copy the quiz to reset previous answers and shuffled options
+        activeData = shuffleArray(selectedQuiz).map(q => ({...q, userAnswer: null, shuffledOptions: null}));
+        
+        currentQuestion = 0;
+        score = 0;
+        wrongAnswersReview = [];
+        
+        menuScreen.style.display = 'none';
+        flashcardScreen.style.display = 'none';
+        quizScreen.style.display = 'block';
+        
+        loadQuestion();
+    }
 
     function loadQuestion() {
-        nextBtn.style.display = 'none';
         feedbackBox.style.display = 'none';
         optionsEl.innerHTML = '';
+        
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        // Toggle Previous button visibility
+        if (currentQuestion > 0) {
+            prevBtn.style.display = 'block';
+        } else {
+            prevBtn.style.display = 'none';
+        }
+
+        // Change Next button text on the last question
+        if (currentQuestion === activeData.length - 1) {
+            nextBtn.innerText = "Finish Quiz";
+        } else {
+            nextBtn.innerText = "Next/Skip";
+        }
         
         const currentQuizData = activeData[currentQuestion];
         progressEl.innerText = `Question ${currentQuestion + 1} of ${activeData.length}`;
@@ -2537,39 +2558,51 @@
         const progressPercent = (currentQuestion / activeData.length) * 100;
         progressBar.style.width = `${progressPercent}%`;
 
-        const randomizedOptions = shuffleArray(currentQuizData.options);
+        // Store the shuffled options so they don't swap places if you go back to this question
+        if (!currentQuizData.shuffledOptions) {
+            currentQuizData.shuffledOptions = shuffleArray([...currentQuizData.options]);
+        }
 
-        randomizedOptions.forEach(option => {
+        currentQuizData.shuffledOptions.forEach(option => {
             const button = document.createElement('button');
             button.innerText = option;
             button.classList.add('option');
-            button.onclick = (e) => selectAnswer(option, e.target);
+            
+            // If the user already answered this question, lock the buttons and show colors
+            if (currentQuizData.userAnswer) {
+                button.disabled = true;
+                if (option === currentQuizData.answer) {
+                    button.classList.add('correct');
+                } else if (option === currentQuizData.userAnswer) {
+                    button.classList.add('wrong');
+                }
+            } else {
+                button.onclick = (e) => selectAnswer(option, e.target);
+            }
+            
             optionsEl.appendChild(button);
         });
+
+        // Show feedback immediately if returning to an already answered question
+        if (currentQuizData.userAnswer) {
+            renderFeedback(currentQuizData.userAnswer, currentQuizData);
+            nextBtn.innerText = currentQuestion === activeData.length - 1 ? "Finish Quiz" : "Next Question";
+        }
     }
 
-  function selectAnswer(selected, buttonElement) {
+    function selectAnswer(selected, buttonElement) {
         const currentQuizData = activeData[currentQuestion];
-        const allButtons = optionsEl.children;
-        
-        for (let btn of allButtons) {
-            btn.disabled = true;
-        }
+        currentQuizData.userAnswer = selected; // Save the answer in memory
 
-        let triviaText = "";
-        if (currentQuizData.trivia) {
-            triviaText = `<div class="rationale"><strong>Explanation:</strong><br>${currentQuizData.trivia}</div>`;
+        const allButtons = optionsEl.children;
+        for (let btn of allButtons) {
+            btn.disabled = true; // Lock all buttons
         }
 
         if (selected === currentQuizData.answer) {
             buttonElement.classList.add('correct');
             score++;
             realTimeScoreEl.innerText = `Score: ${score}`;
-            
-            feedbackBox.className = 'feedback-box correct-feedback';
-            feedbackTitle.innerHTML = '✔ Correct!';
-            feedbackTitle.className = 'feedback-title feedback-correct-title';
-            feedbackText.innerHTML = `Great job! The answer is <strong>"${currentQuizData.answer}"</strong>.${triviaText}`;
         } else {
             buttonElement.classList.add('wrong');
             for (let btn of allButtons) {
@@ -2583,32 +2616,46 @@
                 chosen: selected,
                 correct: currentQuizData.answer
             });
-
-            let definitionText = "";
-            if (termDictionary[selected]) {
-                definitionText = `<div class="rationale"><strong>Wait, what is ${selected}?</strong><br>${termDictionary[selected]}</div>`;
-            } else if (currentQuizData.trivia) {
-                definitionText = `<div class="rationale"><strong>Explanation:</strong><br>${currentQuizData.trivia}</div>`;
-            }
-
-            feedbackBox.className = 'feedback-box wrong-feedback';
-            feedbackTitle.innerHTML = '✖ Incorrect';
-            feedbackTitle.className = 'feedback-title feedback-wrong-title';
-            feedbackText.innerHTML = `The correct answer was: <strong>"${currentQuizData.answer}"</strong>.${definitionText}`;
         }
 
-        feedbackBox.style.display = 'block';
+        renderFeedback(selected, currentQuizData);
 
         const progressPercent = ((currentQuestion + 1) / activeData.length) * 100;
         progressBar.style.width = `${progressPercent}%`;
+        
+        document.getElementById('next-btn').innerText = currentQuestion === activeData.length - 1 ? "Finish Quiz" : "Next Question";
+    }
 
-        nextBtn.style.display = 'block';
-        if (currentQuestion === activeData.length - 1) {
-            nextBtn.innerText = "Finish Quiz";
+    // Helper function to build the feedback box
+    function renderFeedback(selected, currentQuizData) {
+        let triviaText = "";
+        if (termDictionary[selected] && selected !== currentQuizData.answer) {
+            triviaText = `<div class="rationale"><strong>Wait, what is ${selected}?</strong><br>${termDictionary[selected]}</div>`;
+        } else if (currentQuizData.trivia) {
+            triviaText = `<div class="rationale"><strong>Explanation:</strong><br>${currentQuizData.trivia}</div>`;
+        }
+
+        if (selected === currentQuizData.answer) {
+            feedbackBox.className = 'feedback-box correct-feedback';
+            feedbackTitle.innerHTML = '✔ Correct!';
+            feedbackTitle.className = 'feedback-title feedback-correct-title';
+            feedbackText.innerHTML = `Great job! The answer is <strong>"${currentQuizData.answer}"</strong>.${triviaText}`;
         } else {
-            nextBtn.innerText = "Next Question";
+            feedbackBox.className = 'feedback-box wrong-feedback';
+            feedbackTitle.innerHTML = '✖ Incorrect';
+            feedbackTitle.className = 'feedback-title feedback-wrong-title';
+            feedbackText.innerHTML = `The correct answer was: <strong>"${currentQuizData.answer}"</strong>.${triviaText}`;
+        }
+        feedbackBox.style.display = 'block';
+    }
+
+    function prevQuestion() {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            loadQuestion();
         }
     }
+
     function nextQuestion() {
         currentQuestion++;
         if (currentQuestion < activeData.length) {
@@ -2619,8 +2666,8 @@
     }
 
     function showScore() {
-    hideAllScreens(); // Replaces quizScreen.style.display = 'none';
-    scoreScreen.style.display = 'block';
+        quizScreen.style.display = 'none';
+        scoreScreen.style.display = 'block';
         document.getElementById('score').innerText = score;
         document.getElementById('total').innerText = activeData.length;
 
@@ -2641,7 +2688,6 @@
             });
         }
     }
-
     function returnToMenu() {
     hideAllScreens(); // Replaces the incomplete hide logic
     menuScreen.style.display = 'block';
